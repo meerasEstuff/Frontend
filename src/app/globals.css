@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Custom component classes using your color schema */
+@layer components {
+  /* Button variants */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  .btn-secondary {
+    @apply bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .btn-success {
+    @apply bg-success-500 hover:bg-success-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
+  }
+
+  .btn-outline-primary {
+    @apply border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
+  }
+
+  /* Input field styles */
+  .input-field {
+    @apply w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
+  }
+
+  .input-error {
+    @apply border-error-500 focus:ring-error-500 focus:border-error-500;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6 border border-neutral-200;
+  }
+
+  .card-primary {
+    @apply bg-white rounded-lg shadow-md p-6 border-l-4 border-primary-500;
+  }
+
+  .card-success {
+    @apply bg-success-50 rounded-lg shadow-md p-6 border-l-4 border-success-500;
+  }
+
+  .card-referral {
+    @apply bg-white rounded-lg shadow-md p-6 border-l-4 border-referral;
+  }
+
+  .card-earnings {
+    @apply bg-warning-50 rounded-lg shadow-md p-6 border-l-4 border-earnings;
+  }
+
+  /* Status badges */
+  .badge-success {
+    @apply bg-success-100 text-success-700 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-warning {
+    @apply bg-warning-100 text-warning-700 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-error {
+    @apply bg-error-100 text-error-700 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-referral {
+    @apply bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  /* Alert styles */
+  .alert-success {
+    @apply bg-success-50 border border-success-200 text-success-700 px-4 py-3 rounded-lg;
+  }
+
+  .alert-warning {
+    @apply bg-warning-50 border border-warning-200 text-warning-700 px-4 py-3 rounded-lg;
+  }
+
+  .alert-error {
+    @apply bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg;
+  }
+
+  /* Text utilities */
+  .text-earnings {
+    @apply text-earnings font-semibold;
+  }
+
+  .text-referral {
+    @apply text-referral font-semibold;
+  }
+
+  .text-customerid {
+    @apply text-customerid font-semibold;
+  }
+
+  /* Background utilities */
+  .bg-page {
+    @apply bg-meera-bg-primary min-h-screen;
+  }
+
+  .bg-section {
+    @apply bg-meera-bg-secondary;
+  }
+
+  /* Gradient utilities */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-600;
+  }
+
+  .gradient-success {
+    @apply bg-gradient-to-r from-success-500 to-success-600;
+  }
+
+  .gradient-referral {
+    @apply bg-gradient-to-r from-referral to-secondary-500;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom utilities */
+@layer utilities {
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .hover-shadow {
+    @apply transition-shadow duration-200 hover:shadow-lg;
+  }
+
+  /* Focus states */
+  .focus-ring {
+    @apply focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none;
+  }
 }
