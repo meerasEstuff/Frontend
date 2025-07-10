@@ -1,43 +1,88 @@
 "use client";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ShoppingCart, Mail, ArrowLeft } from "lucide-react";
+import { ArrowRight, ShoppingCart, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 // Define the Zod schema for form validation
-const forgotPasswordSchema = z.object({
-  email: z
+const otpSchema = z.object({
+  otp: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Please enter a valid email address" }),
+    .min(1, { message: "OTP is required" })
+    .length(4, { message: "OTP must be 4 digits" })
+    .regex(/^\d{4}$/, { message: "OTP must be numeric" }),
 });
 
 // Define the type for the form data based on the schema
-type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+type OtpFormData = z.infer<typeof otpSchema>;
 
-function ForgotPasswordPage() {
+function OtpVerificationPage() {
   const router = useRouter();
 
   // Initialize React Hook Form with Zod resolver
   const {
-    register,
     handleSubmit,
+    setValue, // Use setValue to manually update the form value
     formState: { errors },
     reset,
-  } = useForm<ForgotPasswordFormData>({
-    resolver: zodResolver(forgotPasswordSchema),
+  } = useForm<OtpFormData>({
+    resolver: zodResolver(otpSchema),
   });
 
+  // Refs for individual OTP input fields
+  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  // State to manage individual OTP digits
+  const [otpDigits, setOtpDigits] = React.useState<string[]>(["", "", "", ""]);
+
+  // Effect to update react-hook-form's 'otp' value when otpDigits change
+  useEffect(() => {
+    setValue("otp", otpDigits.join(""));
+  }, [otpDigits, setValue]);
+
+  // Function to handle input change for each OTP box
+  const handleOtpChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const { value } = e.target;
+    // Allow only one digit per input
+    if (value.length > 1) {
+      return;
+    }
+
+    const newOtpDigits = [...otpDigits];
+    newOtpDigits[index] = value;
+    setOtpDigits(newOtpDigits);
+
+    // Move focus to the next input if a digit is entered and it's not the last input
+    if (value && index < otpInputRefs.current.length - 1) {
+      otpInputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  // Function to handle backspace and navigation
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.key === "Backspace" && !otpDigits[index] && index > 0) {
+      // If backspace is pressed and current input is empty, move focus to previous input
+      otpInputRefs.current[index - 1]?.focus();
+    }
+  };
+
   // Function to handle form submission
-  const onSubmit = (data: ForgotPasswordFormData) => {
-    console.log("Forgot password request submitted:", data);
-    // Here you would typically send a request to your backend to send an OTP
+  const onSubmit = (data: OtpFormData) => {
+    console.log("OTP submitted:", data);
+    // Here you would typically send a request to your backend to verify the OTP
     // For demonstration, we'll just log and reset the form
     reset(); // Clear the form after successful submission
-    // You might want to show a success message or navigate to an OTP verification page
+    setOtpDigits(["", "", "", ""]); // Clear individual input boxes
+    // You might want to show a success message or navigate to a password reset page
   };
 
   return (
@@ -64,10 +109,10 @@ function ForgotPasswordPage() {
           className="flex items-center space-x-2 text-gray-600 hover:text-emerald-600 transition-colors mb-6 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Login</span>
+          <span>Back to Forgot Password</span>
         </motion.button>
 
-        {/* Forgot Password Card */}
+        {/* OTP Verification Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -96,7 +141,7 @@ function ForgotPasswordPage() {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1"
             >
-              Forgot Password?
+              Verify OTP
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -104,7 +149,7 @@ function ForgotPasswordPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-sm text-gray-600"
             >
-              Enter your registered email to receive a verification code.
+              Enter the 4-digit code sent to your email.
             </motion.p>
           </div>
 
@@ -116,39 +161,57 @@ function ForgotPasswordPage() {
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-4"
           >
-            {/* Email Field */}
+            {/* OTP Fields */}
             <div>
               <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+                htmlFor="otp"
+                className="block text-sm font-semibold text-gray-700 mb-1 text-center"
               >
-                Registered Email
+                Verification Code (OTP)
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                </div>
-                <input
-                  type="email"
-                  id="email"
-                  {...register("email")}
-                  className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
-                    errors.email
-                      ? "border-red-300 focus:border-red-500"
-                      : "border-gray-200 focus:border-emerald-500 focus:bg-white"
-                  }`}
-                  placeholder="your.email@example.com"
-                />
+              <div className="flex justify-center space-x-3">
+                {otpDigits.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleOtpChange(e, index)}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    ref={(el) => (otpInputRefs.current[index] = el)}
+                    className={`w-12 h-12 text-center text-xl font-bold bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 ${
+                      errors.otp
+                        ? "border-red-300 focus:border-red-500"
+                        : "border-gray-200 focus:border-emerald-500 focus:bg-white"
+                    }`}
+                    // Ensure react-hook-form registers the combined OTP string
+                    // This input is controlled manually and its value is set via setValue
+                    // No direct 'name' or 'register' on individual inputs
+                  />
+                ))}
               </div>
-              {errors.email && (
+              {errors.otp && (
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-xs mt-1"
+                  className="text-red-500 text-xs mt-1 text-center"
                 >
-                  {errors.email.message}
+                  {errors.otp.message}
                 </motion.p>
               )}
+            </div>
+
+            {/* Resend OTP Link */}
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={() => {
+                  console.log("Resend OTP clicked"); /* Logic to resend OTP */
+                }}
+                className="text-emerald-600 text-xs font-semibold hover:text-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
+              >
+                Resend OTP
+              </button>
             </div>
 
             {/* Submit Button */}
@@ -156,10 +219,10 @@ function ForgotPasswordPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              onClick={() => router.push("/otp")}
+              onClick={() => router.push("/passwordReset")}
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center space-x-2 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
-              <span>Send OTP</span>
+              <span>Verify OTP</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.form>
@@ -172,7 +235,6 @@ function ForgotPasswordPage() {
             className="text-center mt-4"
           >
             <p className="text-gray-600 text-sm">
-              Remembered your password?{" "}
               <button
                 onClick={() => router.push("/login")}
                 className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
@@ -187,4 +249,4 @@ function ForgotPasswordPage() {
   );
 }
 
-export default ForgotPasswordPage;
+export default OtpVerificationPage;

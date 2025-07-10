@@ -1,133 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+
 @import "tailwindcss";
 
-/* Custom component classes using your color schema */
-@layer components {
-  /* Button variants */
-  .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
-  }
+@theme {
+  --font-Montserrat: Montserrat, "sans-serif";
+  /* Primary (Green) */
+  --color-primary-50: #e9f8f1;
+  --color-primary-100: #c7f1db;
+  --color-primary-200: #a3eac3;
+  --color-primary-300: #7ee2aa;
+  --color-primary-400: #5bdc95;
+  --color-primary-500: #39d67f; /* Main green (logo/button) */
+  --color-primary-600: #2fb96d;
+  --color-primary-700: #24955a;
+  --color-primary-800: #197146;
+  --color-primary-900: #0f4d2f;
 
-  .btn-secondary {
-    @apply bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
-  }
+  /* Accent (Teal) */
+  --color-accent-50: #e6f7f7;
+  --color-accent-100: #b9ecec;
+  --color-accent-200: #8cdddd;
+  --color-accent-300: #5ecfd0;
+  --color-accent-400: #32c2c3;
+  --color-accent-500: #00b5b6; /* Used for highlights/icons */
+  --color-accent-600: #009495;
+  --color-accent-700: #007374;
+  --color-accent-800: #005253;
+  --color-accent-900: #003232;
 
-  .btn-success {
-    @apply bg-success-500 hover:bg-success-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
-  }
-
-  .btn-outline-primary {
-    @apply border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200;
-  }
-
-  /* Input field styles */
-  .input-field {
-    @apply w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
-  }
-
-  .input-error {
-    @apply border-error-500 focus:ring-error-500 focus:border-error-500;
-  }
-
-  /* Card styles */
-  .card {
-    @apply bg-white rounded-lg shadow-md p-6 border border-neutral-200;
-  }
-
-  .card-primary {
-    @apply bg-white rounded-lg shadow-md p-6 border-l-4 border-primary-500;
-  }
-
-  .card-success {
-    @apply bg-success-50 rounded-lg shadow-md p-6 border-l-4 border-success-500;
-  }
-
-  .card-referral {
-    @apply bg-white rounded-lg shadow-md p-6 border-l-4 border-referral;
-  }
-
-  .card-earnings {
-    @apply bg-warning-50 rounded-lg shadow-md p-6 border-l-4 border-earnings;
-  }
-
-  /* Status badges */
-  .badge-success {
-    @apply bg-success-100 text-success-700 px-3 py-1 rounded-full text-sm font-medium;
-  }
-
-  .badge-warning {
-    @apply bg-warning-100 text-warning-700 px-3 py-1 rounded-full text-sm font-medium;
-  }
-
-  .badge-error {
-    @apply bg-error-100 text-error-700 px-3 py-1 rounded-full text-sm font-medium;
-  }
-
-  .badge-referral {
-    @apply bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium;
-  }
-
-  /* Alert styles */
-  .alert-success {
-    @apply bg-success-50 border border-success-200 text-success-700 px-4 py-3 rounded-lg;
-  }
-
-  .alert-warning {
-    @apply bg-warning-50 border border-warning-200 text-warning-700 px-4 py-3 rounded-lg;
-  }
-
-  .alert-error {
-    @apply bg-error-50 border border-error-200 text-error-700 px-4 py-3 rounded-lg;
-  }
-
-  /* Text utilities */
-  .text-earnings {
-    @apply text-earnings font-semibold;
-  }
-
-  .text-referral {
-    @apply text-referral font-semibold;
-  }
-
-  .text-customerid {
-    @apply text-customerid font-semibold;
-  }
-
-  /* Background utilities */
-  .bg-page {
-    @apply bg-meera-bg-primary min-h-screen;
-  }
-
-  .bg-section {
-    @apply bg-meera-bg-secondary;
-  }
-
-  /* Gradient utilities */
-  .gradient-primary {
-    @apply bg-gradient-to-r from-primary-500 to-primary-600;
-  }
-
-  .gradient-success {
-    @apply bg-gradient-to-r from-success-500 to-success-600;
-  }
-
-  .gradient-referral {
-    @apply bg-gradient-to-r from-referral to-secondary-500;
-  }
+  /* Neutral (Backgrounds) */
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
 }
 
-/* Custom utilities */
-@layer utilities {
-  /* Hover effects */
-  .hover-lift {
-    @apply transition-transform duration-200 hover:scale-105;
-  }
-
-  .hover-shadow {
-    @apply transition-shadow duration-200 hover:shadow-lg;
-  }
-
-  /* Focus states */
-  .focus-ring {
-    @apply focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none;
-  }
+/* Optional: Set background and text defaults */
+body {
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-900);
 }

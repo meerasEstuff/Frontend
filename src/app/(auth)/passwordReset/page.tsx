@@ -1,25 +1,35 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ShoppingCart, Mail, ArrowLeft } from "lucide-react";
+import { ArrowRight, ShoppingCart, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 // Define the Zod schema for form validation
-const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Please enter a valid email address" }),
-});
+const passwordResetSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(1, { message: "New password is required" })
+      .min(6, { message: "New password must be at least 6 characters" }),
+    confirmPassword: z
+      .string()
+      .min(1, { message: "Please confirm your new password" }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"], // Path of the error
+  });
 
 // Define the type for the form data based on the schema
-type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+type PasswordResetFormData = z.infer<typeof passwordResetSchema>;
 
-function ForgotPasswordPage() {
+function PasswordResetPage() {
   const router = useRouter();
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Initialize React Hook Form with Zod resolver
   const {
@@ -27,17 +37,17 @@ function ForgotPasswordPage() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ForgotPasswordFormData>({
-    resolver: zodResolver(forgotPasswordSchema),
+  } = useForm<PasswordResetFormData>({
+    resolver: zodResolver(passwordResetSchema),
   });
 
   // Function to handle form submission
-  const onSubmit = (data: ForgotPasswordFormData) => {
-    console.log("Forgot password request submitted:", data);
-    // Here you would typically send a request to your backend to send an OTP
+  const onSubmit = (data: PasswordResetFormData) => {
+    console.log("Password reset submitted:", data);
+    // Here you would typically send a request to your backend to reset the password
     // For demonstration, we'll just log and reset the form
     reset(); // Clear the form after successful submission
-    // You might want to show a success message or navigate to an OTP verification page
+    // You might want to show a success message or navigate to the login page
   };
 
   return (
@@ -60,14 +70,14 @@ function ForgotPasswordPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          onClick={() => router.back()}
+          onClick={() => router.back()} // This will take them back to the previous page (OTP or Forgot Password)
           className="flex items-center space-x-2 text-gray-600 hover:text-emerald-600 transition-colors mb-6 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Login</span>
+          <span>Back to Forgot Password</span>
         </motion.button>
 
-        {/* Forgot Password Card */}
+        {/* Password Reset Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -96,7 +106,7 @@ function ForgotPasswordPage() {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1"
             >
-              Forgot Password?
+              Reset Your Password
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -104,7 +114,7 @@ function ForgotPasswordPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-sm text-gray-600"
             >
-              Enter your registered email to receive a verification code.
+              Set a new password for your account.
             </motion.p>
           </div>
 
@@ -116,37 +126,96 @@ function ForgotPasswordPage() {
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-4"
           >
-            {/* Email Field */}
+            {/* New Password Field */}
             <div>
               <label
-                htmlFor="email"
+                htmlFor="newPassword"
                 className="block text-sm font-semibold text-gray-700 mb-1"
               >
-                Registered Email
+                New Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                </div>
                 <input
-                  type="email"
-                  id="email"
-                  {...register("email")}
-                  className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
-                    errors.email
+                  type={showNewPassword ? "text" : "password"}
+                  id="newPassword"
+                  {...register("newPassword")}
+                  className={`w-full pl-3 pr-10 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
+                    errors.newPassword
                       ? "border-red-300 focus:border-red-500"
                       : "border-gray-200 focus:border-emerald-500 focus:bg-white"
                   }`}
-                  placeholder="your.email@example.com"
+                  placeholder="Enter new password"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
+                  aria-label={
+                    showNewPassword ? "Hide new password" : "Show new password"
+                  }
+                >
+                  {showNewPassword ? (
+                    <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                  ) : (
+                    <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                  )}
+                </button>
               </div>
-              {errors.email && (
+              {errors.newPassword && (
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-red-500 text-xs mt-1"
                 >
-                  {errors.email.message}
+                  {errors.newPassword.message}
+                </motion.p>
+              )}
+            </div>
+
+            {/* Confirm Password Field */}
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-semibold text-gray-700 mb-1"
+              >
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  {...register("confirmPassword")}
+                  className={`w-full pl-3 pr-10 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
+                    errors.confirmPassword
+                      ? "border-red-300 focus:border-red-500"
+                      : "border-gray-200 focus:border-emerald-500 focus:bg-white"
+                  }`}
+                  placeholder="Confirm new password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
+                  aria-label={
+                    showConfirmPassword
+                      ? "Hide confirm password"
+                      : "Show confirm password"
+                  }
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                  ) : (
+                    <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                  )}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-xs mt-1"
+                >
+                  {errors.confirmPassword.message}
                 </motion.p>
               )}
             </div>
@@ -156,10 +225,10 @@ function ForgotPasswordPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              onClick={() => router.push("/otp")}
+              onClick={() => router.push("/login")}
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center space-x-2 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
-              <span>Send OTP</span>
+              <span>Reset Password</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.form>
@@ -172,7 +241,6 @@ function ForgotPasswordPage() {
             className="text-center mt-4"
           >
             <p className="text-gray-600 text-sm">
-              Remembered your password?{" "}
               <button
                 onClick={() => router.push("/login")}
                 className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
@@ -187,4 +255,4 @@ function ForgotPasswordPage() {
   );
 }
 
-export default ForgotPasswordPage;
+export default PasswordResetPage;
