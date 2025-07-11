@@ -33,7 +33,7 @@ function OtpVerificationPage() {
   });
 
   // Refs for individual OTP input fields
-  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const otpInputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   // State to manage individual OTP digits
   const [otpDigits, setOtpDigits] = React.useState<string[]>(["", "", "", ""]);
@@ -178,7 +178,9 @@ function OtpVerificationPage() {
                     value={digit}
                     onChange={(e) => handleOtpChange(e, index)}
                     onKeyDown={(e) => handleKeyDown(e, index)}
-                    ref={(el) => (otpInputRefs.current[index] = el)}
+                    ref={(el: HTMLInputElement | null) => {
+                      otpInputRefs.current[index] = el;
+                    }}
                     className={`w-12 h-12 text-center text-xl font-bold bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 ${
                       errors.otp
                         ? "border-red-300 focus:border-red-500"

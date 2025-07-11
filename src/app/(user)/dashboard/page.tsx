@@ -124,7 +124,7 @@ function DashboardPage() {
             Welcome back, {userName}!
           </h1>
           <p className="text-lg text-gray-600">
-            Here's your dashboard overview and referral information.
+            Here&quot;s your dashboard overview and referral information.
           </p>
         </motion.div>
 

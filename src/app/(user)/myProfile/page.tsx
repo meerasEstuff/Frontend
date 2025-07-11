@@ -56,7 +56,6 @@ function MyProfilePage() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: dummyProfileData, // Pre-fill form with dummy data

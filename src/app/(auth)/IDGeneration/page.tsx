@@ -195,8 +195,8 @@ function CustomerIDGenerationPage() {
             Our Vision:
           </h3>
           <p className="text-gray-700 text-sm mb-4">
-            "Your dream, our design" – Empowering people to enhance their lives
-            by helping them achieve their ambition.
+            &quot;Your dream, our design&quot; - Empowering people to enhance
+            their lives by helping them achieve their ambition.
           </p>
 
           <h3 className="text-lg font-semibold text-gray-800 mb-2">

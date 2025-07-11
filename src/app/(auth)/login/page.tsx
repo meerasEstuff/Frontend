@@ -234,7 +234,7 @@ function LoginPage() {
             className="text-center mt-4"
           >
             <p className="text-gray-600 text-sm">
-              Don't have an account?{" "}
+              Don&quot;t have an account?{" "}
               <button
                 onClick={() => router.push("/signup")}
                 className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
