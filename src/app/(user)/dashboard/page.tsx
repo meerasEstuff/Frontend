@@ -179,7 +179,7 @@ function DashboardPage() {
               {growthPercentage}
             </p>
             <p className="text-sm text-gray-500 mt-1">
-              This month's performance
+              This month&quot;s performance
             </p>
           </motion.div>
         </div>
