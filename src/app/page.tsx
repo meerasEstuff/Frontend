@@ -43,7 +43,7 @@ export default function Home() {
               {/* Replaced ShoppingCart icon with img tag for company logo */}
               <Image
                 src="/newLog.jpg" // ✅ must include extension and match filename
-                alt="MeerasEstuff Logo"
+                alt="MeerasEstuff_Logo"
                 width={64}
                 height={64}
                 className="rounded-full shadow-md"
