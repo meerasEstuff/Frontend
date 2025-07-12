@@ -39,10 +39,79 @@
   --color-neutral-700: #374151;
   --color-neutral-800: #1f2937;
   --color-neutral-900: #111827;
+
+  /* Sonner Toast Customization - Using your theme variables */
+  --toast-white: var(--color-neutral-50);
+  --toast-black: var(--color-neutral-900);
+
+  /* Success Toast - Using your primary and accent colors for gradient */
+  --toast-success-background: linear-gradient(
+    to right,
+    var(--color-primary-600),
+    var(--color-accent-600)
+  );
+  --toast-success-border: var(--color-primary-700);
+  --toast-success-foreground: var(--toast-white); /* White text */
+
+  /* Error Toast - Using a red from a standard palette or define a --color-error-X if you have one */
+  --toast-error-background: #ef4444; /* Tailwind red-500 */
+  --toast-error-border: #dc2626; /* Tailwind red-600 */
+  --toast-error-foreground: var(--toast-white);
+
+  /* Warning Toast */
+  --toast-warning-background: #f59e0b; /* Tailwind amber-500 */
+  --toast-warning-border: #d97706; /* Tailwind amber-600 */
+  --toast-warning-foreground: var(--toast-white);
+
+  /* Info/Default Toast - Using your accent and primary colors for gradient */
+  --toast-info-background: linear-gradient(
+    to right,
+    var(--color-accent-600),
+    var(--color-primary-600)
+  );
+  --toast-info-border: var(--color-accent-700);
+  --toast-info-foreground: var(--toast-white);
+
+  /* Action Button in Toast (e.g., Undo) */
+  --toast-action-button-background: var(--color-primary-500);
+  --toast-action-button-foreground: var(--toast-white);
+  --toast-action-button-hover-background: var(--color-primary-600);
+
+  /* Cancel Button in Toast */
+  --toast-cancel-button-background: var(--color-neutral-200);
+  --toast-cancel-button-foreground: var(--color-neutral-700);
+  --toast-cancel-button-hover-background: var(--color-neutral-300);
 }
 
 /* Optional: Set background and text defaults */
 body {
   background: var(--color-neutral-50);
   color: var(--color-neutral-900);
+}
+
+/* Custom Scrollbar for referral list */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-neutral-100); /* Light background for the track */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-500),
+    var(--color-accent-500)
+  ); /* Match your theme gradient */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-600),
+    var(--color-accent-600)
+  ); /* Slightly darker on hover */
 }

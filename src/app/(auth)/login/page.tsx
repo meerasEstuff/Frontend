@@ -5,6 +5,11 @@ import { useForm } from "react-hook-form";
 import { LogIn, Phone, User } from "lucide-react"; // Importing icons for inputs
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { toast } from "sonner";
+import { loginWithCustomerIdAndPhone } from "@/services/authService";
+import { useAuthStore } from "@/app/store/userStore";
+import { useEffect } from "react";
+import { getErrorMessage } from "@/utils/error";
 
 // Define the form data type
 interface LoginFormInputs {
@@ -14,6 +19,11 @@ interface LoginFormInputs {
 
 export default function LoginPage() {
   const router = useRouter();
+  const clearUser = useAuthStore((state) => state.clearUser);
+
+  useEffect(() => {
+    clearUser();
+  }, [clearUser]);
   const {
     register,
     handleSubmit,
@@ -21,18 +31,21 @@ export default function LoginPage() {
   } = useForm<LoginFormInputs>();
 
   // Handle form submission
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log("Login data:", data);
-    // Here you would typically send data to your authentication API
-    // For demonstration, we'll just log it.
-    // After successful login, you might redirect the user:
-    // router.push("/dashboard");
-    alert(
-      "Login attempt with Customer ID: " +
-        data.customerId +
-        " and Phone Number: " +
+  const onSubmit = async (data: LoginFormInputs) => {
+    try {
+      const user = await loginWithCustomerIdAndPhone(
+        data.customerId,
         data.phoneNumber
-    );
+      );
+
+      // Store user in Zustand
+      useAuthStore.getState().setUser(user);
+
+      toast.success("Login successful");
+      router.push("/dashboard");
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err));
+    }
   };
 
   return (
@@ -149,7 +162,6 @@ export default function LoginPage() {
             }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            onClick={() => router.push("/dashboard")}
             className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
           >
             <LogIn className="w-5 h-5" />

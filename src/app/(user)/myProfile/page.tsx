@@ -1,7 +1,8 @@
 "use client";
-import React from "react"; // Removed useState as it's no longer needed for password visibility
+import React, { useState } from "react"; // Removed useState as it's no longer needed for password visibility
 import { motion } from "framer-motion";
 import {
+  Loader2,
   ShoppingCart,
   User,
   Phone,
@@ -13,6 +14,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useAuthStore } from "@/app/store/userStore";
+import { toast } from "sonner";
+import { getErrorMessage } from "@/utils/error";
+import { updateUserProfile } from "@/services/profileService";
 
 // Define the Zod schema for form validation
 const profileSchema = z.object({
@@ -38,12 +43,10 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 function MyProfilePage() {
   const router = useRouter();
 
-  // Dummy Data for the profile (password removed)
-  const dummyProfileData = {
-    username: "john_doe",
-    email: "john.doe@example.com",
-    phone: "9876543210",
-  };
+  const user = useAuthStore((state) => state.user);
+  const { setUser } = useAuthStore();
+
+  const [loading, setLoading] = useState(false);
 
   // Initialize React Hook Form with Zod resolver and default values
   const {
@@ -52,15 +55,29 @@ function MyProfilePage() {
     formState: { errors },
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
-    defaultValues: dummyProfileData, // Pre-fill form with dummy data
+    defaultValues: {
+      username: user?.username || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
+    }, // Pre-fill form with dummy data
   });
 
   // Function to handle form submission (e.g., saving profile changes)
-  const onSubmit = (data: ProfileFormData) => {
-    console.log("Profile data submitted:", data);
-    // In a real application, you would send this data to your backend
-    // and handle success/error feedback.
-    alert("Profile updated successfully!"); // Using alert for demonstration
+  const onSubmit = async (data: ProfileFormData) => {
+    try {
+      if (!user?.id) return;
+      setLoading(true);
+      await updateUserProfile(user.id, data);
+
+      // Update Zustand store
+      setUser({ ...user, ...data });
+
+      toast.success("Profile updated successfully!");
+    } catch (err) {
+      toast.error(getErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -155,7 +172,6 @@ function MyProfilePage() {
                   type="text"
                   id="username"
                   {...register("username")}
-                  readOnly // Set to readOnly for now, can be removed for editing
                   className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
                     errors.username
                       ? "border-red-300 focus:border-red-500"
@@ -190,7 +206,6 @@ function MyProfilePage() {
                   type="email"
                   id="email"
                   {...register("email")}
-                  readOnly // Set to readOnly for now
                   className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
                     errors.email
                       ? "border-red-300 focus:border-red-500"
@@ -225,7 +240,6 @@ function MyProfilePage() {
                   type="tel"
                   id="phone"
                   {...register("phone")}
-                  readOnly // Set to readOnly for now
                   className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
                     errors.phone
                       ? "border-red-300 focus:border-red-500"
@@ -246,13 +260,20 @@ function MyProfilePage() {
 
             {/* Submit Button (Save Changes) */}
             <motion.button
+              type="submit"
+              disabled={loading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center space-x-2 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+              className={`w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl flex items-center justify-center space-x-2 group transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
+    hover:shadow-2xl hover:brightness-105
+    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100`}
             >
-              <span>Save Changes</span>
-              <Save className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <span>{loading ? "Saving..." : "Save Changes"}</span>
+              {loading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              )}
             </motion.button>
           </motion.form>
         </motion.div>

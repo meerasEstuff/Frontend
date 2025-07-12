@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -11,38 +11,84 @@ import {
   ChevronDown,
   Mail,
   MessageSquare,
-  DollarSign, // Icon for Total Reward Earned
+  IndianRupee, // Icon for Total Reward Earned
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/app/store/userStore";
+import { getTotalReferralsCount } from "@/services/userService";
+import { getTotalReferralReward } from "@/services/rewardService";
+import { getReferralsByUserId } from "@/services/userService";
 
 function DashboardPage() {
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
 
-  // Dummy Data
-  const customerId = "CUST-2024-001337";
-  const userName = "User"; // Placeholder for logged-in user's name
-  const totalRewardEarned = "₹ 5,000"; // Dummy value for total reward earned
+  const [totalReferrals, setTotalReferrals] = useState(0);
 
-  // Dummy referral list
-  const dummyReferrals = [
-    { id: 1, name: "Alice Smith", dateJoined: "2024-06-15" },
-    { id: 2, name: "Bob Johnson", dateJoined: "2024-06-20" },
-    { id: 3, name: "Charlie Brown", dateJoined: "2024-07-01" },
-    { id: 4, name: "Diana Prince", dateJoined: "2024-07-05" },
-    { id: 5, name: "Eve Adams", dateJoined: "2024-07-10" },
-  ];
-  const totalReferrals = dummyReferrals.length;
+  const [referrals, setReferrals] = useState<
+    { id: string; username: string; created_at: string }[]
+  >([]);
+
+  useEffect(() => {
+    async function fetchReferralsList() {
+      if (user?.id) {
+        try {
+          const result = await getReferralsByUserId(user.id);
+          setReferrals(result);
+        } catch (err) {
+          console.error("Error fetching referrals:", err);
+        }
+      }
+    }
+
+    fetchReferralsList();
+  }, [user?.id]);
+
+  useEffect(() => {
+    async function fetchReferrals() {
+      if (user?.id) {
+        const count = await getTotalReferralsCount(user.id);
+        setTotalReferrals(count);
+      }
+    }
+
+    fetchReferrals();
+  }, [user?.id]);
+
+  const [totalRewardEarned, setTotalRewardEarned] = useState(0);
+
+  useEffect(() => {
+    async function fetchReward() {
+      if (user?.id) {
+        const reward = await getTotalReferralReward(user.id);
+        setTotalRewardEarned(reward);
+      }
+    }
+
+    fetchReward();
+  }, [user?.id]);
 
   // State for dropdown visibility for user profile in navbar
+  // THESE MUST BE DECLARED AT THE TOP LEVEL BEFORE ANY CONDITIONAL RENDERING
   const [isUserProfileDropdownOpen, setIsUserProfileDropdownOpen] =
     useState(false);
   // State for dropdown visibility for referrals list
   const [isReferralListDropdownOpen, setIsReferralListDropdownOpen] =
     useState(false);
 
+  useEffect(() => {
+    // Add 'router' to the dependency array
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]); // Added router to dependency array
+
+  // This conditional return is fine AFTER all hooks are declared
+  if (!user) return null;
+
   const handleLogout = () => {
     console.log("User logged out");
-    // Implement actual logout logic here (e.g., clear tokens, redirect to login)
+    useAuthStore.getState().clearUser();
     router.push("/login");
   };
 
@@ -132,10 +178,10 @@ function DashboardPage() {
           className="text-center mb-12"
         >
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-            Welcome back, {userName}!
+            Welcome back, {user?.username}!
           </h1>
           <p className="text-lg text-gray-600">
-            Here`&apos;`s your dashboard overview.
+            Here&apos;s your dashboard overview.
           </p>
         </motion.div>
 
@@ -155,7 +201,7 @@ function DashboardPage() {
               Customer ID
             </h3>
             <p className="text-2xl font-bold text-gray-900 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-              {customerId}
+              {user?.customer_id}
             </p>
             <p className="text-sm text-gray-500 mt-1">Your unique identifier</p>
           </motion.div>
@@ -190,7 +236,7 @@ function DashboardPage() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 flex flex-col items-center text-center"
           >
-            <DollarSign className="w-8 h-8 text-emerald-600 mb-3" />
+            <IndianRupee className="w-8 h-8 text-emerald-600 mb-3" />
             <h3 className="text-lg font-semibold text-gray-700 mb-1">
               Total Reward Earned
             </h3>
@@ -220,16 +266,17 @@ function DashboardPage() {
             ) : (
               <div className="max-h-60 overflow-y-auto custom-scrollbar">
                 <ul className="space-y-3">
-                  {dummyReferrals.map((referral) => (
+                  {referrals.map((referral) => (
                     <li
                       key={referral.id}
                       className="flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm"
                     >
                       <span className="font-medium text-gray-800">
-                        {referral.name}
+                        {referral.username}
                       </span>
                       <span className="text-sm text-gray-500">
-                        Joined: {referral.dateJoined}
+                        Joined:{" "}
+                        {new Date(referral.created_at).toLocaleDateString()}
                       </span>
                     </li>
                   ))}
