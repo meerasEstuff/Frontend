@@ -152,8 +152,8 @@ function AddReferralPage() {
               transition={{ duration: 0.8, delay: 0.7 }}
               className="text-sm text-red-600 font-semibold mt-2"
             >
-              (A payment of Rs. 1000 is required upon "Add Referral" to generate
-              Customer ID)
+              (A payment of Rs. 1000 is required upon &quot;Add Referral &quot;
+              to generate Customer ID)
             </motion.p>
           </div>
 
