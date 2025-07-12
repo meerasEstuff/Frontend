@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react"; // Import useState
+import React from "react"; // Removed useState as it's no longer needed for password visibility
 import { motion } from "framer-motion";
 import {
   ShoppingCart,
@@ -8,17 +8,13 @@ import {
   Mail,
   ArrowLeft,
   Save, // Icon for Save button
-  Eye, // Import Eye icon
-  EyeOff, // Import EyeOff icon
-} from "lucide-react";
+} from "lucide-react"; // Removed Eye and EyeOff icons
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 // Define the Zod schema for form validation
-// For now, making them optional as they might be read-only,
-// but structure allows for future editing.
 const profileSchema = z.object({
   username: z
     .string()
@@ -41,14 +37,12 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 
 function MyProfilePage() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
-  // Dummy Data for the profile
+  // Dummy Data for the profile (password removed)
   const dummyProfileData = {
     username: "john_doe",
     email: "john.doe@example.com",
     phone: "9876543210",
-    password: "securepassword123", // Added dummy password
   };
 
   // Initialize React Hook Form with Zod resolver and default values
@@ -66,7 +60,7 @@ function MyProfilePage() {
     console.log("Profile data submitted:", data);
     // In a real application, you would send this data to your backend
     // and handle success/error feedback.
-    // For now, we just log and could potentially show a success message.
+    alert("Profile updated successfully!"); // Using alert for demonstration
   };
 
   return (
@@ -250,38 +244,6 @@ function MyProfilePage() {
               )}
             </div>
 
-            {/* Password Field - Added for display with toggle */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-gray-700 mb-1"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  value={dummyProfileData.password} // Display dummy password
-                  readOnly // This field is for display only, not for direct editing
-                  className={`w-full pl-3 pr-10 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm border-gray-200 focus:border-emerald-500 focus:bg-white`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
-                  )}
-                </button>
-              </div>
-              {/* No error message for password here as it's read-only */}
-            </div>
-
             {/* Submit Button (Save Changes) */}
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -293,25 +255,6 @@ function MyProfilePage() {
               <Save className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.form>
-
-          {/* Link to change password or other settings could go here */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-center mt-4"
-          >
-            <p className="text-gray-600 text-sm">
-              <button
-                onClick={() => {
-                  /* Handle navigation to change password page */
-                }}
-                className="text-emerald-600 font-semibold hover:text-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg"
-              >
-                Change Password
-              </button>
-            </p>
-          </motion.div>
         </motion.div>
       </motion.div>
     </div>

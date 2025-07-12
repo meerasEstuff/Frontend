@@ -98,27 +98,14 @@ export default function Home() {
                   boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push("/signup")}
+                onClick={() => router.push("/login")}
                 className="group bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-xl transition-all duration-300 flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                aria-label="Sign up now"
+                aria-label="Get In"
               >
-                <span>Join Now</span>
+                <span>Get In</span> {/* Renamed button */}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </motion.button>
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  router.push("/login");
-                }}
-                className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-semibold text-lg shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                aria-label="Login"
-              >
-                Login
-              </motion.button>
+              {/* Removed Login Button */}
             </motion.div>
 
             {/* Stats Cards */}
