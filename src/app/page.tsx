@@ -42,7 +42,7 @@ export default function Home() {
             >
               {/* Replaced ShoppingCart icon with img tag for company logo */}
               <Image
-                src="/newLog.jpg" // ✅ must include extension and match filename
+                src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
                 alt="MeerasEstuff_Logo"
                 width={64}
                 height={64}

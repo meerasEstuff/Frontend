@@ -14,13 +14,22 @@ export async function getTotalReferralsCount(userId: string) {
   return count ?? 0;
 }
 
-export async function getReferralsByUserId(referrerId: string) {
+export async function getReferralsByUserId(
+  referrerId: string,
+  page = 1,
+  pageSize = 5
+) {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
   const { data, error } = await supabase
     .from("users")
-    .select("id, username, created_at") // select the fields you want
-    .eq("referred_by", referrerId); // assuming you have a 'referred_by' column
+    .select("id,customer_id, username, created_at")
+    .eq("referred_by_id", referrerId)
+    .range(from, to); // 👈 Pagination logic
 
   if (error) {
+    console.error("Error fetching referrals:", error.message, error.details);
     throw new Error("Failed to fetch referrals");
   }
 

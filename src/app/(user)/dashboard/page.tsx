@@ -18,6 +18,7 @@ import { useAuthStore } from "@/app/store/userStore";
 import { getTotalReferralsCount } from "@/services/userService";
 import { getTotalReferralReward } from "@/services/rewardService";
 import { getReferralsByUserId } from "@/services/userService";
+import { getGreeting } from "@/utils/greeting";
 
 function DashboardPage() {
   const router = useRouter();
@@ -26,14 +27,17 @@ function DashboardPage() {
   const [totalReferrals, setTotalReferrals] = useState(0);
 
   const [referrals, setReferrals] = useState<
-    { id: string; username: string; created_at: string }[]
+    { id: string; customer_id: string; username: string; created_at: string }[]
   >([]);
+
+  const [page, setPage] = useState(1);
+  const pageSize = 5;
 
   useEffect(() => {
     async function fetchReferralsList() {
       if (user?.id) {
         try {
-          const result = await getReferralsByUserId(user.id);
+          const result = await getReferralsByUserId(user.id, page, pageSize);
           setReferrals(result);
         } catch (err) {
           console.error("Error fetching referrals:", err);
@@ -42,7 +46,7 @@ function DashboardPage() {
     }
 
     fetchReferralsList();
-  }, [user?.id]);
+  }, [user?.id, page]);
 
   useEffect(() => {
     async function fetchReferrals() {
@@ -178,7 +182,7 @@ function DashboardPage() {
           className="text-center mb-12"
         >
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
-            Welcome back, {user?.username}!
+            {getGreeting()}, {user?.username}!
           </h1>
           <p className="text-lg text-gray-600">
             Here&apos;s your dashboard overview.
@@ -259,29 +263,65 @@ function DashboardPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-4">
               Your Referred Customers
             </h3>
-            {totalReferrals === 0 ? (
+            {referrals.length === 0 ? (
               <p className="text-gray-600 text-center">
-                No referrals yet. Share your link to start earning!
+                No referrals yet. Add new referrals to start earning!
               </p>
             ) : (
-              <div className="max-h-60 overflow-y-auto custom-scrollbar">
-                <ul className="space-y-3">
-                  {referrals.map((referral) => (
-                    <li
-                      key={referral.id}
-                      className="flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm"
+              <>
+                <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                  <ul className="space-y-3">
+                    {referrals.map((referral) => (
+                      <li
+                        key={referral.id}
+                        // Adjusted classes for mobile-first responsiveness
+                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-3 rounded-lg shadow-sm text-center sm:text-left"
+                      >
+                        <span className="font-medium text-gray-800 mb-1 sm:mb-0">
+                          {referral.username}
+                        </span>
+                        <p className="text-sm text-gray-500 mb-1 sm:mb-0 break-all w-full sm:w-auto min-w-0">
+                          {" "}
+                          {/* Added w-full sm:w-auto min-w-0 */}
+                          Customer ID:{" "}
+                          <span className="font-mono">
+                            {referral.customer_id}
+                          </span>
+                        </p>
+                        <span className="text-sm text-gray-500">
+                          Joined:{" "}
+                          {new Date(referral.created_at).toLocaleDateString()}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* Pagination buttons ONLY when referrals exist */}
+                {totalReferrals > 5 && (
+                  <div className="flex justify-center items-center space-x-4 mt-4">
+                    <button
+                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={page === 1}
+                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 disabled:opacity-50"
                     >
-                      <span className="font-medium text-gray-800">
-                        {referral.username}
-                      </span>
-                      <span className="text-sm text-gray-500">
-                        Joined:{" "}
-                        {new Date(referral.created_at).toLocaleDateString()}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                      Previous
+                    </button>
+                    <span className="text-gray-700 font-medium">
+                      Page {page}
+                    </span>
+                    <button
+                      onClick={() => {
+                        const maxPage = Math.ceil(totalReferrals / pageSize);
+                        if (page < maxPage) setPage(page + 1);
+                      }}
+                      disabled={page >= Math.ceil(totalReferrals / pageSize)}
+                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 disabled:opacity-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </motion.div>
         )}

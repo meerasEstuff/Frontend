@@ -65,9 +65,27 @@ function MyProfilePage() {
   // Function to handle form submission (e.g., saving profile changes)
   const onSubmit = async (data: ProfileFormData) => {
     try {
-      if (!user?.id) return;
+      if (!user?.customer_id || !user?.phone) return;
+
+      console.log("Submitting updated data for:", user.id, data);
+
       setLoading(true);
-      await updateUserProfile(user.id, data);
+      const res = await fetch("/api/update-profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer_id: user.customer_id,
+          phone: user.phone,
+          username: data.username,
+          email: data.email,
+        }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || "Failed to update");
+      }
 
       // Update Zustand store
       setUser({ ...user, ...data });

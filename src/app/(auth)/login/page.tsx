@@ -67,7 +67,7 @@ export default function LoginPage() {
           {/* Logo/Brand - Consistent with marketing page */}
           <div className="flex items-center justify-center space-x-3 mb-4">
             <Image
-              src="/newLog.jpg" // Ensure this path is correct relative to your public directory
+              src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
               alt="MeerasEstuff_Logo"
               width={64}
               height={64}
