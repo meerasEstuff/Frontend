@@ -20,10 +20,13 @@ import { getTotalReferralReward } from "@/services/rewardService";
 import { getReferralsByUserId } from "@/services/userService";
 import { getGreeting } from "@/utils/greeting";
 import { handleShareCustomerId } from "@/utils/shareUtils"; // Import the utility function
+import { useProtectPage } from "@/lib/useProtectPage";
+import Image from "next/image";
 
 function DashboardPage() {
   const router = useRouter();
-  const user = useAuthStore((state) => state.user);
+
+  const user = useProtectPage();
 
   const [totalReferrals, setTotalReferrals] = useState(0);
 
@@ -83,12 +86,6 @@ function DashboardPage() {
   // NEW: Ref to the user profile dropdown container
   const userProfileDropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    }
-  }, [user, router]);
-
   // NEW: useEffect for handling clicks outside the user profile dropdown
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -130,6 +127,14 @@ function DashboardPage() {
     setIsReferralListDropdownOpen(!isReferralListDropdownOpen);
   };
 
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans">
       {/* Navbar */}
@@ -141,14 +146,19 @@ function DashboardPage() {
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left: Company Icon & Name */}
-          <div className="flex items-center space-x-3">
-            <div className="p-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
-              <ShoppingCart className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <Image
+              src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
+              alt="MeerasEstuff_Logo"
+              width={34}
+              height={34}
+              className="rounded-full shadow-md"
+            />
+            <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               MeerasEstuff
             </span>
           </div>
+
           {/* Right: User Profile Icon with Dropdown */}
           <div className="relative" ref={userProfileDropdownRef}>
             {" "}
@@ -400,12 +410,18 @@ function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between text-center md:text-left">
             <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl shadow-md">
-                <ShoppingCart className="w-6 h-6 text-white" />
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <Image
+                  src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
+                  alt="MeerasEstuff_Logo"
+                  width={34}
+                  height={34}
+                  className="rounded-full shadow-md"
+                />
+                <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  MeerasEstuff
+                </span>
               </div>
-              <span className="text-xl sm:text-2xl font-bold">
-                MeerasEstuff
-              </span>
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 mt-4 md:mt-0">
               <a

@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart, ArrowLeft, Copy, Check, Share2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { generateCustomerId } from "@/utils/idGenerator";
+import { useOnboardingStore } from "@/app/store/onboardingStore";
+import { insertNewUser } from "@/services/userService";
 
 function GenerateCustomerIdPage() {
   const router = useRouter();
@@ -11,52 +14,97 @@ function GenerateCustomerIdPage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Simulate API call or complex generation process
-    const generateId = () => {
-      setIsLoading(true);
-      setTimeout(() => {
-        const prefix = "CUST-";
-        const randomNum = Math.floor(100000 + Math.random() * 900000); // 6-digit random number
-        const newId = `${prefix}${new Date().getFullYear()}-${randomNum}`;
-        setCustomerId(newId);
-        setIsLoading(false);
-      }, 1500); // Simulate loading time for animation
+    let hasSaved = false;
+
+    const saveUser = async (newId: string) => {
+      setCustomerId(newId);
+      setIsLoading(false);
+
+      if (hasSaved) return; // ✅ Prevent double call
+      hasSaved = true;
+
+      const { username, email, phone, referredById, reset } =
+        useOnboardingStore.getState();
+
+      try {
+        await insertNewUser({
+          customer_id: newId,
+          username,
+          email,
+          phone,
+          referred_by_id: referredById,
+        });
+
+        console.log("✅ User saved to Supabase");
+        reset();
+        // ❌ Removed router.push() here to give user time
+      } catch (error) {
+        console.error("❌ Error inserting user:", error);
+      }
     };
 
-    generateId();
-  }, []); // Empty dependency array means this runs once on mount
+    setIsLoading(true);
+    setTimeout(() => {
+      const newId = generateCustomerId();
+      saveUser(newId);
+    }, 1500);
 
-  const copyCustomerId = () => {
+    // Optional: cleanup
+    return () => {
+      hasSaved = true;
+    };
+  }, []);
+
+  const copyCustomerId = async () => {
     if (customerId) {
-      const el = document.createElement("textarea");
-      el.value = customerId;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // Reset feedback after 2 seconds
+      try {
+        await navigator.clipboard.writeText(customerId);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error("Clipboard copy failed. Falling back:", err);
+        const el = document.createElement("textarea");
+        el.value = customerId;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
     }
   };
 
   const shareCustomerId = () => {
     if (customerId) {
-      // In a real application, you might use navigator.share or a custom share modal
-      // For this environment, we'll just alert the user about sharing.
-      alert(
-        `Simulating share of Customer ID: ${customerId}\n(In a real app, this would open a share dialog or copy to clipboard.)`
-      );
+      const shareText = `Check out this new Customer ID: ${customerId} on MeerasEstuff!`;
+
+      if (navigator.share) {
+        navigator
+          .share({
+            title: "MeerasEstuff Customer ID",
+            text: shareText,
+          })
+          .catch((error) => {
+            if (error.name !== "AbortError") {
+              console.error("Share failed:", error);
+              copyCustomerId();
+              alert("Failed to share. Customer ID copied to clipboard.");
+            }
+          });
+      } else {
+        copyCustomerId();
+        alert("Share not available. Customer ID copied to clipboard.");
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-4 font-sans">
-      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-emerald-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-teal-500 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-20 w-64 h-64 bg-emerald-500 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-80 h-80 bg-teal-500 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full blur-3xl" />
       </div>
 
       <motion.div
@@ -65,16 +113,12 @@ function GenerateCustomerIdPage() {
         transition={{ duration: 0.8 }}
         className="relative z-10 w-full max-w-md mx-auto"
       >
-        {/* Back Button at the top removed */}
-
-        {/* Customer ID Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 sm:p-8 text-center"
         >
-          {/* Header */}
           <div className="mb-6">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -108,7 +152,6 @@ function GenerateCustomerIdPage() {
             </motion.p>
           </div>
 
-          {/* Generated Customer ID Display */}
           <div className="my-8">
             {isLoading ? (
               <motion.div
@@ -125,7 +168,7 @@ function GenerateCustomerIdPage() {
               </motion.div>
             ) : (
               <motion.p
-                key={customerId} // Key to trigger re-animation on ID change
+                key={customerId}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -136,7 +179,6 @@ function GenerateCustomerIdPage() {
             )}
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -170,10 +212,10 @@ function GenerateCustomerIdPage() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => router.push("/dashboard")} // Navigate back to dashboard
+              onClick={() => router.push("/dashboard")}
               className="flex-1 bg-gray-700 text-white py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
-              <ArrowLeft className="w-5 h-5" /> {/* Only the icon */}
+              <ArrowLeft className="w-5 h-5" />
             </motion.button>
           </div>
         </motion.div>

@@ -1,18 +1,20 @@
 "use client";
-import React from "react"; // useState is no longer needed as customerId is generated on submit
+import React from "react";
 import { motion } from "framer-motion";
 import {
-  ShoppingCart,
   User,
   Phone,
   Mail,
   ArrowLeft,
   PlusCircle, // Icon for Add Referral
-} from "lucide-react"; // RefreshCcw icon is no longer needed
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useProtectPage } from "@/lib/useProtectPage";
+import { useOnboardingStore } from "@/app/store/onboardingStore";
+import Image from "next/image";
 
 // Define the Zod schema for form validation
 const newReferralSchema = z.object({
@@ -38,6 +40,12 @@ type NewReferralFormData = z.infer<typeof newReferralSchema>;
 
 function AddReferralPage() {
   const router = useRouter();
+
+  const user = useProtectPage();
+  const setOnboardingData = useOnboardingStore(
+    (state) => state.setOnboardingData
+  );
+
   const {
     register,
     handleSubmit,
@@ -53,31 +61,24 @@ function AddReferralPage() {
 
   // Function to handle form submission (e.g., adding new referral)
   const onSubmit = (data: NewReferralFormData) => {
-    // Simulate payment confirmation
-    const confirmPayment = window.confirm(
-      "Please confirm to pay Rs. 1000 to add this referral."
-    );
-
-    if (confirmPayment) {
-      // Simulate successful payment and then generate customer ID
-      const prefix = "CUST-";
-      const randomNum = Math.floor(100000 + Math.random() * 900000); // 6-digit random number
-      const generatedCustomerId = `${prefix}${new Date().getFullYear()}-${randomNum}`;
-
-      console.log("New referral data submitted:", {
-        ...data,
-        customerId: generatedCustomerId,
-      });
-      // In a real application, you would send this data to your backend
-      // and handle success/error feedback.
-      alert(
-        `Payment successful! New referral added: ${data.username} with Customer ID: ${generatedCustomerId}`
-      ); // Using alert for demonstration
-      router.push("/dashboard"); // Redirect back to dashboard after submission
-    } else {
-      alert("Referral creation cancelled. Payment not confirmed.");
-    }
+    setOnboardingData({
+      username: data.username,
+      email: data.email,
+      phone: data.phone,
+      referredById: user?.id,
+    });
+    const onboardingData = useOnboardingStore.getState();
+    console.log("✅ Onboarding Data Set:", onboardingData);
+    router.push("/razorpay");
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-4 font-sans">
@@ -121,12 +122,18 @@ function AddReferralPage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex items-center justify-center space-x-3 mb-4"
             >
-              <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl">
-                <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <Image
+                  src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
+                  alt="MeerasEstuff_Logo"
+                  width={34}
+                  height={34}
+                  className="rounded-full shadow-md"
+                />
+                <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  MeerasEstuff
+                </span>
               </div>
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                MeerasEstuff
-              </span>
             </motion.div>
 
             <motion.h1
@@ -135,7 +142,7 @@ function AddReferralPage() {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1"
             >
-              Add New Referral
+              Add New Customer
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -143,17 +150,17 @@ function AddReferralPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-sm text-gray-600"
             >
-              Enter details for the new customer.
+              Enter details for the new customer you &quot; re referring.
             </motion.p>
-            {/* Added payment mention */}
+            {/* NEW: Updated minimal and positive payment mention */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-sm text-red-600 font-semibold mt-2"
+              className="text-sm text-gray-600 font-semibold mt-2" // Keeping it subtle with gray-600
             >
-              (A payment of Rs. 1000 is required upon &quot;Add Referral &quot;
-              to generate Customer ID)
+              Note: A Rs. 1000 activation fee is required from the new customer
+              to generate their Customer ID.
             </motion.p>
           </div>
 
@@ -270,15 +277,12 @@ function AddReferralPage() {
               )}
             </div>
 
-            {/* Customer ID Field and Generate Button are removed from here */}
-            {/* The Customer ID will be generated upon successful submission (simulating payment) */}
-
             {/* Submit Button (Add Referral) */}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              onClick={() => router.push("GenerateCustomerIdPage")}
+              // Removed onClick={() => router.push("GenerateCustomerIdPage")} as per previous recommendation
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center space-x-2 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
               <span>Add Referral</span>

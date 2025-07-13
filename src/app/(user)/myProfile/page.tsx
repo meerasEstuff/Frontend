@@ -3,7 +3,6 @@ import React, { useState } from "react"; // Removed useState as it's no longer n
 import { motion } from "framer-motion";
 import {
   Loader2,
-  ShoppingCart,
   User,
   Phone,
   Mail,
@@ -17,6 +16,8 @@ import * as z from "zod";
 import { useAuthStore } from "@/app/store/userStore";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/utils/error";
+import { useProtectPage } from "@/lib/useProtectPage";
+import Image from "next/image";
 
 // Define the Zod schema for form validation
 const profileSchema = z.object({
@@ -42,7 +43,9 @@ type ProfileFormData = z.infer<typeof profileSchema>;
 function MyProfilePage() {
   const router = useRouter();
 
-  const user = useAuthStore((state) => state.user);
+  const user = useProtectPage();
+
+  // const user = useAuthStore((state) => state.user);
   const { setUser } = useAuthStore();
 
   const [loading, setLoading] = useState(false);
@@ -97,6 +100,14 @@ function MyProfilePage() {
     }
   };
 
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-4 font-sans">
       {/* Background Pattern */}
@@ -139,12 +150,18 @@ function MyProfilePage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex items-center justify-center space-x-3 mb-4"
             >
-              <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl">
-                <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              <div className="flex items-center justify-center space-x-3 mb-4">
+                <Image
+                  src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
+                  alt="MeerasEstuff_Logo"
+                  width={34}
+                  height={34}
+                  className="rounded-full shadow-md"
+                />
+                <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  MeerasEstuff
+                </span>
               </div>
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                MeerasEstuff
-              </span>
             </motion.div>
 
             <motion.h1
@@ -256,12 +273,16 @@ function MyProfilePage() {
                 <input
                   type="tel"
                   id="phone"
+                  disabled
                   {...register("phone")}
-                  className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
-                    errors.phone
-                      ? "border-red-300 focus:border-red-500"
-                      : "border-gray-200 focus:border-emerald-500 focus:bg-white"
-                  }`}
+                  className={`w-full pl-10 pr-3 py-3 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm
+                    +         ${
+                      errors.phone
+                        ? "border-red-300 focus:border-red-500"
+                        : "border-gray-200"
+                    }
+                    +         disabled:bg-gray-100 disabled:text-gray-500 disabled:border-gray-300 disabled:shadow-inner disabled:cursor-not-allowed
+                    +         focus:border-emerald-500 focus:bg-white`}
                 />
               </div>
               {errors.phone && (
