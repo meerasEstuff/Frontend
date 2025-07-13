@@ -425,7 +425,7 @@ function DashboardPage() {
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 mt-4 md:mt-0">
               <a
-                href="https://wa.me/YOUR_WHATSAPP_NUMBER"
+                href="https://wa.me/919496987436"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-gray-300 hover:text-emerald-400 transition-colors duration-200"
