@@ -17,7 +17,6 @@ import * as z from "zod";
 import { useAuthStore } from "@/app/store/userStore";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/utils/error";
-import { updateUserProfile } from "@/services/profileService";
 
 // Define the Zod schema for form validation
 const profileSchema = z.object({
