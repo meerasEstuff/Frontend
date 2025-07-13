@@ -19,7 +19,7 @@ import { getTotalReferralsCount } from "@/services/userService";
 import { getTotalReferralReward } from "@/services/rewardService";
 import { getReferralsByUserId } from "@/services/userService";
 import { getGreeting } from "@/utils/greeting";
-import { handleShareCustomerId } from "@/utils/shareUtils";
+import { handleShareCustomerId } from "@/utils/shareUtils"; // Import the utility function
 
 function DashboardPage() {
   const router = useRouter();
@@ -75,22 +75,17 @@ function DashboardPage() {
     fetchReward();
   }, [user?.id]);
 
-  // State for dropdown visibility for user profile in navbar
-  // THESE MUST BE DECLARED AT THE TOP LEVEL BEFORE ANY CONDITIONAL RENDERING
   const [isUserProfileDropdownOpen, setIsUserProfileDropdownOpen] =
     useState(false);
-  // State for dropdown visibility for referrals list
   const [isReferralListDropdownOpen, setIsReferralListDropdownOpen] =
     useState(false);
 
   useEffect(() => {
-    // Add 'router' to the dependency array
     if (!user) {
       router.push("/login");
     }
-  }, [user, router]); // Added router to dependency array
+  }, [user, router]);
 
-  // This conditional return is fine AFTER all hooks are declared
   if (!user) return null;
 
   const handleLogout = () => {
@@ -100,7 +95,7 @@ function DashboardPage() {
   };
 
   const handleAddNewReferral = () => {
-    router.push("/onboard"); // Navigate to a new page for adding referrals
+    router.push("/onboard");
   };
 
   const toggleReferralList = () => {
@@ -108,7 +103,6 @@ function DashboardPage() {
   };
 
   return (
-    // Added flex flex-col to the root div to push the footer to the bottom
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans">
       {/* Navbar */}
       <motion.nav
@@ -155,7 +149,7 @@ function DashboardPage() {
                 <button
                   onClick={() => {
                     router.push("/myProfile");
-                    setIsUserProfileDropdownOpen(false); // Close dropdown after click
+                    setIsUserProfileDropdownOpen(false);
                   }}
                   className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
                 >
@@ -175,7 +169,6 @@ function DashboardPage() {
         </div>
       </motion.nav>
 
-      {/* Added flex-grow to main to push the footer down */}
       <main className="flex-grow pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -194,9 +187,6 @@ function DashboardPage() {
 
         {/* Top Metric Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {" "}
-          {/* Changed to 3 columns */}
-          {/* Customer ID Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -212,7 +202,6 @@ function DashboardPage() {
             </p>
             <p className="text-sm text-gray-500 mt-1">Your unique identifier</p>
           </motion.div>
-          {/* Total Referrals Card (now clickable for dropdown) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -236,7 +225,6 @@ function DashboardPage() {
               }`}
             />
           </motion.div>
-          {/* Total Reward Earned Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -277,12 +265,16 @@ function DashboardPage() {
                     {referrals.map((referral) => (
                       <li
                         key={referral.id}
-                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-3 rounded-lg shadow-sm text-center sm:text-left relative"
+                        // Adjusted classes for mobile-first responsiveness
+                        // On small screens: flex-col, items-center. On sm breakpoint and up: flex-row, justify-between, items-center.
+                        className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-3 rounded-lg shadow-sm text-center sm:text-left relative"
                       >
                         <span className="font-medium text-gray-800 mb-1 sm:mb-0">
                           {referral.username}
                         </span>
-                        <div className="flex items-center space-x-2 mb-1 sm:mb-0">
+
+                        {/* Updated: Container for Customer ID and Share Button */}
+                        <div className="flex items-center gap-2 mb-1 sm:mb-0 flex-wrap justify-center sm:justify-start">
                           <p className="text-sm text-gray-500 break-all min-w-0">
                             Customer ID:{" "}
                             <span className="font-mono">
@@ -292,19 +284,20 @@ function DashboardPage() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              // NEW: Call the imported function and pass the state setter
                               handleShareCustomerId(
                                 referral.customer_id,
                                 referral.username,
                                 setCopiedMessageId
                               );
                             }}
-                            className="p-1 rounded-full text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                            className="p-1 rounded-full text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 flex-shrink-0" // flex-shrink-0 to prevent shrinking
                             aria-label="Share Customer ID"
                           >
                             <Share2 className="w-4 h-4" />
                           </button>
                         </div>
+                        {/* End Updated Container */}
+
                         <span className="text-sm text-gray-500">
                           Joined:{" "}
                           {new Date(referral.created_at).toLocaleDateString()}
@@ -390,7 +383,7 @@ function DashboardPage() {
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 mt-4 md:mt-0">
               <a
-                href="https://wa.me/YOUR_WHATSAPP_NUMBER" // Replace with actual WhatsApp number
+                href="https://wa.me/YOUR_WHATSAPP_NUMBER"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-gray-300 hover:text-emerald-400 transition-colors duration-200"
@@ -399,7 +392,7 @@ function DashboardPage() {
                 <span>WhatsApp</span>
               </a>
               <a
-                href="mailto:contact@meerasestuff.com" // Replace with actual email
+                href="mailto:contact@meerasestuff.com"
                 className="flex items-center space-x-2 text-gray-300 hover:text-emerald-400 transition-colors duration-200"
               >
                 <Mail className="w-5 h-5" />
