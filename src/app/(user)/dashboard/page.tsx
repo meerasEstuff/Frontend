@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react"; // NEW: Import useRef
 import { motion } from "framer-motion";
 import {
   User,
@@ -80,11 +80,39 @@ function DashboardPage() {
   const [isReferralListDropdownOpen, setIsReferralListDropdownOpen] =
     useState(false);
 
+  // NEW: Ref to the user profile dropdown container
+  const userProfileDropdownRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!user) {
       router.push("/login");
     }
   }, [user, router]);
+
+  // NEW: useEffect for handling clicks outside the user profile dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        userProfileDropdownRef.current &&
+        !userProfileDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsUserProfileDropdownOpen(false);
+      }
+    }
+
+    // Add event listener when dropdown is open
+    if (isUserProfileDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      // Remove event listener when dropdown is closed to prevent memory leaks
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup function: remove event listener when component unmounts or dropdown state changes
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isUserProfileDropdownOpen]); // Re-run effect when dropdown state changes
 
   if (!user) return null;
 
@@ -122,7 +150,9 @@ function DashboardPage() {
             </span>
           </div>
           {/* Right: User Profile Icon with Dropdown */}
-          <div className="relative">
+          <div className="relative" ref={userProfileDropdownRef}>
+            {" "}
+            {/* NEW: Attach ref here */}
             <button
               onClick={() =>
                 setIsUserProfileDropdownOpen(!isUserProfileDropdownOpen)
@@ -265,15 +295,12 @@ function DashboardPage() {
                     {referrals.map((referral) => (
                       <li
                         key={referral.id}
-                        // Adjusted classes for mobile-first responsiveness
-                        // On small screens: flex-col, items-center. On sm breakpoint and up: flex-row, justify-between, items-center.
                         className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-3 rounded-lg shadow-sm text-center sm:text-left relative"
                       >
                         <span className="font-medium text-gray-800 mb-1 sm:mb-0">
                           {referral.username}
                         </span>
 
-                        {/* Updated: Container for Customer ID and Share Button */}
                         <div className="flex items-center gap-2 mb-1 sm:mb-0 flex-wrap justify-center sm:justify-start">
                           <p className="text-sm text-gray-500 break-all min-w-0">
                             Customer ID:{" "}
@@ -290,13 +317,12 @@ function DashboardPage() {
                                 setCopiedMessageId
                               );
                             }}
-                            className="p-1 rounded-full text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 flex-shrink-0" // flex-shrink-0 to prevent shrinking
+                            className="p-1 rounded-full text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 flex-shrink-0"
                             aria-label="Share Customer ID"
                           >
                             <Share2 className="w-4 h-4" />
                           </button>
                         </div>
-                        {/* End Updated Container */}
 
                         <span className="text-sm text-gray-500">
                           Joined:{" "}
