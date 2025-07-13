@@ -19,6 +19,7 @@ import { getTotalReferralsCount } from "@/services/userService";
 import { getTotalReferralReward } from "@/services/rewardService";
 import { getReferralsByUserId } from "@/services/userService";
 import { getGreeting } from "@/utils/greeting";
+import { handleShareCustomerId } from "@/utils/shareUtils";
 
 function DashboardPage() {
   const router = useRouter();
@@ -32,6 +33,8 @@ function DashboardPage() {
 
   const [page, setPage] = useState(1);
   const pageSize = 5;
+
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchReferralsList() {
@@ -274,29 +277,52 @@ function DashboardPage() {
                     {referrals.map((referral) => (
                       <li
                         key={referral.id}
-                        // Adjusted classes for mobile-first responsiveness
-                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-3 rounded-lg shadow-sm text-center sm:text-left"
+                        className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-3 rounded-lg shadow-sm text-center sm:text-left relative"
                       >
                         <span className="font-medium text-gray-800 mb-1 sm:mb-0">
                           {referral.username}
                         </span>
-                        <p className="text-sm text-gray-500 mb-1 sm:mb-0 break-all w-full sm:w-auto min-w-0">
-                          {" "}
-                          {/* Added w-full sm:w-auto min-w-0 */}
-                          Customer ID:{" "}
-                          <span className="font-mono">
-                            {referral.customer_id}
-                          </span>
-                        </p>
+                        <div className="flex items-center space-x-2 mb-1 sm:mb-0">
+                          <p className="text-sm text-gray-500 break-all min-w-0">
+                            Customer ID:{" "}
+                            <span className="font-mono">
+                              {referral.customer_id}
+                            </span>
+                          </p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // NEW: Call the imported function and pass the state setter
+                              handleShareCustomerId(
+                                referral.customer_id,
+                                referral.username,
+                                setCopiedMessageId
+                              );
+                            }}
+                            className="p-1 rounded-full text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                            aria-label="Share Customer ID"
+                          >
+                            <Share2 className="w-4 h-4" />
+                          </button>
+                        </div>
                         <span className="text-sm text-gray-500">
                           Joined:{" "}
                           {new Date(referral.created_at).toLocaleDateString()}
                         </span>
+                        {copiedMessageId === referral.customer_id && (
+                          <motion.span
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-white text-xs px-2 py-1 rounded-full shadow-md z-10 whitespace-nowrap"
+                          >
+                            Copied!
+                          </motion.span>
+                        )}
                       </li>
                     ))}
                   </ul>
                 </div>
-                {/* Pagination buttons ONLY when referrals exist */}
                 {totalReferrals > 5 && (
                   <div className="flex justify-center items-center space-x-4 mt-4">
                     <button
