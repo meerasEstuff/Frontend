@@ -129,7 +129,7 @@ function GenerateCustomerIdPage() {
               <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl">
                 <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r text-gray-900">
                 MeerasEstuff
               </span>
             </motion.div>

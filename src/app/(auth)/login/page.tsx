@@ -73,7 +73,7 @@ export default function LoginPage() {
               height={64}
               className="rounded-full shadow-md"
             />
-            <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+            <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r text-gray-900 ">
               MeerasEstuff
             </span>
           </div>

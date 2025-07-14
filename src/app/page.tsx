@@ -48,7 +48,7 @@ export default function Home() {
                 height={64}
                 className="rounded-full shadow-md"
               />
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+              <span className="text-2xl sm:text-3xl font-bold text-gray-900">
                 MeerasEstuff
               </span>
             </motion.div>
@@ -79,10 +79,8 @@ export default function Home() {
                 profitable opportunities
               </span>{" "}
               through our direct selling model. Earn{" "}
-              <span className="font-bold text-emerald-700">
-                up to 50% income
-              </span>{" "}
-              on every referral and more incentives!
+              <span className="font-bold text-emerald-700">40% income</span> on
+              every referral and more incentives!
             </motion.p>
 
             {/* CTA Buttons */}
@@ -119,7 +117,7 @@ export default function Home() {
                 <div className="flex items-center justify-center w-14 h-14 bg-emerald-100 rounded-xl mb-4 shadow-md">
                   <TrendingUp className="w-7 h-7 text-emerald-600" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900">Up to 50%</h3>
+                <h3 className="text-3xl font-bold text-gray-900">40%</h3>
                 <p className="text-gray-600 text-base">Referral Income</p>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20 flex flex-col items-center text-center">
