@@ -61,7 +61,7 @@ export default function AdminNavbar({ userEmail }: AdminNavbarProps) {
             // Changed gradient colors to match the provided image (blue/purple to pink/red)
             className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-fuchsia-600 bg-clip-text text-transparent"
           >
-            MeerasEstuff Admin
+            MeerasEstuff
           </Link>
         </div>
 
