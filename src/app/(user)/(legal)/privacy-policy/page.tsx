@@ -164,13 +164,6 @@ function PrivacyPolicyPage() {
                   <MessageSquare className="w-5 h-5" />
                   <span>WhatsApp</span>
                 </a>
-                <a
-                  href="mailto:contact@meerasestuff.com"
-                  className="flex items-center space-x-2 text-gray-300 hover:text-emerald-400 transition-colors duration-200"
-                >
-                  <Mail className="w-5 h-5" />
-                  <span>contact@meerasestuff.com</span>
-                </a>
               </div>
 
               {/* Legal Links Section (Using router.push instead of href) */}

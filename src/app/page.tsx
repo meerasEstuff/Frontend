@@ -8,6 +8,8 @@ import {
   TrendingUp,
   Target,
   Eye,
+  MessageSquare,
+  Mail,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -243,21 +245,85 @@ export default function Home() {
       </section>
 
       {/* Footer */}
+      {/* New Footer */}
       <footer className="bg-gray-900 text-white py-10 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between text-center md:text-left">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl shadow-md">
-                <ShoppingCart className="w-6 h-6 text-white" />
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left">
+            {/* Company Logo and Name */}
+            <div className="flex flex-col items-center md:items-start space-y-3 mb-8 md:mb-0">
+              <div className="flex items-center space-x-3">
+                <Image
+                  src="/meeras-logo.jpg"
+                  alt="MeerasEstuff_Logo"
+                  width={34}
+                  height={34}
+                  className="rounded-full shadow-md"
+                />
+                <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-50 to-white bg-clip-text text-transparent">
+                  MeerasEstuff
+                </span>
               </div>
-              <span className="text-xl sm:text-2xl font-bold">
-                MeerasEstuff
-              </span>
+              {/* Copyright - Moved here for better mobile grouping with logo */}
+              <p className="text-gray-400 text-sm sm:text-base mt-4 md:mt-0">
+                © {new Date().getFullYear()} MeerasEstuff. All rights reserved.
+              </p>
             </div>
-            <p className="text-gray-400 text-sm sm:text-base mt-4 md:mt-0">
-              © {new Date().getFullYear()} MeerasEstuff. Quality pickles & dry
-              nuts with rewarding opportunities.
-            </p>
+
+            {/* Contact & Legal Links Container */}
+            <div className="flex flex-col sm:flex-row sm:space-x-12 space-y-8 sm:space-y-0 w-full md:w-auto md:ml-auto md:pr-4">
+              {/* Existing Contact Links (WhatsApp, Email) */}
+              <div className="flex flex-col items-center sm:items-start space-y-4">
+                <h4 className="text-lg font-semibold text-gray-200 mb-2">
+                  Contact Us
+                </h4>
+                <a
+                  href="https://wa.me/9744 698 259"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-gray-300 hover:text-emerald-400 transition-colors duration-200"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+
+              {/* Legal Links Section (Using router.push instead of href) */}
+              <div className="flex flex-col items-center sm:items-start space-y-4 mt-8 sm:mt-0">
+                <h4 className="text-lg font-semibold text-gray-200 mb-2">
+                  Legal
+                </h4>
+                <button
+                  onClick={() => router.push("/privacy-policy")}
+                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
+                >
+                  Privacy Policy
+                </button>
+                <button
+                  onClick={() => router.push("/terms-and-conditions")}
+                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
+                >
+                  Terms & Conditions
+                </button>
+                <button
+                  onClick={() => router.push("/cancellation-and-refund")}
+                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
+                >
+                  Cancellation & Refund
+                </button>
+                <button
+                  onClick={() => router.push("/shipping-and-delivery")}
+                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
+                >
+                  Shipping & Delivery
+                </button>
+                <button
+                  onClick={() => router.push("/contact-us")}
+                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
+                >
+                  Contact Us
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
