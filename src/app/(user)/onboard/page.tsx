@@ -150,17 +150,7 @@ function AddReferralPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-sm text-gray-600"
             >
-              Enter details for the new customer you &quot; re referring.
-            </motion.p>
-            {/* NEW: Updated minimal and positive payment mention */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-sm text-gray-600 font-semibold mt-2" // Keeping it subtle with gray-600
-            >
-              Note: A Rs. 1000 activation fee is required from the new customer
-              to generate their Customer ID.
+              Enter details for the new customer you&quot;re referring.
             </motion.p>
           </div>
 
