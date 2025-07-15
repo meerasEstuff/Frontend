@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, MessageSquare, ArrowLeft } from "lucide-react"; // Import ArrowLeft for the back button
+import { MessageSquare, ArrowLeft } from "lucide-react"; // Import ArrowLeft for the back button
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

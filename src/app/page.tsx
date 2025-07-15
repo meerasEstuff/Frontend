@@ -9,7 +9,6 @@ import {
   Target,
   Eye,
   MessageSquare,
-  Mail,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";

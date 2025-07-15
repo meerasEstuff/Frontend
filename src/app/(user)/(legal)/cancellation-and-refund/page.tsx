@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, MessageSquare, Mail } from "lucide-react"; // Import the back arrow icon
+import { ArrowLeft, MessageSquare } from "lucide-react"; // Import the back arrow icon
 
 function CancellationAndRefundPage() {
   const router = useRouter();

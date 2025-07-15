@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Mail, MessageSquare } from "lucide-react"; // Import necessary icons
+import { ArrowLeft, MessageSquare } from "lucide-react"; // Import necessary icons
 
 function ShippingAndDeliveryPage() {
   const router = useRouter();

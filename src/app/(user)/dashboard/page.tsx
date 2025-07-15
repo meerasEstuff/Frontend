@@ -9,7 +9,6 @@ import {
   Link,
   ShoppingCart,
   ChevronDown,
-  Mail,
   MessageSquare,
   IndianRupee, // Icon for Total Reward Earned
 } from "lucide-react";
