@@ -9,6 +9,9 @@ import * as z from "zod";
 import Image from "next/image"; // Import Image component
 import { toast } from "sonner"; // Assuming sonner is available for toasts
 
+import { getErrorMessage } from "@/utils/error";
+import { signInAdmin } from "@/services/adminAuthServices";
+
 // Define the Zod schema for form validation
 const adminLoginSchema = z.object({
   email: z
@@ -42,21 +45,15 @@ function AdminLoginPage() {
 
   const onSubmit = async (data: AdminLoginFormData) => {
     setLoading(true);
-    // Simulate API call for admin login
-    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate network delay
-
-    // Hardcoded admin credentials for demonstration
-    const ADMIN_EMAIL = "admin@meerasestuff.com";
-    const ADMIN_PASSWORD = "adminpassword123";
-
-    if (data.email === ADMIN_EMAIL && data.password === ADMIN_PASSWORD) {
-      toast.success("Admin login successful! Redirecting...");
-      // In a real app, you'd store an auth token and redirect to an admin dashboard
-      router.push("/admin/dashboard"); // Simulate redirect to admin dashboard
-    } else {
-      toast.error("Invalid admin credentials. Please try again.");
+    try {
+      await signInAdmin(data.email, data.password);
+      toast.success("Login successful!");
+      router.push("/adminDashboard");
+    } catch (error: unknown) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
