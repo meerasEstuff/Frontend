@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { LogIn, Phone, User } from "lucide-react"; // Importing icons for inputs
+import { LogIn, Phone, User, Loader2 } from "lucide-react"; // Importing icons for inputs
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
 import { loginWithCustomerIdAndPhone } from "@/services/authService";
 import { useAuthStore } from "@/app/store/userStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getErrorMessage } from "@/utils/error";
 
 // Define the form data type
@@ -20,6 +20,7 @@ interface LoginFormInputs {
 export default function LoginPage() {
   const router = useRouter();
   const clearUser = useAuthStore((state) => state.clearUser);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     clearUser();
@@ -32,6 +33,7 @@ export default function LoginPage() {
 
   // Handle form submission
   const onSubmit = async (data: LoginFormInputs) => {
+    setLoading(true);
     try {
       const user = await loginWithCustomerIdAndPhone(
         data.customerId,
@@ -45,6 +47,7 @@ export default function LoginPage() {
       router.push("/dashboard");
     } catch (err: unknown) {
       toast.error(getErrorMessage(err));
+      setLoading(false);
     }
   };
 
@@ -163,8 +166,13 @@ export default function LoginPage() {
             whileTap={{ scale: 0.98 }}
             type="submit"
             className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+            disabled={loading} // Disable the button when loading is true
           >
-            <LogIn className="w-5 h-5" />
+            {loading ? (
+              <Loader2 className="w-5 h-5 animate-spin" /> // Show spinner when loading
+            ) : (
+              <LogIn className="w-5 h-5" /> // Show Login icon when not loading
+            )}
             <span>Login</span>
           </motion.button>
         </form>
