@@ -201,7 +201,6 @@ function AdminLoginPage() {
               disabled={loading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => router.push("/adminDashboard")}
               className={`w-full bg-gradient-to-r from-indigo-600 to-pink-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl flex items-center justify-center space-x-2 group transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                 hover:shadow-2xl hover:brightness-105
                 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100`}
