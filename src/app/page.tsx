@@ -166,7 +166,7 @@ export default function ProfessionalLandingPage() {
                   <div className="inline-flex items-center space-x-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-200">
                     <Shield className="w-4 h-4 text-emerald-600" />
                     <span className="text-sm font-medium text-emerald-700">
-                      Trusted by 10,000+ Customers
+                      Trusted by 1000+ Customers
                     </span>
                   </div>
                 </motion.div>
