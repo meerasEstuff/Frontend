@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, ArrowLeft, Copy, Check, Share2 } from "lucide-react";
+import { ShoppingCart, House, Copy, Check, Share2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { generateCustomerId } from "@/utils/idGenerator";
 import { useOnboardingStore } from "@/app/store/onboardingStore";
@@ -215,7 +215,7 @@ function GenerateCustomerIdPage() {
               onClick={() => router.push("/dashboard")}
               className="flex-1 bg-gray-700 text-white py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <House className="w-5 h-5" />
             </motion.button>
           </div>
         </motion.div>
