@@ -4,9 +4,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
-import { ArrowLeft, MessageSquare } from "lucide-react"; // Import the back arrow icon
+import { ArrowLeft, Phone } from "lucide-react"; // Import the back arrow icon
 
 function CancellationAndRefundPage() {
   const router = useRouter();
@@ -26,7 +26,7 @@ function CancellationAndRefundPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
-          onClick={() => router.back()} // Go back to the previous page
+          onClick={() => router.push("/dashboard")} // Go back to the previous page
           className="flex items-center text-gray-600 hover:text-emerald-600 transition-colors duration-200 mb-4 md:mb-8"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
@@ -65,12 +65,12 @@ function CancellationAndRefundPage() {
       </main>
 
       {/* Footer - Replicated for consistent look */}
-      <footer className="bg-gray-900 text-white py-10 sm:py-12">
+      <footer id="contact" className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left">
-            {/* Company Logo and Name */}
-            <div className="flex flex-col items-center md:items-start space-y-3 mb-8 md:mb-0">
-              <div className="flex items-center space-x-3">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Company Info */}
+            <div className="md:col-span-2">
+              <div className="flex items-center space-x-3 mb-4">
                 <Image
                   src="/meeras-logo.jpg"
                   alt="MeerasEstuff_Logo"
@@ -78,74 +78,86 @@ function CancellationAndRefundPage() {
                   height={34}
                   className="rounded-full shadow-md"
                 />
-                <Link
-                  href="/"
-                  className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-50 to-white bg-clip-text text-transparent"
-                >
-                  MeerasEstuff
-                </Link>
+                <span className="text-2xl font-bold">MeerasEstuff</span>
               </div>
-              {/* Copyright */}
-              <p className="text-gray-400 text-sm sm:text-base mt-4 md:mt-0">
-                © {new Date().getFullYear()} MeerasEstuff. All rights reserved.
+              <p className="text-lg text-emerald-100 italic mb-2">
+                Your dream, our design
               </p>
-            </div>
-
-            {/* Contact & Legal Links Container */}
-            <div className="flex flex-col sm:flex-row sm:space-x-12 space-y-8 sm:space-y-0 w-full md:w-auto md:ml-auto md:pr-4">
-              {/* Existing Contact Links (WhatsApp, Email) */}
-              <div className="flex flex-col items-center sm:items-start space-y-4">
-                <h4 className="text-lg font-semibold text-gray-200 mb-2">
-                  Contact Us
-                </h4>
+              <p className="text-gray-400 mb-6 max-w-md">
+                Empowering entrepreneurs with quality products and sustainable
+                income opportunities through our innovative direct selling
+                model.
+              </p>
+              <div className="flex space-x-4">
                 <a
-                  href="https://wa.me/9744 698 259"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-gray-300 hover:text-emerald-400 transition-colors duration-200"
+                  href="tel:+919744698259"
+                  className="flex items-center space-x-2 text-gray-400 hover:text-emerald-400 transition-colors"
                 >
-                  <MessageSquare className="w-5 h-5" />
-                  <span>WhatsApp</span>
+                  <Phone className="w-4 h-4" />
+                  <span>+91 9744 698 259</span>
                 </a>
               </div>
-
-              {/* Legal Links Section */}
-              <div className="flex flex-col items-center sm:items-start space-y-4 mt-8 sm:mt-0">
-                <h4 className="text-lg font-semibold text-gray-200 mb-2">
-                  Legal
-                </h4>
-                <button
-                  onClick={() => router.push("/privacy-policy")}
-                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
-                >
-                  Privacy Policy
-                </button>
-                <button
-                  onClick={() => router.push("/terms-and-conditions")}
-                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
-                >
-                  Terms & Conditions
-                </button>
-                <button
-                  onClick={() => router.push("/cancellation-and-refund")}
-                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
-                >
-                  Cancellation & Refund
-                </button>
-                <button
-                  onClick={() => router.push("/shipping-and-delivery")}
-                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
-                >
-                  Shipping & Delivery
-                </button>
-                <button
-                  onClick={() => router.push("/contact-us")}
-                  className="text-gray-300 hover:text-emerald-400 transition-colors duration-200 text-sm sm:text-base focus:outline-none"
-                >
-                  Contact Us
-                </button>
-              </div>
             </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => router.push("/contact-us")}
+                    className="text-gray-400 hover:text-emerald-400 transition-colors"
+                  >
+                    Contact
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => router.push("/privacy-policy")}
+                    className="text-gray-400 hover:text-emerald-400 transition-colors"
+                  >
+                    Privacy Policy
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => router.push("/terms-and-conditions")}
+                    className="text-gray-400 hover:text-emerald-400 transition-colors"
+                  >
+                    Terms & Conditions
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => router.push("/cancellation-and-refund")}
+                    className="text-gray-400 hover:text-emerald-400 transition-colors"
+                  >
+                    Cancellation & Refund
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => router.push("/shipping-and-delivery")}
+                    className="text-gray-400 hover:text-emerald-400 transition-colors"
+                  >
+                    Shipping & Delivery
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center">
+            <p className="text-gray-400">
+              © {new Date().getFullYear()} MeerasEstuff. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
