@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react"; // NEW: Import useRef
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -10,7 +10,9 @@ import {
   ShoppingCart,
   ChevronDown,
   Phone,
-  IndianRupee, // Icon for Total Reward Earned
+  IndianRupee,
+  Package,
+  Info, // Icon for description dropdown
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/store/userStore";
@@ -18,25 +20,65 @@ import { getTotalReferralsCount } from "@/services/userService";
 import { getTotalReferralReward } from "@/services/rewardService";
 import { getReferralsByUserId } from "@/services/userService";
 import { getGreeting } from "@/utils/greeting";
-import { handleShareCustomerId } from "@/utils/shareUtils"; // Import the utility function
+import { handleShareCustomerId } from "@/utils/shareUtils";
 import { useProtectPage } from "@/lib/useProtectPage";
 import Image from "next/image";
 
+// UPDATED: Products data for 1 main product and 3 future products
+const products = [
+  {
+    id: 1,
+    name: "Prawn Roast Combo Pack",
+    image: "/Mainimg.jpg",
+    price: 998,
+    isMain: true,
+    description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
+  },
+  {
+    id: 2,
+    name: "Dates Pickle",
+    image: "/img1.jpeg", // Using existing placeholder images
+    price: 499,
+    unit: "per 1 kg",
+    isMain: false,
+    description:
+      "a flavorful Pickle made with dates and spices, and can be sweat,sour ,tangy or spicy",
+  },
+  {
+    id: 3,
+    name: "Garlic Pickle",
+    image: "/img2.jpg",
+    price: 499,
+    unit: "per 1 kg",
+    isMain: false,
+    description:
+      "Garlic Pickle,a flavorful and tangy condiment that add a burst of zest to any meal",
+  },
+  {
+    id: 4,
+    name: "Masala Mix Pickle",
+    image: "/img3.jpeg",
+    price: 499,
+    unit: "per 1 kg",
+    isMain: false,
+    description:
+      "Prawns Masala Mix is made using dried sea Prawns which are Handpicked and processed under hygienic conditions",
+  },
+];
+
 function DashboardPage() {
   const router = useRouter();
-
   const user = useProtectPage();
-
   const [totalReferrals, setTotalReferrals] = useState(0);
-
   const [referrals, setReferrals] = useState<
     { id: string; customer_id: string; username: string; created_at: string }[]
   >([]);
-
   const [page, setPage] = useState(1);
   const pageSize = 5;
-
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
+  // Changed to a single boolean, as only the main product will have a togglable description
+  const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
+    useState(false);
 
   useEffect(() => {
     async function fetchReferralsList() {
@@ -81,11 +123,8 @@ function DashboardPage() {
     useState(false);
   const [isReferralListDropdownOpen, setIsReferralListDropdownOpen] =
     useState(false);
-
-  // NEW: Ref to the user profile dropdown container
   const userProfileDropdownRef = useRef<HTMLDivElement>(null);
 
-  // NEW: useEffect for handling clicks outside the user profile dropdown
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -96,19 +135,16 @@ function DashboardPage() {
       }
     }
 
-    // Add event listener when dropdown is open
     if (isUserProfileDropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
-      // Remove event listener when dropdown is closed to prevent memory leaks
       document.removeEventListener("mousedown", handleClickOutside);
     }
 
-    // Cleanup function: remove event listener when component unmounts or dropdown state changes
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isUserProfileDropdownOpen]); // Re-run effect when dropdown state changes
+  }, [isUserProfileDropdownOpen]);
 
   if (!user) return null;
 
@@ -126,6 +162,11 @@ function DashboardPage() {
     setIsReferralListDropdownOpen(!isReferralListDropdownOpen);
   };
 
+  // Only one function to toggle the main product's description
+  const toggleMainProductDescription = () => {
+    setIsMainProductDescriptionOpen((prev) => !prev);
+  };
+
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -133,6 +174,9 @@ function DashboardPage() {
       </div>
     );
   }
+
+  const mainProduct = products.find((p) => p.isMain);
+  const futureProducts = products.filter((p) => !p.isMain);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans">
@@ -144,10 +188,9 @@ function DashboardPage() {
         className="bg-white/90 backdrop-blur-md shadow-md fixed top-0 left-0 right-0 z-50 p-4"
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Left: Company Icon & Name */}
           <div className="flex items-center justify-center space-x-3 mb-4">
             <Image
-              src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
+              src="/meeras-logo.jpg"
               alt="MeerasEstuff_Logo"
               width={34}
               height={34}
@@ -158,10 +201,7 @@ function DashboardPage() {
             </span>
           </div>
 
-          {/* Right: User Profile Icon with Dropdown */}
           <div className="relative" ref={userProfileDropdownRef}>
-            {" "}
-            {/* NEW: Attach ref here */}
             <button
               onClick={() =>
                 setIsUserProfileDropdownOpen(!isUserProfileDropdownOpen)
@@ -384,7 +424,7 @@ function DashboardPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
           className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 mt-6 flex flex-col items-center text-center"
         >
           <Link className="w-8 h-8 text-emerald-600 mb-3" />
@@ -402,13 +442,162 @@ function DashboardPage() {
             <Share2 className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
         </motion.div>
+
+        {/* --- */}
+        {/* Our Products Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 mt-6"
+        >
+          <div className="text-center mb-8">
+            <Package className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              Our Products
+            </h2>
+            <p className="text-gray-600">
+              Discover our main offering and upcoming delights!
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Column: Main Product */}
+            {mainProduct && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+                className="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col relative" // Removed border classes, added relative for overlay
+              >
+                <div className="relative h-96 w-full flex-grow">
+                  {" "}
+                  {/* Increased height, flex-grow to fill container */}
+                  <Image
+                    src={mainProduct.image}
+                    alt={mainProduct.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover" // Ensure image covers the area
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.parentElement
+                        ?.querySelector(".fallback-placeholder")
+                        ?.classList.remove("hidden");
+                    }}
+                  />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
+                    <Package className="w-16 h-16 text-emerald-500" />
+                    <p className="text-gray-600 mt-2 text-sm">
+                      Image not available
+                    </p>
+                  </div>
+                  {/* Overlay for details */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
+                    <h3 className="text-3xl font-bold mb-1">
+                      {mainProduct.name}
+                      <span className="ml-2 text-base bg-emerald-500 text-white px-3 py-1 rounded-full">
+                        Featured
+                      </span>
+                    </h3>
+                    <p className="text-4xl font-bold mb-4 flex items-center">
+                      <IndianRupee className="w-8 h-8 mr-1" />
+                      {mainProduct.price}
+                    </p>
+                    <button
+                      onClick={toggleMainProductDescription}
+                      className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                    >
+                      <Info className="w-5 h-5" />
+                      <span>
+                        {isMainProductDescriptionOpen
+                          ? "Hide Details"
+                          : "Show More"}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform ${
+                          isMainProductDescriptionOpen
+                            ? "rotate-180"
+                            : "rotate-0"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Description dropdown (conditionally rendered outside the image div) */}
+                {isMainProductDescriptionOpen && (
+                  <motion.p
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-gray-700 text-sm p-6 bg-gray-50 rounded-b-md" // Added padding and background for clarity
+                  >
+                    {mainProduct.description}
+                  </motion.p>
+                )}
+              </motion.div>
+            )}
+
+            {/* Right Column: Future Products */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
+              {futureProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
+                >
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.parentElement
+                          ?.querySelector(".fallback-placeholder")
+                          ?.classList.remove("hidden");
+                      }}
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
+                      <Package className="w-16 h-16 text-emerald-500" />
+                      <p className="text-gray-600 mt-2 text-sm">
+                        Image not available
+                      </p>
+                    </div>
+                  </div>
+                  <div className="p-4 flex-grow flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                        <IndianRupee className="w-5 h-5 mr-1" />
+                        {product.price} {product.unit ? ` ${product.unit}` : ""}
+                      </p>
+                    </div>
+                    <p className="text-gray-600 text-sm mt-2">
+                      {product.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* --- */}
       </main>
 
-      {/* New Footer */}
+      {/* Footer */}
       <footer id="contact" className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Company Info */}
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
                 <Image
@@ -439,7 +628,6 @@ function DashboardPage() {
               </div>
             </div>
 
-            {/* Quick Links */}
             <div>
               <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
@@ -454,7 +642,6 @@ function DashboardPage() {
               </ul>
             </div>
 
-            {/* Legal */}
             <div>
               <h4 className="text-lg font-semibold mb-4">Legal</h4>
               <ul className="space-y-2">

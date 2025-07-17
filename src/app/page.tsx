@@ -18,12 +18,18 @@ import {
   Phone,
   Menu,
   X,
+  Package, // Import Package icon
+  Info, // Import Info icon
+  ChevronDown, // Import ChevronDown icon
+  IndianRupee, // Import IndianRupee icon
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function ProfessionalLandingPage() {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
+    useState(false); // State for main product description
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -32,6 +38,46 @@ export default function ProfessionalLandingPage() {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
+
+  const toggleMainProductDescription = () => {
+    setIsMainProductDescriptionOpen(!isMainProductDescriptionOpen);
+  };
+
+  // Your provided product data
+  const products = [
+    {
+      id: 1,
+      name: "Prawn Roast Combo Pack",
+      image: "/Mainimg.jpg",
+      price: 998,
+      isMain: true,
+      description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
+    },
+    {
+      id: 2,
+      name: "Dates Pickle",
+      image: "/img1.jpeg", // Using existing placeholder images
+      price: 499,
+      unit: "per 1 kg",
+      isMain: false,
+      description:
+        "a flavorful Pickle made with dates and spices, and can be sweat,sour ,tangy or spicy",
+    },
+    {
+      id: 3,
+      name: "Garlic Pickle",
+      image: "/img2.jpg",
+      price: 499,
+      unit: "per 1 kg",
+      isMain: false,
+      description:
+        "Garlic Pickle,a flavorful and tangy condiment that add a burst of zest to any meal",
+    },
+  ];
+
+  // Derive mainProduct and futureProducts from the 'products' array
+  const mainProduct = products.find((product) => product.isMain);
+  const futureProducts = products.filter((product) => !product.isMain);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans antialiased">
@@ -65,6 +111,12 @@ export default function ProfessionalLandingPage() {
                 className="text-gray-700 hover:text-emerald-600 transition-colors font-medium"
               >
                 Features
+              </a>
+              <a
+                href="#products" // Added products section link
+                className="text-gray-700 hover:text-emerald-600 transition-colors font-medium"
+              >
+                Products
               </a>
               <a
                 href="#about"
@@ -115,6 +167,13 @@ export default function ProfessionalLandingPage() {
                     Features
                   </a>
                   <a
+                    href="#products" // Added products section link
+                    onClick={closeMobileMenu}
+                    className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
+                  >
+                    Products
+                  </a>
+                  <a
                     href="#about"
                     onClick={closeMobileMenu}
                     className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
@@ -134,7 +193,6 @@ export default function ProfessionalLandingPage() {
           </AnimatePresence>
         </div>
       </nav>
-
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
         {/* Enhanced Background */}
@@ -243,7 +301,157 @@ export default function ProfessionalLandingPage() {
           </div>
         </div>
       </section>
+      ---
+      {/* Product Section */}
+      <section id="products" className="py-20 bg-emerald-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 mt-6"
+          >
+            <div className="text-center mb-8">
+              <Package className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+                Our Products
+              </h2>
+              <p className="text-gray-600">
+                Discover our main offering and upcoming delights!
+              </p>
+            </div>
 
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Column: Main Product */}
+              {mainProduct && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col relative"
+                >
+                  <div className="relative h-96 w-full flex-grow">
+                    <Image
+                      src={mainProduct.image}
+                      alt={mainProduct.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.parentElement
+                          ?.querySelector(".fallback-placeholder")
+                          ?.classList.remove("hidden");
+                      }}
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
+                      <Package className="w-16 h-16 text-emerald-500" />
+                      <p className="text-gray-600 mt-2 text-sm">
+                        Image not available
+                      </p>
+                    </div>
+                    {/* Overlay for details */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
+                      <h3 className="text-3xl font-bold mb-1">
+                        {mainProduct.name}
+                        <span className="ml-2 text-base bg-emerald-500 text-white px-3 py-1 rounded-full">
+                          Featured
+                        </span>
+                      </h3>
+                      <p className="text-4xl font-bold mb-4 flex items-center">
+                        <IndianRupee className="w-8 h-8 mr-1" />
+                        {mainProduct.price}
+                      </p>
+                      <button
+                        onClick={toggleMainProductDescription}
+                        className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                      >
+                        <Info className="w-5 h-5" />
+                        <span>
+                          {isMainProductDescriptionOpen
+                            ? "Hide Details"
+                            : "Show More"}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${
+                            isMainProductDescriptionOpen
+                              ? "rotate-180"
+                              : "rotate-0"
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Description dropdown (conditionally rendered outside the image div) */}
+                  {isMainProductDescriptionOpen && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-gray-700 text-sm p-6 bg-gray-50 rounded-b-md"
+                    >
+                      {mainProduct.description}
+                    </motion.p>
+                  )}
+                </motion.div>
+              )}
+
+              {/* Right Column: Future Products */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
+                {futureProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
+                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
+                  >
+                    <div className="relative h-48 w-full">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                          e.currentTarget.parentElement
+                            ?.querySelector(".fallback-placeholder")
+                            ?.classList.remove("hidden");
+                        }}
+                      />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
+                        <Package className="w-16 h-16 text-emerald-500" />
+                        <p className="text-gray-600 mt-2 text-sm">
+                          Image not available
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-4 flex-grow flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                          {product.name}
+                        </h3>
+                        <p className="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                          <IndianRupee className="w-5 h-5 mr-1" />
+                          {product.price}{" "}
+                          {product.unit ? ` ${product.unit}` : ""}
+                        </p>
+                      </div>
+                      <p className="text-gray-600 text-sm mt-2">
+                        {product.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      ---
       <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -319,7 +527,6 @@ export default function ProfessionalLandingPage() {
           </div>
         </div>
       </section>
-
       {/* Stats Section */}
       <section className="py-20 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -356,7 +563,6 @@ export default function ProfessionalLandingPage() {
           </div>
         </div>
       </section>
-
       {/* Mission & Vision Section */}
       <section id="about" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -407,7 +613,7 @@ export default function ProfessionalLandingPage() {
                 <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
               </div>
               <p className="text-lg text-gray-600 leading-relaxed">
-                To become India&quat;s most trusted direct selling company,
+                To become India&apos;s most trusted direct selling company,
                 empowering millions to achieve financial freedom through our
                 innovative business model.
               </p>
@@ -415,7 +621,6 @@ export default function ProfessionalLandingPage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -442,7 +647,6 @@ export default function ProfessionalLandingPage() {
           </motion.div>
         </div>
       </section>
-
       {/* Footer */}
       <footer id="contact" className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -488,6 +692,14 @@ export default function ProfessionalLandingPage() {
                     className="text-gray-400 hover:text-emerald-400 transition-colors"
                   >
                     Features
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#products" // Added products section link
+                    className="text-gray-400 hover:text-emerald-400 transition-colors"
+                  >
+                    Products
                   </a>
                 </li>
                 <li>
