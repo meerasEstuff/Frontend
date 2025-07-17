@@ -37,7 +37,7 @@ const products = [
   {
     id: 2,
     name: "Dates Pickle",
-    image: "/img1.jpeg", // Using existing placeholder images
+    image: "/img1.jpg", // Using existing placeholder images
     price: 499,
     unit: "per 1 kg",
     isMain: false,
@@ -57,7 +57,7 @@ const products = [
   {
     id: 4,
     name: "Masala Mix Pickle",
-    image: "/img3.jpeg",
+    image: "/img3.jpg",
     price: 499,
     unit: "per 1 kg",
     isMain: false,
