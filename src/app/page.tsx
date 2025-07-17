@@ -56,7 +56,7 @@ export default function ProfessionalLandingPage() {
     {
       id: 2,
       name: "Dates Pickle",
-      image: "/img1.jpeg", // Using existing placeholder images
+      image: "/img1.jpg", // Using existing placeholder images
       price: 499,
       unit: "per 1 kg",
       isMain: false,
