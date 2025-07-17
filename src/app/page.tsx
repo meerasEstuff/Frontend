@@ -301,7 +301,6 @@ export default function ProfessionalLandingPage() {
           </div>
         </div>
       </section>
-      ---
       {/* Product Section */}
       <section id="products" className="py-20 bg-emerald-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -468,7 +467,7 @@ export default function ProfessionalLandingPage() {
             {[
               {
                 icon: <TrendingUp className="w-8 h-8 text-emerald-600" />,
-                title: "40% Commission Rate",
+                title: "60% Commission Rate",
                 description:
                   "Earn substantial income with our industry-leading commission structure on every referral",
               },
