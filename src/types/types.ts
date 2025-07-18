@@ -5,7 +5,6 @@ export interface NewUserPayload {
   phone: string;
   referred_by_id: string | null;
 }
-
 export interface UserRow {
   id: string;
   email: string;
