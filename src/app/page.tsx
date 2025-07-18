@@ -66,7 +66,7 @@ export default function ProfessionalLandingPage() {
     {
       id: 3,
       name: "Garlic Pickle",
-      image: "/img2.jpg",
+      image: "/img3.jpg",
       price: 499,
       unit: "per 1 kg",
       isMain: false,

@@ -47,7 +47,7 @@ const products = [
   {
     id: 3,
     name: "Garlic Pickle",
-    image: "/img2.jpg",
+    image: "/img3.jpg",
     price: 499,
     unit: "per 1 kg",
     isMain: false,
@@ -57,7 +57,7 @@ const products = [
   {
     id: 4,
     name: "Masala Mix Pickle",
-    image: "/img3.jpg",
+    image: "/img2.jpg",
     price: 499,
     unit: "per 1 kg",
     isMain: false,
