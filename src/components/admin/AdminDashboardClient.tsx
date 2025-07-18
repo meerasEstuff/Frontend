@@ -15,6 +15,7 @@ interface UserRow {
   customer_id: string;
   Joined: string; // date string like "2024-05-01"
   Referrals: number;
+  username: string;
 }
 
 interface AdminDashboardClientProps {
