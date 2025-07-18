@@ -9,7 +9,7 @@ export async function POST() {
     });
 
     const options = {
-      amount: 600 * 100, // ₹600 in paise
+      amount: 100,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
