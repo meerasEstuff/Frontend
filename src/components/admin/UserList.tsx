@@ -11,6 +11,7 @@ interface UserRow {
   customer_id: string;
   Joined: string;
   Referrals: number;
+  username: string;
 }
 
 interface UserListProps {
@@ -24,7 +25,7 @@ export default function UserList({ users, onSearch, onFilter }: UserListProps) {
   const [selectedFilter, setSelectedFilter] = useState("All Time");
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+  const usersPerPage = 20;
 
   const filterDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -170,7 +171,7 @@ export default function UserList({ users, onSearch, onFilter }: UserListProps) {
               paginatedUsers.map((user) => (
                 <tr key={user.id}>
                   <td className="px-4 py-4 text-sm font-medium text-gray-900">
-                    {user.email.split("@")[0]}
+                    {user.username}
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-700">
                     {user.customer_id}
