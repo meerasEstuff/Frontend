@@ -9,16 +9,6 @@ import TotalRevenueCard from "./TotalRevenueCard";
 import UserList from "./UserList";
 import { UserRow } from "@/types/types";
 
-// interface UserRow {
-//   id: string;
-//   email: string;
-//   phone: string;
-//   customer_id: string;
-//   Joined: string; // date string like "2024-05-01"
-//   Referrals: number;
-//   username: string;
-// }
-
 interface AdminDashboardClientProps {
   user: User;
   totalUsers: number;
@@ -39,6 +29,7 @@ export default function AdminDashboardClient({
     const q = query.toLowerCase();
     const results = allUsers.filter(
       (u) =>
+        u.username.toLowerCase().includes(q) ||
         u.email.toLowerCase().includes(q) ||
         u.customer_id.toLowerCase().includes(q) ||
         u.phone.includes(q)
