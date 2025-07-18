@@ -7,16 +7,7 @@ import AdminNavbar from "./AdminNavbar";
 import TotalUsersCard from "./TotalUsersCard";
 import TotalRevenueCard from "./TotalRevenueCard";
 import UserList from "./UserList";
-
-interface UserRow {
-  id: string;
-  email: string;
-  phone: string;
-  customer_id: string;
-  Joined: string;
-  Referrals: number;
-  username: string;
-}
+import { UserRow } from "@/types/types";
 
 interface AdminDashboardClientProps {
   user: User;
