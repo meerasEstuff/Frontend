@@ -251,7 +251,7 @@ export default function ProfessionalLandingPage() {
                 >
                   Join thousands of entrepreneurs earning{" "}
                   <span className="font-semibold text-emerald-600">
-                    40% commission
+                    60% commission
                   </span>{" "}
                   while delivering premium pickles & dry nuts directly to
                   customers
