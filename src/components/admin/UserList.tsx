@@ -3,16 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, ChevronDown, SlidersHorizontal } from "lucide-react";
-
-interface UserRow {
-  id: string;
-  email: string;
-  phone: string;
-  customer_id: string;
-  Joined: string;
-  Referrals: number;
-  username: string;
-}
+import { UserRow } from "@/types/types";
 
 interface UserListProps {
   users: UserRow[];
