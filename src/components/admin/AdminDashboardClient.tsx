@@ -7,7 +7,7 @@ import AdminNavbar from "./AdminNavbar";
 import TotalUsersCard from "./TotalUsersCard";
 import TotalRevenueCard from "./TotalRevenueCard";
 import UserList from "./UserList";
-import { UserRow } from "@/types/types";
+import type { UserRow } from "@/types/types";
 
 interface AdminDashboardClientProps {
   user: User;

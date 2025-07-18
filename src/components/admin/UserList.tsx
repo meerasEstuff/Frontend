@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, ChevronDown, SlidersHorizontal } from "lucide-react";
-import { UserRow } from "@/types/types";
+import type { UserRow } from "@/types/types";
 
 interface UserListProps {
   users: UserRow[];
