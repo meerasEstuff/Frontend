@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Lock, Loader2 } from "lucide-react";
+import { Mail, Lock, Loader2, Home } from "lucide-react"; // Import Home icon
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import Image from "next/image"; // Import Image component
-import { toast } from "sonner"; // Assuming sonner is available for toasts
+import Image from "next/image";
+import { toast } from "sonner";
 
 import { getErrorMessage } from "@/utils/error";
 import { signInAdmin } from "@/services/adminAuthServices";
@@ -88,7 +88,7 @@ function AdminLoginPage() {
             >
               {/* Logo - same as main app, but inside new color scheme */}
               <Image
-                src="/meeras-logo.jpg" // Corrected to .png based on your file structure in the screenshot.
+                src="/meeras-logo.jpg"
                 alt="MeerasEstuff_Logo"
                 width={64}
                 height={64}
@@ -209,6 +209,25 @@ function AdminLoginPage() {
               {loading && <Loader2 className="w-4 h-4 animate-spin ml-2" />}
             </motion.button>
           </motion.form>
+
+          {/* Link to User Home Page */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mt-6 text-center"
+          >
+            <p className="text-sm text-gray-600">
+              Are you a user looking for Home page?
+              <button
+                onClick={() => router.push("/")}
+                className="ml-2 inline-flex items-center text-indigo-600 hover:text-indigo-800 font-semibold transition-colors duration-200"
+              >
+                <Home className="h-4 w-4 mr-1" />
+                Go to Home
+              </button>
+            </p>
+          </motion.div>
         </motion.div>
       </motion.div>
     </div>
