@@ -1,3 +1,7 @@
 export function generateCustomerId(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  const timePart = Date.now().toString().slice(-4); // last 4 digits of ms timestamp
+  const randPart = Math.floor(Math.random() * 100)
+    .toString()
+    .padStart(2, "0"); // 00–99
+  return `${timePart}${randPart}`; // 6-digit string
 }
