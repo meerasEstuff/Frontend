@@ -302,43 +302,48 @@ export default function ProfessionalLandingPage() {
         </div>
       </section>
       {/* Product Section */}
+      {/* Product Section */}
       <section id="products" className="py-20 bg-emerald-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 mt-6"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8"
           >
-            <div className="text-center mb-8">
-              <Package className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                Our Products
+            <div className="text-center mb-12">
+              <Package className="w-10 h-10 text-emerald-600 mx-auto mb-4" />
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
+                Our Culinary Creations
               </h2>
-              <p className="text-gray-600">
-                Discover our main offering and upcoming delights!
+              <p className="text-lg text-gray-600">
+                Discover our featured delight and upcoming flavors!
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Left Column: Main Product */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+              {/* Left Column: Main Product (Spanning 3 columns) */}
               {mainProduct && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.9 }}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col relative"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="lg:col-span-3 bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col"
                 >
-                  <div className="relative h-96 w-full flex-grow">
+                  {/* Aspect ratio container for the image */}
+                  <div className="relative w-full aspect-[3/4]">
                     <Image
                       src={mainProduct.image}
                       alt={mainProduct.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                       onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        e.currentTarget.parentElement
+                        const target = e.currentTarget;
+                        target.style.display = "none";
+                        target.parentElement
                           ?.querySelector(".fallback-placeholder")
                           ?.classList.remove("hidden");
                       }}
@@ -353,7 +358,7 @@ export default function ProfessionalLandingPage() {
                     <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
                       <h3 className="text-3xl font-bold mb-1">
                         {mainProduct.name}
-                        <span className="ml-2 text-base bg-emerald-500 text-white px-3 py-1 rounded-full">
+                        <span className="ml-2 text-sm bg-emerald-500 text-white px-3 py-1 rounded-full align-middle">
                           Featured
                         </span>
                       </h3>
@@ -363,7 +368,7 @@ export default function ProfessionalLandingPage() {
                       </p>
                       <button
                         onClick={toggleMainProductDescription}
-                        className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                        className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
                       >
                         <Info className="w-5 h-5" />
                         <span>
@@ -372,7 +377,7 @@ export default function ProfessionalLandingPage() {
                             : "Show More"}
                         </span>
                         <ChevronDown
-                          className={`w-4 h-4 transition-transform ${
+                          className={`w-5 h-5 transition-transform ${
                             isMainProductDescriptionOpen
                               ? "rotate-180"
                               : "rotate-0"
@@ -382,65 +387,74 @@ export default function ProfessionalLandingPage() {
                     </div>
                   </div>
 
-                  {/* Description dropdown (conditionally rendered outside the image div) */}
-                  {isMainProductDescriptionOpen && (
-                    <motion.p
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-gray-700 text-sm p-6 bg-gray-50 rounded-b-md"
-                    >
-                      {mainProduct.description}
-                    </motion.p>
-                  )}
+                  {/* Description dropdown */}
+                  <AnimatePresence>
+                    {isMainProductDescriptionOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-gray-700 p-6 bg-gray-50">
+                          {mainProduct.description}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               )}
 
-              {/* Right Column: Future Products */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
+              {/* Right Column: Future Products (Spanning 2 columns) */}
+              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
                 {futureProducts.map((product, index) => (
                   <motion.div
                     key={product.id}
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                     className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
                   >
-                    <div className="relative h-48 w-full">
+                    {/* Aspect ratio container for the image */}
+                    <div className="relative w-full aspect-[4/5]">
                       <Image
                         src={product.image}
                         alt={product.name}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                         className="object-cover"
                         onError={(e) => {
-                          e.currentTarget.style.display = "none";
-                          e.currentTarget.parentElement
+                          const target = e.currentTarget;
+                          target.style.display = "none";
+                          target.parentElement
                             ?.querySelector(".fallback-placeholder")
                             ?.classList.remove("hidden");
                         }}
                       />
                       <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
-                        <Package className="w-16 h-16 text-emerald-500" />
-                        <p className="text-gray-600 mt-2 text-sm">
+                        <Package className="w-12 h-12 text-emerald-500" />
+                        <p className="text-gray-600 mt-2 text-xs">
                           Image not available
                         </p>
                       </div>
                     </div>
-                    <div className="p-4 flex-grow flex flex-col justify-between">
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                          {product.name}
-                        </h3>
-                        <p className="text-xl font-bold text-gray-800 mb-3 flex items-center">
-                          <IndianRupee className="w-5 h-5 mr-1" />
-                          {product.price}{" "}
-                          {product.unit ? ` ${product.unit}` : ""}
-                        </p>
-                      </div>
-                      <p className="text-gray-600 text-sm mt-2">
+                    <div className="p-4 flex-grow flex flex-col">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {product.name}
+                      </h3>
+                      <p className="text-gray-500 text-sm mt-1 mb-3 flex-grow">
                         {product.description}
+                      </p>
+                      <p className="text-xl font-bold text-gray-800 flex items-center">
+                        <IndianRupee className="w-5 h-5 mr-1" />
+                        {product.price}
+                        {product.unit && (
+                          <span className="text-sm font-normal text-gray-500 ml-1">
+                            {product.unit}
+                          </span>
+                        )}
                       </p>
                     </div>
                   </motion.div>

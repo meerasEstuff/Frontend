@@ -566,20 +566,13 @@ function DashboardPage() {
                   >
                     <div className="flex p-4">
                       {/* Product Image */}
-                      <div className="w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-white shadow-sm">
+                      <div className="w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 relative overflow-hidden bg-white rounded-xl border border-gray-100 shadow">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
-                          className="object-contain p-3 group-hover:scale-110 transition-transform duration-300"
+                          className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
                         />
-                        <div className="absolute inset-0  items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden rounded-xl">
-                          <Package className="w-10 h-10 text-emerald-500" />
-                        </div>
-                        {/* Quality Badge */}
-                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-emerald-400 to-teal-400 rounded-full shadow-md flex items-center justify-center">
-                          <div className="w-2 h-2 bg-white rounded-full"></div>
-                        </div>
                       </div>
 
                       {/* Product Info */}
