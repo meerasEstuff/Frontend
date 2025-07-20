@@ -35,7 +35,6 @@ function GenerateCustomerIdPage() {
           referred_by_id: referredById,
         });
 
-        console.log("✅ User saved to Supabase");
         reset();
         // ❌ Removed router.push() here to give user time
       } catch (error) {

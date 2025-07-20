@@ -10,7 +10,6 @@ export default function ClientLogoutButton() {
 
   const handleAdminLogout = async () => {
     await supabase.auth.signOut(); // Clears the auth cookie
-    console.log("Admin logged out");
     router.push("/adminAuth");
   };
 

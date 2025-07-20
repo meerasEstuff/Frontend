@@ -12,7 +12,9 @@ import {
   Phone,
   IndianRupee,
   Package,
-  Info, // Icon for description dropdown
+  Info,
+  Star,
+  Sparkles,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/store/userStore";
@@ -30,39 +32,29 @@ const products = [
     id: 1,
     name: "Prawn Roast Combo Pack",
     image: "/Mainimg.jpg",
-    price: 998,
+    price: 750,
     isMain: true,
-    description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
+    description: `Indulge in our exquisite Prawn Roast, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
   },
   {
     id: 2,
     name: "Dates Pickle",
-    image: "/img1.jpg", // Using existing placeholder images
-    price: 499,
+    image: "/img1.jpg",
+    price: 750,
     unit: "per 1 kg",
     isMain: false,
     description:
-      "a flavorful Pickle made with dates and spices, and can be sweat,sour ,tangy or spicy",
+      "A flavorful pickle made with dates and spices, and can be sweet, sour, tangy or spicy",
   },
   {
     id: 3,
     name: "Garlic Pickle",
     image: "/img3.jpg",
-    price: 499,
+    price: 750,
     unit: "per 1 kg",
     isMain: false,
     description:
-      "Garlic Pickle,a flavorful and tangy condiment that add a burst of zest to any meal",
-  },
-  {
-    id: 4,
-    name: "Masala Mix Pickle",
-    image: "/img2.jpg",
-    price: 499,
-    unit: "per 1 kg",
-    isMain: false,
-    description:
-      "Prawns Masala Mix is made using dried sea Prawns which are Handpicked and processed under hygienic conditions",
+      "Garlic Pickle, a flavorful and tangy condiment that adds a burst of zest to any meal",
   },
 ];
 
@@ -149,7 +141,6 @@ function DashboardPage() {
   if (!user) return null;
 
   const handleLogout = () => {
-    console.log("User logged out");
     useAuthStore.getState().clearUser();
     router.push("/login");
   };
@@ -162,9 +153,11 @@ function DashboardPage() {
     setIsReferralListDropdownOpen(!isReferralListDropdownOpen);
   };
 
-  // Only one function to toggle the main product's description
+  const mainProduct = products.find((p) => p.isMain);
+  const futureProducts = products.filter((p) => !p.isMain);
+
   const toggleMainProductDescription = () => {
-    setIsMainProductDescriptionOpen((prev) => !prev);
+    setIsMainProductDescriptionOpen(!isMainProductDescriptionOpen);
   };
 
   if (!user) {
@@ -174,9 +167,6 @@ function DashboardPage() {
       </div>
     );
   }
-
-  const mainProduct = products.find((p) => p.isMain);
-  const futureProducts = products.filter((p) => !p.isMain);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans">
@@ -445,151 +435,200 @@ function DashboardPage() {
 
         {/* --- */}
         {/* Our Products Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 mt-6"
-        >
-          <div className="text-center mb-8">
-            <Package className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-              Our Products
-            </h2>
-            <p className="text-gray-600">
-              Discover our main offering and upcoming delights!
-            </p>
-          </div>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-teal-50 p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Header Section */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-lg mb-6">
+                <Package className="w-8 h-8 text-white" />
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-4">
+                Our Products
+              </h1>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Discover our main offering and upcoming delights crafted with
+                premium quality ingredients!
+              </p>
+              <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mt-6 rounded-full"></div>
+            </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column: Main Product */}
-            {mainProduct && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col relative" // Removed border classes, added relative for overlay
-              >
-                <div className="relative h-96 w-full flex-grow">
-                  {" "}
-                  {/* Increased height, flex-grow to fill container */}
-                  <Image
-                    src={mainProduct.image}
-                    alt={mainProduct.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover" // Ensure image covers the area
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      e.currentTarget.parentElement
-                        ?.querySelector(".fallback-placeholder")
-                        ?.classList.remove("hidden");
-                    }}
-                  />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
-                    <Package className="w-16 h-16 text-emerald-500" />
-                    <p className="text-gray-600 mt-2 text-sm">
-                      Image not available
-                    </p>
-                  </div>
-                  {/* Overlay for details */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
-                    <h3 className="text-3xl font-bold mb-1">
-                      {mainProduct.name}
-                      <span className="ml-2 text-base bg-emerald-500 text-white px-3 py-1 rounded-full">
-                        Featured
-                      </span>
-                    </h3>
-                    <p className="text-4xl font-bold mb-4 flex items-center">
-                      <IndianRupee className="w-8 h-8 mr-1" />
-                      {mainProduct.price}
-                    </p>
-                    <button
-                      onClick={toggleMainProductDescription}
-                      className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                    >
-                      <Info className="w-5 h-5" />
-                      <span>
-                        {isMainProductDescriptionOpen
-                          ? "Hide Details"
-                          : "Show More"}
-                      </span>
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform ${
-                          isMainProductDescriptionOpen
-                            ? "rotate-180"
-                            : "rotate-0"
-                        }`}
-                      />
-                    </button>
+            {/* Main Content Grid */}
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              {/* Featured Product - Takes 2 columns on extra large screens */}
+              {mainProduct && (
+                <div className="xl:col-span-2">
+                  <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 overflow-hidden hover:shadow-3xl transition-all duration-700 group relative">
+                    {/* Featured Badge */}
+                    <div className="absolute top-6 left-6 z-10">
+                      <div className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
+                        <Star className="w-4 h-4 fill-current" />
+                        <span className="text-sm font-semibold">
+                          Featured Product
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row min-h-[600px]">
+                      {/* Image Section */}
+                      <div className="lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50">
+                        <div className="relative h-80 lg:h-full ">
+                          <Image
+                            src={mainProduct.image}
+                            alt={mainProduct.name}
+                            fill
+                            className="object-contain p-8 group-hover:scale-110 transition-transform duration-700"
+                            priority
+                          />
+
+                          <div className="absolute inset-0 flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden">
+                            <Package className="w-20 h-20 text-emerald-500 mb-4" />
+                            <p className="text-gray-600 text-lg font-medium">
+                              Premium Product Image
+                            </p>
+                          </div>
+                        </div>
+                        {/* Decorative Elements */}
+                        <div className="absolute bottom-4 right-4 w-12 h-12 bg-white/20 rounded-full backdrop-blur-sm flex items-center justify-center">
+                          <Sparkles className="w-6 h-6 text-emerald-500" />
+                        </div>
+                      </div>
+
+                      {/* Content Section */}
+                      <div className="lg:w-1/2 p-8 lg:p-10 flex flex-col justify-center bg-white/90 backdrop-blur-sm">
+                        <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                          {mainProduct.name}
+                        </h2>
+
+                        <div className="flex items-center mb-8">
+                          <div className="flex items-center bg-gradient-to-r from-emerald-100 to-teal-100 px-6 py-3 rounded-2xl">
+                            <IndianRupee className="w-8 h-8 text-emerald-600 mr-2" />
+                            <span className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                              {mainProduct.price}
+                            </span>
+                          </div>
+                          <span className="ml-4 text-lg text-gray-500 font-medium">
+                            per pack
+                          </span>
+                        </div>
+
+                        <div className="mb-8">
+                          <p
+                            className={`text-gray-700 leading-relaxed text-lg transition-all duration-300 ${
+                              isMainProductDescriptionOpen ? "" : "line-clamp-3"
+                            }`}
+                          >
+                            {mainProduct.description}
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={toggleMainProductDescription}
+                          className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-semibold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-300 shadow-lg hover:shadow-xl group/btn transform hover:-translate-y-1 self-start"
+                        >
+                          <Info className="w-5 h-5 group-hover/btn:rotate-12 transition-transform" />
+                          <span>
+                            {isMainProductDescriptionOpen
+                              ? "Show Less"
+                              : "Learn More"}
+                          </span>
+                          <ChevronDown
+                            className={`w-5 h-5 transition-transform ${
+                              isMainProductDescriptionOpen
+                                ? "rotate-180"
+                                : "rotate-0"
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              )}
 
-                {/* Description dropdown (conditionally rendered outside the image div) */}
-                {isMainProductDescriptionOpen && (
-                  <motion.p
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-gray-700 text-sm p-6 bg-gray-50 rounded-b-md" // Added padding and background for clarity
+              {/* Specialties Column */}
+              <div className="space-y-6">
+                {/* Section Header */}
+                <div className="text-center xl:text-left mb-8">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
+                    Our Specialties
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    Premium quality products crafted with care
+                  </p>
+                  <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto xl:mx-0 rounded-full"></div>
+                </div>
+
+                {/* Specialty Products */}
+                {futureProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-white/30 hover:border-emerald-300 group transform hover:-translate-y-2"
                   >
-                    {mainProduct.description}
-                  </motion.p>
-                )}
-              </motion.div>
-            )}
+                    <div className="flex p-4">
+                      {/* Product Image */}
+                      <div className="w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-white shadow-sm">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          className="object-contain p-3 group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0  items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden rounded-xl">
+                          <Package className="w-10 h-10 text-emerald-500" />
+                        </div>
+                        {/* Quality Badge */}
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-emerald-400 to-teal-400 rounded-full shadow-md flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                      </div>
 
-            {/* Right Column: Future Products */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
-              {futureProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
-                >
-                  <div className="relative h-48 w-full">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        e.currentTarget.parentElement
-                          ?.querySelector(".fallback-placeholder")
-                          ?.classList.remove("hidden");
-                      }}
-                    />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
-                      <Package className="w-16 h-16 text-emerald-500" />
-                      <p className="text-gray-600 mt-2 text-sm">
-                        Image not available
-                      </p>
+                      {/* Product Info */}
+                      <div className="flex-1 ml-4 flex flex-col justify-between">
+                        <div>
+                          <div className="flex items-start justify-between mb-2">
+                            <h4 className="font-bold text-lg sm:text-xl text-gray-900 group-hover:text-emerald-700 transition-colors leading-tight">
+                              {product.name}
+                            </h4>
+                          </div>
+
+                          <div className="flex items-center mb-3">
+                            <div className="flex items-center bg-gradient-to-r from-emerald-100 to-teal-100 group-hover:from-emerald-200 group-hover:to-teal-200 px-3 py-1.5 rounded-xl transition-colors shadow-sm">
+                              <IndianRupee className="w-4 h-4 mr-1 text-emerald-600" />
+                              <span className="font-bold text-emerald-700 text-lg">
+                                {product.price}
+                              </span>
+                              {product.unit && (
+                                <span className="text-emerald-600 text-sm ml-1 font-medium">
+                                  /{product.unit.replace("per ", "")}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 group-hover:text-gray-700 transition-colors">
+                            {product.description}
+                          </p>
+                        </div>
+
+                        {/* Quality Indicator */}
+                        <div className="mt-3 flex items-center space-x-2">
+                          <div className="flex items-center space-x-1">
+                            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                            <div className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-pulse delay-75"></div>
+                            <div className="w-1 h-1 bg-emerald-300 rounded-full animate-pulse delay-150"></div>
+                          </div>
+                          <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
+                            Premium Quality
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="p-4 flex-grow flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {product.name}
-                      </h3>
-                      <p className="text-xl font-bold text-gray-800 mb-3 flex items-center">
-                        <IndianRupee className="w-5 h-5 mr-1" />
-                        {product.price} {product.unit ? ` ${product.unit}` : ""}
-                      </p>
-                    </div>
-                    <p className="text-gray-600 text-sm mt-2">
-                      {product.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* --- */}
       </main>

@@ -69,8 +69,6 @@ function MyProfilePage() {
     try {
       if (!user?.customer_id || !user?.phone) return;
 
-      console.log("Submitting updated data for:", user.id, data);
-
       setLoading(true);
       const res = await fetch("/api/update-profile", {
         method: "POST",

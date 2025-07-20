@@ -52,8 +52,7 @@ function ShippingAndDeliveryPage() {
           <section className="mb-8">
             <p className="text-gray-700 leading-relaxed mb-4">
               After your payment and onboarding are complete, your welcome
-              products worth ₹1000 will be shipped via a trusted courier
-              service.
+              products worth ₹750 will be shipped via a trusted courier service.
             </p>
           </section>
 

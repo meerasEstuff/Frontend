@@ -67,8 +67,8 @@ function AddReferralPage() {
       phone: data.phone,
       referredById: user?.id,
     });
-    const onboardingData = useOnboardingStore.getState();
-    console.log("✅ Onboarding Data Set:", onboardingData);
+    useOnboardingStore.getState();
+    // console.log("✅ Onboarding Data Set:", onboardingData);
     router.push("/razorpay");
   };
 

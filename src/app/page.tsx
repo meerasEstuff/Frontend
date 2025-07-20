@@ -47,9 +47,9 @@ export default function ProfessionalLandingPage() {
   const products = [
     {
       id: 1,
-      name: "Prawn Roast Combo Pack",
+      name: "Prawn Roast",
       image: "/Mainimg.jpg",
-      price: 998,
+      price: 750,
       isMain: true,
       description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
     },
@@ -57,7 +57,7 @@ export default function ProfessionalLandingPage() {
       id: 2,
       name: "Dates Pickle",
       image: "/img1.jpg", // Using existing placeholder images
-      price: 499,
+      price: 750,
       unit: "per 1 kg",
       isMain: false,
       description:
@@ -67,7 +67,7 @@ export default function ProfessionalLandingPage() {
       id: 3,
       name: "Garlic Pickle",
       image: "/img3.jpg",
-      price: 499,
+      price: 750,
       unit: "per 1 kg",
       isMain: false,
       description:
@@ -251,7 +251,7 @@ export default function ProfessionalLandingPage() {
                 >
                   Join thousands of entrepreneurs earning{" "}
                   <span className="font-semibold text-emerald-600">
-                    60% commission
+                    40% and above commission
                   </span>{" "}
                   while delivering premium pickles & dry nuts directly to
                   customers
@@ -467,7 +467,7 @@ export default function ProfessionalLandingPage() {
             {[
               {
                 icon: <TrendingUp className="w-8 h-8 text-emerald-600" />,
-                title: "60% Commission Rate",
+                title: "40% above Commission Rate",
                 description:
                   "Earn substantial income with our industry-leading commission structure on every referral",
               },
