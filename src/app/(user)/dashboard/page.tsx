@@ -30,7 +30,7 @@ import Image from "next/image";
 const products = [
   {
     id: 1,
-    name: "Prawn Roast Combo Pack",
+    name: "Prawn Roast ",
     image: "/Mainimg.jpg",
     price: 750,
     isMain: true,
@@ -507,7 +507,7 @@ function DashboardPage() {
                             </span>
                           </div>
                           <span className="ml-4 text-lg text-gray-500 font-medium">
-                            per pack
+                            per Bottle
                           </span>
                         </div>
 
