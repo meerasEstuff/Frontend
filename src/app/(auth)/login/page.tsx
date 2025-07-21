@@ -34,10 +34,15 @@ export default function LoginPage() {
   // Handle form submission
   const onSubmit = async (data: LoginFormInputs) => {
     setLoading(true);
+
+    const sanitizedData = {
+      customerId: data.customerId.trim(),
+      phoneNumber: data.phoneNumber.trim(),
+    };
     try {
       const user = await loginWithCustomerIdAndPhone(
-        data.customerId,
-        data.phoneNumber
+        sanitizedData.customerId,
+        sanitizedData.phoneNumber
       );
 
       // Store user in Zustand
