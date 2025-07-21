@@ -433,7 +433,7 @@ export default function ProfessionalLandingPage() {
                             ?.classList.remove("hidden");
                         }}
                       />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
+                      <div className="absolute inset-0  flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
                         <Package className="w-12 h-12 text-emerald-500" />
                         <p className="text-gray-600 mt-2 text-xs">
                           Image not available
