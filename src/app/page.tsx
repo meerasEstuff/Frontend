@@ -87,7 +87,7 @@ export default function ProfessionalLandingPage() {
         <title>MeerasEstuff | Buy & Refer Premium Pickles & Dry Fruits</title>
         <meta
           name="description"
-          content="Buy premium quality pickles and dry fruits. Earn ₹400 per referral. Start your entrepreneurship journey with MeerasEstuff."
+          content="Buy premium quality pickles and dry fruits. Earn ₹250 per referral. Start your entrepreneurship journey with MeerasEstuff."
         />
         <meta name="robots" content="index, follow" />
 
@@ -311,10 +311,10 @@ export default function ProfessionalLandingPage() {
                 >
                   <div className="relative">
                     <Image
-                      src="/CompanyImg.jpeg"
+                      src="/CompanyImg.jpeg" // <-- CHANGE THIS LINE
                       alt="MeerasEstuff Company"
                       width={500}
-                      height={500}
+                      height={1500}
                       className="rounded-3xl shadow-2xl border-4 border-white transform hover:scale-105 transition-transform duration-300 ease-in-out w-full max-w-md h-auto object-cover"
                     />
                     <div className="absolute -top-2 -right-2 bg-white rounded-full p-2 shadow-lg">

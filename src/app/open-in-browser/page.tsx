@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function OpenInBrowser() {
   useEffect(() => {
-    const url = "https://meerasestuff.com/onboard";
+    const url = "https://meerasestuff.com/";
     window.location.href = url;
   }, []);
 
