@@ -1,4 +1,5 @@
 "use client";
+import Head from "next/head";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader2, Home } from "lucide-react"; // Import Home icon
@@ -57,180 +58,186 @@ function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 font-sans bg-gradient-to-br from-indigo-50 via-white to-pink-50">
-      {/* Background Pattern - Adjusted for new colors */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-indigo-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-pink-500 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-indigo-400 to-pink-400 rounded-full blur-3xl"></div>
-      </div>
+    <>
+      <Head>
+        <title>Your Dashboard | MeerasEstuff</title>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <div className="min-h-screen flex items-center justify-center p-4 font-sans bg-gradient-to-br from-indigo-50 via-white to-pink-50">
+        {/* Background Pattern - Adjusted for new colors */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-indigo-500 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-pink-500 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-indigo-400 to-pink-400 rounded-full blur-3xl"></div>
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="relative z-10 w-full max-w-md mx-auto"
-      >
-        {/* Admin Login Card */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 sm:p-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 w-full max-w-md mx-auto"
         >
-          {/* Header */}
-          <div className="text-center mb-6">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex items-center justify-center space-x-3 mb-4"
-            >
-              {/* Logo - same as main app, but inside new color scheme */}
-              <Image
-                src="/meeras-logo.jpg"
-                alt="MeerasEstuff_Logo"
-                width={64}
-                height={64}
-                className="rounded-full shadow-md"
-              />
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
-                MeerasEstuff
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1"
-            >
-              Admin Login
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-sm text-gray-600"
-            >
-              Access the administration panel.
-            </motion.p>
-          </div>
-
-          {/* Form */}
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4"
+          {/* Admin Login Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 sm:p-8"
           >
-            {/* Email Field */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-700 mb-1"
+            {/* Header */}
+            <div className="text-center mb-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex items-center justify-center space-x-3 mb-4"
               >
-                Email
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                </div>
-                <input
-                  type="email"
-                  id="email"
-                  {...register("email")}
-                  className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
-                    errors.email
-                      ? "border-red-300 focus:border-red-500"
-                      : "border-gray-200 focus:border-indigo-500 focus:bg-white"
-                  }`}
-                  placeholder="Enter admin email"
+                {/* Logo - same as main app, but inside new color scheme */}
+                <Image
+                  src="/meeras-logo.jpg"
+                  alt="MeerasEstuff_Logo"
+                  width={64}
+                  height={64}
+                  className="rounded-full shadow-md"
                 />
-              </div>
-              {errors.email && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-xs mt-1"
-                >
-                  {errors.email.message}
-                </motion.p>
-              )}
+                <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+                  MeerasEstuff
+                </span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1"
+              >
+                Admin Login
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="text-sm text-gray-600"
+              >
+                Access the administration panel.
+              </motion.p>
             </div>
 
-            {/* Password Field */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-gray-700 mb-1"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-4 w-4 text-gray-400" />
-                </div>
-                <input
-                  type="password"
-                  id="password"
-                  {...register("password")}
-                  className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
-                    errors.password
-                      ? "border-red-300 focus:border-red-500"
-                      : "border-gray-200 focus:border-indigo-500 focus:bg-white"
-                  }`}
-                  placeholder="Enter password"
-                />
-              </div>
-              {errors.password && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-xs mt-1"
+            {/* Form */}
+            <motion.form
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4"
+            >
+              {/* Email Field */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-gray-700 mb-1"
                 >
-                  {errors.password.message}
-                </motion.p>
-              )}
-            </div>
+                  Email
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-4 w-4 text-gray-400" />
+                  </div>
+                  <input
+                    type="email"
+                    id="email"
+                    {...register("email")}
+                    className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
+                      errors.email
+                        ? "border-red-300 focus:border-red-500"
+                        : "border-gray-200 focus:border-indigo-500 focus:bg-white"
+                    }`}
+                    placeholder="Enter admin email"
+                  />
+                </div>
+                {errors.email && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-500 text-xs mt-1"
+                  >
+                    {errors.email.message}
+                  </motion.p>
+                )}
+              </div>
 
-            {/* Submit Button */}
-            <motion.button
-              type="submit"
-              disabled={loading}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`w-full bg-gradient-to-r from-indigo-600 to-pink-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl flex items-center justify-center space-x-2 group transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+              {/* Password Field */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-gray-700 mb-1"
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-4 w-4 text-gray-400" />
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    {...register("password")}
+                    className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
+                      errors.password
+                        ? "border-red-300 focus:border-red-500"
+                        : "border-gray-200 focus:border-indigo-500 focus:bg-white"
+                    }`}
+                    placeholder="Enter password"
+                  />
+                </div>
+                {errors.password && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-500 text-xs mt-1"
+                  >
+                    {errors.password.message}
+                  </motion.p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                disabled={loading}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full bg-gradient-to-r from-indigo-600 to-pink-600 text-white py-3 rounded-xl font-semibold text-base shadow-xl flex items-center justify-center space-x-2 group transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
                 hover:shadow-2xl hover:brightness-105
                 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100`}
-            >
-              <span>{loading ? "Logging In..." : "Login as Admin"}</span>
-              {loading && <Loader2 className="w-4 h-4 animate-spin ml-2" />}
-            </motion.button>
-          </motion.form>
-
-          {/* Link to User Home Page */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-6 text-center"
-          >
-            <p className="text-sm text-gray-600">
-              Are you a user looking for Home page?
-              <button
-                onClick={() => router.push("/")}
-                className="ml-2 inline-flex items-center text-indigo-600 hover:text-indigo-800 font-semibold transition-colors duration-200"
               >
-                <Home className="h-4 w-4 mr-1" />
-                Go to Home
-              </button>
-            </p>
+                <span>{loading ? "Logging In..." : "Login as Admin"}</span>
+                {loading && <Loader2 className="w-4 h-4 animate-spin ml-2" />}
+              </motion.button>
+            </motion.form>
+
+            {/* Link to User Home Page */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-6 text-center"
+            >
+              <p className="text-sm text-gray-600">
+                Are you a user looking for Home page?
+                <button
+                  onClick={() => router.push("/")}
+                  className="ml-2 inline-flex items-center text-indigo-600 hover:text-indigo-800 font-semibold transition-colors duration-200"
+                >
+                  <Home className="h-4 w-4 mr-1" />
+                  Go to Home
+                </button>
+              </p>
+            </motion.div>
           </motion.div>
         </motion.div>
-      </motion.div>
-    </div>
+      </div>
+    </>
   );
 }
 

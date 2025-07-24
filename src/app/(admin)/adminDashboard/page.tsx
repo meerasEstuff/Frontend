@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Head from "next/head";
 import { getAdminSession } from "@/lib/adminSession";
 import AdminDashboardClient from "@/components/admin/AdminDashboardClient";
 
@@ -13,11 +14,17 @@ export default async function AdminDashboardPage() {
 
   // console.log("Users with referral data:", users);
   return (
-    <AdminDashboardClient
-      user={user}
-      totalUsers={totalUsers}
-      totalRevenue={totalRevenue}
-      users={users}
-    />
+    <>
+      <Head>
+        <title>Your Dashboard | MeerasEstuff</title>
+        <meta name="robots" content="noindex" />
+      </Head>
+      <AdminDashboardClient
+        user={user}
+        totalUsers={totalUsers}
+        totalRevenue={totalRevenue}
+        users={users}
+      />
+    </>
   );
 }
