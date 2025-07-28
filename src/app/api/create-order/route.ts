@@ -9,7 +9,7 @@ export async function POST() {
     });
 
     const options = {
-      amount: 50000,
+      amount: 25000,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
     };
