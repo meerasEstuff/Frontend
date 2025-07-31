@@ -254,7 +254,7 @@ export default function ProfessionalLandingPage() {
         </nav>
 
         {/* Enhanced Hero Section with Image Carousel */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 ">
           {/* Enhanced Background */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500 rounded-full blur-3xl opacity-70"></div>
@@ -262,11 +262,11 @@ export default function ProfessionalLandingPage() {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full blur-3xl opacity-40"></div>
           </div>
 
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-9">
             <div className="text-center space-y-8">
               <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
                 {/* Left Column */}
-                <div className="w-full lg:w-1/2 space-y-8">
+                <div className="w-full lg:w-1/2 space-y-8 mt-9">
                   {/* Trust Badge */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
