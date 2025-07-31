@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Head from "next/head";
@@ -20,10 +20,12 @@ import {
   Phone,
   Menu,
   X,
-  Package, // Import Package icon
-  Info, // Import Info icon
-  ChevronDown, // Import ChevronDown icon
-  IndianRupee, // Import IndianRupee icon
+  Package,
+  Info,
+  ChevronDown,
+  IndianRupee,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -31,7 +33,31 @@ export default function ProfessionalLandingPage() {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
-    useState(false); // State for main product description
+    useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Image carousel data
+  const heroImages = [
+    {
+      src: "/CompanyImg.jpeg",
+      alt: "MeerasEstuff Company",
+      title: "Premium Quality Products",
+    },
+    {
+      src: "/CompanyImg3.jpeg",
+      alt: "MeerasEstuff Products",
+      title: "Artisanal Excellence",
+    },
+  ];
+
+  // Auto-rotate images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -45,7 +71,17 @@ export default function ProfessionalLandingPage() {
     setIsMainProductDescriptionOpen(!isMainProductDescriptionOpen);
   };
 
-  // Your provided product data
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? heroImages.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Product data
   const products = [
     {
       id: 1,
@@ -58,7 +94,7 @@ export default function ProfessionalLandingPage() {
     {
       id: 2,
       name: "Dates Pickle",
-      image: "/img1.jpg", // Using existing placeholder images
+      image: "/img1.jpg",
       price: 499,
       unit: "per 1 kg",
       isMain: false,
@@ -77,7 +113,6 @@ export default function ProfessionalLandingPage() {
     },
   ];
 
-  // Derive mainProduct and futureProducts from the 'products' array
   const mainProduct = products.find((product) => product.isMain);
   const futureProducts = products.filter((product) => !product.isMain);
 
@@ -90,8 +125,6 @@ export default function ProfessionalLandingPage() {
           content="Buy premium quality pickles and dry fruits. Earn ₹250 per referral. Start your entrepreneurship journey with MeerasEstuff."
         />
         <meta name="robots" content="index, follow" />
-
-        {/* Open Graph for social sharing */}
         <meta property="og:title" content="MeerasEstuff" />
         <meta
           property="og:description"
@@ -103,11 +136,9 @@ export default function ProfessionalLandingPage() {
         />
         <meta property="og:url" content="https://meerasestuff.com" />
         <meta property="og:type" content="website" />
-
-        {/* Twitter preview (optional) */}
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      ;
+
       <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans antialiased">
         {/* Navbar */}
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
@@ -141,7 +172,7 @@ export default function ProfessionalLandingPage() {
                   Features
                 </a>
                 <a
-                  href="#products" // Added products section link
+                  href="#products"
                   className="text-gray-700 hover:text-emerald-600 transition-colors font-medium"
                 >
                   Products
@@ -195,7 +226,7 @@ export default function ProfessionalLandingPage() {
                       Features
                     </a>
                     <a
-                      href="#products" // Added products section link
+                      href="#products"
                       onClick={closeMobileMenu}
                       className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
                     >
@@ -221,7 +252,8 @@ export default function ProfessionalLandingPage() {
             </AnimatePresence>
           </div>
         </nav>
-        {/* Hero Section */}
+
+        {/* Enhanced Hero Section with Image Carousel */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
           {/* Enhanced Background */}
           <div className="absolute inset-0 opacity-5">
@@ -235,13 +267,6 @@ export default function ProfessionalLandingPage() {
               <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
                 {/* Left Column */}
                 <div className="w-full lg:w-1/2 space-y-8">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center lg:text-left"
-                  ></motion.div>
-
                   {/* Trust Badge */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -302,21 +327,82 @@ export default function ProfessionalLandingPage() {
                   </motion.div>
                 </div>
 
-                {/* Right Column Image */}
+                {/* Right Column - Enhanced Image Carousel */}
                 <motion.div
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="w-full lg:w-1/2 flex justify-center items-center"
                 >
-                  <div className="relative">
-                    <Image
-                      src="/CompanyImg.jpeg" // <-- CHANGE THIS LINE
-                      alt="MeerasEstuff Company"
-                      width={500}
-                      height={1500}
-                      className="rounded-3xl shadow-2xl border-4 border-white transform hover:scale-105 transition-transform duration-300 ease-in-out w-full max-w-md h-auto object-cover"
-                    />
+                  <div className="relative group">
+                    {/* Main Image Container */}
+                    <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={currentImageIndex}
+                          initial={{ opacity: 0, scale: 1.1 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ duration: 0.5 }}
+                          className="relative"
+                        >
+                          <Image
+                            src={heroImages[currentImageIndex].src}
+                            alt={heroImages[currentImageIndex].alt}
+                            width={500}
+                            height={600}
+                            className="w-full max-w-md h-auto object-cover transition-transform duration-700 hover:scale-105"
+                          />
+
+                          {/* Image Overlay with Title */}
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
+                            <motion.h3
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5, delay: 0.2 }}
+                              className="text-white text-xl font-bold text-center"
+                            >
+                              {heroImages[currentImageIndex].title}
+                            </motion.h3>
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
+
+                      {/* Navigation Arrows */}
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* Image Indicators */}
+                    <div className="flex justify-center mt-4 space-x-2">
+                      {heroImages.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                            index === currentImageIndex
+                              ? "bg-emerald-600 scale-110"
+                              : "bg-gray-300 hover:bg-gray-400"
+                          }`}
+                          aria-label={`Go to image ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Decorative Elements */}
                     <div className="absolute -top-2 -right-2 bg-white rounded-full p-2 shadow-lg">
                       <Award className="w-4 h-4 text-emerald-600" />
                     </div>
@@ -329,7 +415,56 @@ export default function ProfessionalLandingPage() {
             </div>
           </div>
         </section>
-        {/* Product Section */}
+
+        {/* Additional Gallery Section - Showcase both images */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                Experience Our Excellence
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Discover the passion and craftsmanship behind every product we
+                create
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {heroImages.map((image, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  className="relative group overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={600}
+                    height={400}
+                    className="w-full h-80 object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-4 left-4">
+                      <h3 className="text-white text-xl font-bold">
+                        {image.title}
+                      </h3>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Product Section */}
         <section id="products" className="py-20 bg-emerald-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -351,7 +486,7 @@ export default function ProfessionalLandingPage() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-                {/* Left Column: Main Product (Spanning 3 columns) */}
+                {/* Left Column: Main Product */}
                 {mainProduct && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -360,7 +495,6 @@ export default function ProfessionalLandingPage() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="lg:col-span-3 bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col"
                   >
-                    {/* Aspect ratio container for the image */}
                     <div className="relative w-full aspect-[3/4]">
                       <Image
                         src={mainProduct.image}
@@ -382,7 +516,6 @@ export default function ProfessionalLandingPage() {
                           Image not available
                         </p>
                       </div>
-                      {/* Overlay for details */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
                         <h3 className="text-3xl font-bold mb-1">
                           {mainProduct.name}
@@ -415,7 +548,6 @@ export default function ProfessionalLandingPage() {
                       </div>
                     </div>
 
-                    {/* Description dropdown */}
                     <AnimatePresence>
                       {isMainProductDescriptionOpen && (
                         <motion.div
@@ -434,7 +566,7 @@ export default function ProfessionalLandingPage() {
                   </motion.div>
                 )}
 
-                {/* Right Column: Future Products (Spanning 2 columns) */}
+                {/* Right Column: Future Products */}
                 <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
                   {futureProducts.map((product, index) => (
                     <motion.div
@@ -445,7 +577,6 @@ export default function ProfessionalLandingPage() {
                       transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                       className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
                     >
-                      {/* Aspect ratio container for the image */}
                       <div className="relative w-full aspect-[4/5]">
                         <Image
                           src={product.image}
@@ -461,7 +592,7 @@ export default function ProfessionalLandingPage() {
                               ?.classList.remove("hidden");
                           }}
                         />
-                        <div className="absolute inset-0  flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
+                        <div className="absolute inset-0 flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
                           <Package className="w-12 h-12 text-emerald-500" />
                           <p className="text-gray-600 mt-2 text-xs">
                             Image not available
@@ -493,6 +624,7 @@ export default function ProfessionalLandingPage() {
           </div>
         </section>
 
+        {/* Features Section */}
         <section id="features" className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -568,6 +700,7 @@ export default function ProfessionalLandingPage() {
             </div>
           </div>
         </section>
+
         {/* Stats Section */}
         <section className="py-20 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -604,6 +737,7 @@ export default function ProfessionalLandingPage() {
             </div>
           </div>
         </section>
+
         {/* Mission & Vision Section */}
         <section id="about" className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -664,6 +798,7 @@ export default function ProfessionalLandingPage() {
             </div>
           </div>
         </section>
+
         {/* CTA Section */}
         <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -690,6 +825,7 @@ export default function ProfessionalLandingPage() {
             </motion.div>
           </div>
         </section>
+
         {/* Footer */}
         <footer id="contact" className="bg-gray-900 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -739,7 +875,7 @@ export default function ProfessionalLandingPage() {
                   </li>
                   <li>
                     <a
-                      href="#products" // Added products section link
+                      href="#products"
                       className="text-gray-400 hover:text-emerald-400 transition-colors"
                     >
                       Products
