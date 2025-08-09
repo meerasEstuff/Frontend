@@ -25,7 +25,7 @@ export async function getReferralsByUserId(
 
   const { data, error } = await supabase
     .from("users")
-    .select("id, customer_id, username, created_at")
+    .select("id, customer_id, username, created_at, phone")
     .eq("referred_by_id", referrerId)
     .order("created_at", { ascending: false }) // 👈 Sort by most recent first
     .range(from, to);
@@ -33,6 +33,21 @@ export async function getReferralsByUserId(
   if (error) {
     console.error("Error fetching referrals:", error.message, error.details);
     throw new Error("Failed to fetch referrals");
+  }
+
+  return data;
+}
+
+export async function getUserById(userId: string) {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, username") // Select only what you need
+    .eq("id", userId)
+    .single(); // Use .single() to get one record
+
+  if (error) {
+    console.error("Error fetching user:", error.message);
+    throw new Error("Failed to fetch user details");
   }
 
   return data;

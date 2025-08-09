@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Search, ChevronDown, SlidersHorizontal } from "lucide-react";
+import { Search, ChevronDown, SlidersHorizontal, Loader2 } from "lucide-react";
 import type { UserRow } from "@/types/types";
+import { useRouter } from "next/navigation";
 
 interface UserListProps {
   users: UserRow[];
@@ -12,7 +13,9 @@ interface UserListProps {
 }
 
 export default function UserList({ users, onSearch, onFilter }: UserListProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All Time");
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -174,7 +177,22 @@ export default function UserList({ users, onSearch, onFilter }: UserListProps) {
                     {user.phone}
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-700">
-                    {user.Referrals}
+                    <div className="flex items-center justify-start space-x-4">
+                      <span>{user.Referrals}</span>
+                      <button
+                        className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full hover:bg-indigo-200 transition-colors duration-200"
+                        onClick={() => {
+                          setLoading(true);
+                          router.push(`/referralPage?id=${user.id}`);
+                        }}
+                      >
+                        {loading ? (
+                          <Loader2 className="w-4 h-4 animate-spin ml-2" />
+                        ) : (
+                          "View"
+                        )}
+                      </button>
+                    </div>
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-700">
                     {user.Joined}

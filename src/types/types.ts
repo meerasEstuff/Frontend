@@ -14,3 +14,11 @@ export interface UserRow {
   Referrals: number;
   username: string;
 }
+
+export type UserRowReferral = {
+  id: string;
+  username: string;
+  customer_id: string;
+  created_at: string;
+  phone: string;
+};
