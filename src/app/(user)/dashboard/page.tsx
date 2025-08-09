@@ -34,6 +34,7 @@ const products = [
     name: "Prawn Roast ",
     image: "/Mainimg.jpg",
     price: 499,
+    unit: "per 175 gm",
     isMain: true,
     description: `Indulge in our exquisite Prawn Roast, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
   },
@@ -42,7 +43,7 @@ const products = [
     name: "Dates Pickle",
     image: "/img1.jpg",
     price: 499,
-    unit: "per 1 kg",
+    unit: "per 400 gm",
     isMain: false,
     description:
       "A flavorful pickle made with dates and spices, and can be sweet, sour, tangy or spicy",
@@ -52,7 +53,7 @@ const products = [
     name: "Garlic Pickle",
     image: "/img3.jpg",
     price: 499,
-    unit: "per 1 kg",
+    unit: "per 400 gm",
     isMain: false,
     description:
       "Garlic Pickle, a flavorful and tangy condiment that adds a burst of zest to any meal",
@@ -519,6 +520,9 @@ function DashboardPage() {
                             </span>
                           </div>
 
+                          <span className="text-emerald-600 text-sm ml-1 font-medium">
+                            {mainProduct.unit}
+                          </span>
                           <div className="mb-8">
                             <p
                               className={`text-gray-700 leading-relaxed text-lg transition-all duration-300 ${
