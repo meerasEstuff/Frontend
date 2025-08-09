@@ -88,6 +88,7 @@ export default function ProfessionalLandingPage() {
       name: "Prawn Roast",
       image: "/Mainimg.jpg",
       price: 499,
+      unit: "per 175 gm",
       isMain: true,
       description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
     },
@@ -96,7 +97,7 @@ export default function ProfessionalLandingPage() {
       name: "Dates Pickle",
       image: "/img1.jpg",
       price: 499,
-      unit: "per 1 kg",
+      unit: "per 400 gm",
       isMain: false,
       description:
         "a flavorful Pickle made with dates and spices, and can be sweat,sour ,tangy or spicy",
@@ -106,7 +107,7 @@ export default function ProfessionalLandingPage() {
       name: "Garlic Pickle",
       image: "/img3.jpg",
       price: 499,
-      unit: "per 1 kg",
+      unit: "per 400 gm",
       isMain: false,
       description:
         "Garlic Pickle,a flavorful and tangy condiment that add a burst of zest to any meal",
@@ -523,9 +524,16 @@ export default function ProfessionalLandingPage() {
                             Featured
                           </span>
                         </h3>
-                        <p className="text-4xl font-bold mb-4 flex items-center">
-                          <IndianRupee className="w-8 h-8 mr-1" />
-                          {mainProduct.price}
+                        <p className="text-4xl font-bold mb-4 flex items-baseline gap-x-2">
+                          <span className="flex items-center bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-lg">
+                            <IndianRupee className="w-8 h-8 mr-1" />
+                            {mainProduct.price}
+                          </span>
+                          {mainProduct.unit && (
+                            <span className="text-lg font-normal bg-color-primary-500/50 backdrop-blur-sm text-gray-200 px-2 py-1 rounded-md">
+                              {mainProduct.unit}
+                            </span>
+                          )}
                         </p>
                         <button
                           onClick={toggleMainProductDescription}
