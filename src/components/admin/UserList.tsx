@@ -15,7 +15,8 @@ interface UserListProps {
 export default function UserList({ users, onSearch, onFilter }: UserListProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
   const [selectedFilter, setSelectedFilter] = useState("All Time");
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -182,11 +183,11 @@ export default function UserList({ users, onSearch, onFilter }: UserListProps) {
                       <button
                         className="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full hover:bg-indigo-200 transition-colors duration-200"
                         onClick={() => {
-                          setLoading(true);
+                          setLoadingUserId(user.id);
                           router.push(`/referralPage?id=${user.id}`);
                         }}
                       >
-                        {loading ? (
+                        {loadingUserId === user.id ? (
                           <Loader2 className="w-4 h-4 animate-spin ml-2" />
                         ) : (
                           "View"

@@ -1,10 +1,10 @@
 "use client";
 
 import { getReferralsByUserId, getUserById } from "@/services/userService";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import type { UserRowReferral } from "@/types/types";
-import { ArrowLeft, Users } from "lucide-react";
+import { Users } from "lucide-react";
 
 // A simpler type for the referrer, matching the data from getUserById
 type Referrer = {
@@ -13,13 +13,13 @@ type Referrer = {
 };
 
 export default function ReferralPageComponent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
 
   const [referrer, setReferrer] = useState<Referrer | null>(null);
   const [referrals, setReferrals] = useState<UserRowReferral[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,10 +63,6 @@ export default function ReferralPageComponent() {
     fetchAllData();
   }, [userId, currentPage]); // This now re-runs when 'currentPage' changes
 
-  const handleBack = () => {
-    router.push("/adminDashboard");
-  };
-
   if (loading && currentPage === 1 && !referrer) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-50">
@@ -90,13 +86,6 @@ export default function ReferralPageComponent() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <button
-            onClick={handleBack}
-            className="flex items-center space-x-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Dashboard</span>
-          </button>
           <h1 className="text-3xl font-bold text-gray-900">Referral List</h1>
           {referrer && (
             <p className="text-lg text-gray-600 mt-1">
