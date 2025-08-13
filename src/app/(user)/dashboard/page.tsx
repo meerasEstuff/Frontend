@@ -33,7 +33,7 @@ const products = [
     id: 1,
     name: "Prawn Roast ",
     image: "/Mainimg.jpg",
-    price: 499,
+    price: 360,
     unit: "per 175 gm",
     isMain: true,
     description: `Indulge in our exquisite Prawn Roast, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
@@ -42,7 +42,7 @@ const products = [
     id: 2,
     name: "Dates Pickle",
     image: "/img1.jpg",
-    price: 499,
+    price: 360,
     unit: "per 400 gm",
     isMain: false,
     description:
@@ -52,7 +52,7 @@ const products = [
     id: 3,
     name: "Garlic Pickle",
     image: "/img3.jpg",
-    price: 499,
+    price: 360,
     unit: "per 400 gm",
     isMain: false,
     description:

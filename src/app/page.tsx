@@ -87,7 +87,7 @@ export default function ProfessionalLandingPage() {
       id: 1,
       name: "Prawn Roast",
       image: "/Mainimg.jpg",
-      price: 499,
+      price: 360,
       unit: "per 175 gm",
       isMain: true,
       description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
@@ -96,7 +96,7 @@ export default function ProfessionalLandingPage() {
       id: 2,
       name: "Dates Pickle",
       image: "/img1.jpg",
-      price: 499,
+      price: 360,
       unit: "per 400 gm",
       isMain: false,
       description:
@@ -106,7 +106,7 @@ export default function ProfessionalLandingPage() {
       id: 3,
       name: "Garlic Pickle",
       image: "/img3.jpg",
-      price: 499,
+      price: 360,
       unit: "per 400 gm",
       isMain: false,
       description:
@@ -123,7 +123,7 @@ export default function ProfessionalLandingPage() {
         <title>MeerasEstuff | Buy & Refer Premium Pickles & Dry Fruits</title>
         <meta
           name="description"
-          content="Buy premium quality pickles and dry fruits. Earn ₹250 per referral. Start your entrepreneurship journey with MeerasEstuff."
+          content="Buy premium quality pickles and dry fruits. Earn ₹160 per referral. Start your entrepreneurship journey with MeerasEstuff."
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:title" content="MeerasEstuff" />
@@ -305,7 +305,7 @@ export default function ProfessionalLandingPage() {
                   >
                     Join thousands of entrepreneurs earning{" "}
                     <span className="font-semibold text-emerald-600">
-                      50% commission
+                      80% commission
                     </span>{" "}
                     while delivering premium pickles & dry nuts directly to
                     customers
@@ -649,7 +649,7 @@ export default function ProfessionalLandingPage() {
               {[
                 {
                   icon: <TrendingUp className="w-8 h-8 text-emerald-600" />,
-                  title: "50% Commission Rate",
+                  title: "80% Commission Rate",
                   description:
                     "Earn substantial income with our industry-leading commission structure on every referral",
                 },

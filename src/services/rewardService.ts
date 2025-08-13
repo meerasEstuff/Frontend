@@ -12,5 +12,5 @@ export async function getTotalReferralReward(referrerId: string) {
   }
 
   // Assuming ₹250 reward per referral
-  return (count ?? 0) * 250;
+  return (count ?? 0) * 160;
 }
