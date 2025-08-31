@@ -303,12 +303,15 @@ export default function ProfessionalLandingPage() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-lg sm:text-xl text-gray-600 leading-relaxed text-center lg:text-left"
                   >
-                    Join thousands of entrepreneurs earning{" "}
+                    Build your business with just{" "}
                     <span className="font-semibold text-emerald-600">
-                      80% commission
+                      ₹860 ID activations
                     </span>{" "}
-                    while delivering premium pickles & dry nuts directly to
-                    customers
+                    — you earn{" "}
+                    <span className="font-semibold text-emerald-600">
+                      ₹500 per referral
+                    </span>{" "}
+                    on premium pickles & dry nuts.
                   </motion.p>
 
                   {/* CTA */}
