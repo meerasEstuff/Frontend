@@ -94,23 +94,13 @@ export default function ProfessionalLandingPage() {
     },
     {
       id: 2,
-      name: "Dates Pickle",
+      name: "Cashew Nut",
       image: "/img1.jpg",
-      price: 360,
-      unit: "per 400 gm",
+      price: 499,
+      unit: "250 gm",
       isMain: false,
       description:
         "a flavorful Pickle made with dates and spices, and can be sweat,sour ,tangy or spicy",
-    },
-    {
-      id: 3,
-      name: "Garlic Pickle",
-      image: "/img3.jpg",
-      price: 360,
-      unit: "per 400 gm",
-      isMain: false,
-      description:
-        "Garlic Pickle,a flavorful and tangy condiment that add a burst of zest to any meal",
     },
   ];
 
@@ -305,11 +295,11 @@ export default function ProfessionalLandingPage() {
                   >
                     Build your business with just{" "}
                     <span className="font-semibold text-emerald-600">
-                      ₹860 ID activations
+                      ₹1499 ID activations
                     </span>{" "}
                     — you earn{" "}
                     <span className="font-semibold text-emerald-600">
-                      ₹500 per referral
+                      ₹1000 per referral
                     </span>{" "}
                     on premium pickles & dry nuts.
                   </motion.p>
@@ -470,6 +460,7 @@ export default function ProfessionalLandingPage() {
         </section>
 
         {/* Product Section */}
+        {/* Product Section */}
         <section id="products" className="py-20 bg-emerald-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -489,7 +480,7 @@ export default function ProfessionalLandingPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 {/* Left Column: Main Product */}
                 {mainProduct && (
                   <motion.div
@@ -497,15 +488,15 @@ export default function ProfessionalLandingPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="lg:col-span-3 bg-white rounded-xl shadow-lg overflow-hidden transition-shadow duration-300 flex flex-col"
+                    className="lg:col-span-2 bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl border border-gray-100 flex flex-col group"
                   >
                     <div className="relative w-full aspect-[3/4]">
                       <Image
                         src={mainProduct.image}
                         alt={mainProduct.name}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                         onError={(e) => {
                           const target = e.currentTarget;
                           target.style.display = "none";
@@ -520,27 +511,27 @@ export default function ProfessionalLandingPage() {
                           Image not available
                         </p>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
-                        <h3 className="text-3xl font-bold mb-1">
+                      <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white">
+                        <h3 className="text-3xl lg:text-4xl font-bold mb-2">
                           {mainProduct.name}
-                          <span className="ml-2 text-sm bg-emerald-500 text-white px-3 py-1 rounded-full align-middle">
+                          <span className="ml-3 text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full align-middle shadow-lg">
                             Featured
                           </span>
                         </h3>
-                        <p className="text-4xl font-bold mb-4 flex items-baseline gap-x-2">
-                          <span className="flex items-center bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-lg">
-                            <IndianRupee className="w-8 h-8 mr-1" />
+                        <p className="text-4xl lg:text-5xl font-bold mb-6 flex items-baseline gap-x-3">
+                          <span className="flex items-center bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-xl shadow-lg">
+                            <IndianRupee className="w-8 h-8 mr-2" />
                             {mainProduct.price}
                           </span>
                           {mainProduct.unit && (
-                            <span className="text-lg font-normal bg-color-primary-500/50 backdrop-blur-sm text-gray-200 px-2 py-1 rounded-md">
+                            <span className="text-lg font-normal bg-emerald-600/80 backdrop-blur-md text-gray-100 px-3 py-2 rounded-lg">
                               {mainProduct.unit}
                             </span>
                           )}
                         </p>
                         <button
                           onClick={toggleMainProductDescription}
-                          className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black"
+                          className="w-full flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                         >
                           <Info className="w-5 h-5" />
                           <span>
@@ -549,7 +540,7 @@ export default function ProfessionalLandingPage() {
                               : "Show More"}
                           </span>
                           <ChevronDown
-                            className={`w-5 h-5 transition-transform ${
+                            className={`w-5 h-5 transition-transform duration-300 ${
                               isMainProductDescriptionOpen
                                 ? "rotate-180"
                                 : "rotate-0"
@@ -565,12 +556,14 @@ export default function ProfessionalLandingPage() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <p className="text-gray-700 p-6 bg-gray-50">
-                            {mainProduct.description}
-                          </p>
+                          <div className="p-8 bg-gradient-to-br from-gray-50 to-emerald-50">
+                            <p className="text-gray-700 leading-relaxed text-lg">
+                              {mainProduct.description}
+                            </p>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -578,7 +571,7 @@ export default function ProfessionalLandingPage() {
                 )}
 
                 {/* Right Column: Future Products */}
-                <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+                <div className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
                   {futureProducts.map((product, index) => (
                     <motion.div
                       key={product.id}
@@ -586,15 +579,15 @@ export default function ProfessionalLandingPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
+                      className="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300 flex flex-col border border-gray-100 group transform hover:scale-105"
                     >
                       <div className="relative w-full aspect-[4/5]">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
-                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                          className="object-cover"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
                           onError={(e) => {
                             const target = e.currentTarget;
                             target.style.display = "none";
@@ -609,23 +602,26 @@ export default function ProfessionalLandingPage() {
                             Image not available
                           </p>
                         </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
-                      <div className="p-4 flex-grow flex flex-col">
-                        <h3 className="text-lg font-semibold text-gray-900">
+                      <div className="p-6 flex-grow flex flex-col bg-gradient-to-br from-white to-gray-50">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">
                           {product.name}
                         </h3>
-                        <p className="text-gray-500 text-sm mt-1 mb-3 flex-grow">
+                        <p className="text-gray-600 text-sm mb-4 flex-grow leading-relaxed">
                           {product.description}
                         </p>
-                        <p className="text-xl font-bold text-gray-800 flex items-center">
-                          <IndianRupee className="w-5 h-5 mr-1" />
-                          {product.price}
+                        <div className="flex items-center justify-between">
+                          <p className="text-2xl font-bold text-gray-800 flex items-center">
+                            <IndianRupee className="w-6 h-6 mr-1" />
+                            {product.price}
+                          </p>
                           {product.unit && (
-                            <span className="text-sm font-normal text-gray-500 ml-1">
+                            <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
                               {product.unit}
                             </span>
                           )}
-                        </p>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
@@ -652,9 +648,9 @@ export default function ProfessionalLandingPage() {
               {[
                 {
                   icon: <TrendingUp className="w-8 h-8 text-emerald-600" />,
-                  title: "80% Commission Rate",
+                  title: "Maximum Earnings",
                   description:
-                    "Earn substantial income with our industry-leading commission structure on every referral",
+                    "Maximize Your Income Keep the majority of every sale you generate with our high-paying referral program",
                 },
                 {
                   icon: <ShoppingCart className="w-8 h-8 text-teal-600" />,

@@ -40,23 +40,13 @@ const products = [
   },
   {
     id: 2,
-    name: "Dates Pickle",
+    name: "Cashew Nut",
     image: "/img1.jpg",
-    price: 360,
-    unit: "per 400 gm",
+    price: 499,
+    unit: "250 gm",
     isMain: false,
     description:
       "A flavorful pickle made with dates and spices, and can be sweet, sour, tangy or spicy",
-  },
-  {
-    id: 3,
-    name: "Garlic Pickle",
-    image: "/img3.jpg",
-    price: 360,
-    unit: "per 400 gm",
-    isMain: false,
-    description:
-      "Garlic Pickle, a flavorful and tangy condiment that adds a burst of zest to any meal",
   },
 ];
 
@@ -466,7 +456,7 @@ function DashboardPage() {
                 {/* Featured Product - Takes 2 columns on extra large screens */}
                 {mainProduct && (
                   <div className="xl:col-span-2">
-                    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 overflow-hidden hover:shadow-3xl transition-all duration-700 group relative">
+                    <div className=" backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 overflow-hidden hover:shadow-3xl transition-all duration-700 group relative">
                       {/* Featured Badge */}
                       <div className="absolute top-6 left-6 z-10">
                         <div className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
