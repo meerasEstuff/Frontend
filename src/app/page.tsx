@@ -100,7 +100,7 @@ export default function ProfessionalLandingPage() {
       unit: "250 gm",
       isMain: false,
       description:
-        "a flavorful Pickle made with dates and spices, and can be sweat,sour ,tangy or spicy",
+        "Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste",
     },
   ];
 
