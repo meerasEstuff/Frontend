@@ -58,6 +58,6 @@ export async function fetchAllUsersWithReferralCount() {
   return {
     users: usersWithReferralData,
     totalUsers: usersWithReferralData.length,
-    totalRevenue: usersWithReferralData.length * 200,
+    totalRevenue: usersWithReferralData.length * 499,
   };
 }

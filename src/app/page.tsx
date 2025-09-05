@@ -34,11 +34,7 @@ export default function ProfessionalLandingPage() {
   const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
     useState(false);
 
-  const AdditionalImg = [
-    { src: "/adImg1.jpg" },
-    { src: "/adImg2.jpg" },
-    { src: "/adImg3.jpg" },
-  ];
+  const AdditionalImg = [{ src: "/adimg4.jpg" }, { src: "/adimg5.jpg" }];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -348,7 +344,7 @@ export default function ProfessionalLandingPage() {
 
             {/* Main Gallery Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-              {/* First Image - Large Featured */}
+              {/* First Image - Large Featured (4:3 for full pickle jar showcase) */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -360,7 +356,7 @@ export default function ProfessionalLandingPage() {
                   <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
                     <Image
                       src={AdditionalImg[0].src}
-                      alt="Featured Gallery Image"
+                      alt="Premium Pickle Collection - Full Product Showcase"
                       width={800}
                       height={600}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -377,7 +373,7 @@ export default function ProfessionalLandingPage() {
                 </div>
               </motion.div>
 
-              {/* Second and Third Images - Stacked */}
+              {/* Second and Third Images - Square (Perfect for close-ups and process shots) */}
               <div className="lg:col-span-5 flex flex-col gap-6">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -387,12 +383,12 @@ export default function ProfessionalLandingPage() {
                   className="relative group flex-1"
                 >
                   <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2 h-full">
-                    <div className="relative overflow-hidden rounded-2xl h-full aspect-[4/3]">
+                    <div className="relative overflow-hidden rounded-2xl h-full aspect-square">
                       <Image
                         src={AdditionalImg[1].src}
-                        alt="Gallery Image 2"
+                        alt="Pickle Texture & Ingredients Close-up"
                         width={400}
-                        height={300}
+                        height={400}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-transparent to-teal-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
@@ -400,34 +396,6 @@ export default function ProfessionalLandingPage() {
                       {/* Corner Badge */}
                       <div className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                         <Heart className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  className="relative group flex-1"
-                >
-                  <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2 h-full">
-                    <div className="relative overflow-hidden rounded-2xl h-full min-h-[190px] sm:min-h-[240px] lg:min-h-[290px]">
-                      <Image
-                        src={AdditionalImg[2].src}
-                        alt="Gallery Image 3"
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-tl from-amber-500/20 via-transparent to-orange-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-
-                      {/* Corner Badge */}
-                      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                        <span className="text-gray-800 font-medium text-xs">
-                          Handcrafted
-                        </span>
                       </div>
                     </div>
                   </div>
@@ -481,7 +449,6 @@ export default function ProfessionalLandingPage() {
             </motion.div>
           </div>
         </section>
-
         {/* Product Section */}
         <section
           id="products"
@@ -617,7 +584,7 @@ export default function ProfessionalLandingPage() {
                   </motion.div>
                 )}
 
-                {/* Right Column: Future Products */}
+                {/* Right Column: Future Products - Increased Height */}
                 <div className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8">
                   {futureProducts.map((product, index) => (
                     <motion.div
@@ -628,7 +595,8 @@ export default function ProfessionalLandingPage() {
                       transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                       className="bg-gradient-to-br from-white to-gray-50/80 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-500 flex flex-col border border-white/60 group transform hover:scale-105 hover:-translate-y-2 backdrop-blur-sm"
                     >
-                      <div className="relative w-full aspect-[4/5] overflow-hidden">
+                      {/* Increased aspect ratio from 4/5 to 3/4 for taller images */}
+                      <div className="relative w-full aspect-[3/4] overflow-hidden">
                         <Image
                           src={product.image}
                           alt={product.name}

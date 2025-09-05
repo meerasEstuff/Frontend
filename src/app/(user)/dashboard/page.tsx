@@ -172,7 +172,7 @@ function DashboardPage() {
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="bg-white/90 backdrop-blur-md shadow-md fixed top-0 left-0 right-0 z-50 p-4"
+          className=" backdrop-blur-md shadow-md fixed top-0 left-0 right-0 z-50 p-4"
         >
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
@@ -434,7 +434,7 @@ function DashboardPage() {
 
           {/* --- */}
           {/* Our Products Section */}
-          <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-teal-50 p-4 sm:p-6 lg:p-8">
+          <div className="min-h-screen  p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto">
               {/* Header Section */}
               <div className="text-center mb-12">
@@ -469,13 +469,13 @@ function DashboardPage() {
 
                       <div className="flex flex-col lg:flex-row min-h-[600px]">
                         {/* Image Section */}
-                        <div className="lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50">
+                        <div className="lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 ">
                           <div className="relative h-80 lg:h-full ">
                             <Image
                               src={mainProduct.image}
                               alt={mainProduct.name}
                               fill
-                              className="object-contain p-8 group-hover:scale-110 transition-transform duration-700"
+                              className="object-contain p-8 group-hover:scale-110 transition-transform duration-700 "
                               priority
                             />
 
@@ -550,9 +550,9 @@ function DashboardPage() {
                 )}
 
                 {/* Specialties Column */}
-                <div className="space-y-6">
+                <div className="space-y-8">
                   {/* Section Header */}
-                  <div className="text-center xl:text-left mb-8">
+                  <div className="text-center xl:text-left mb-12">
                     <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
                       Our Specialties
                     </h3>
@@ -566,57 +566,44 @@ function DashboardPage() {
                   {futureProducts.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-white/30 hover:border-emerald-300 group transform hover:-translate-y-2"
+                      className="group py-6 hover:bg-gray-50/50 transition-colors duration-200 rounded-lg border border-[#2fb96d]"
                     >
-                      <div className="flex p-4">
+                      <div className="flex items-start gap-6">
                         {/* Product Image */}
-                        <div className="w-32 h-32 sm:w-40 sm:h-40 flex-shrink-0 relative overflow-hidden bg-white rounded-xl border border-gray-100 shadow">
+                        <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 relative">
                           <Image
                             src={product.image}
                             alt={product.name}
                             fill
-                            className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                            className="object-contain"
                           />
                         </div>
 
                         {/* Product Info */}
-                        <div className="flex-1 ml-4 flex flex-col justify-between">
-                          <div>
-                            <div className="flex items-start justify-between mb-2">
-                              <h4 className="font-bold text-lg sm:text-xl text-gray-900 group-hover:text-emerald-700 transition-colors leading-tight">
-                                {product.name}
-                              </h4>
-                            </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-lg sm:text-xl text-gray-900 mb-2 leading-tight">
+                            {product.name}
+                          </h4>
 
-                            <div className="flex items-center mb-3">
-                              <div className="flex items-center bg-gradient-to-r from-emerald-100 to-teal-100 group-hover:from-emerald-200 group-hover:to-teal-200 px-3 py-1.5 rounded-xl transition-colors shadow-sm">
-                                <IndianRupee className="w-4 h-4 mr-1 text-emerald-600" />
-                                <span className="font-bold text-emerald-700 text-lg">
-                                  {product.price}
-                                </span>
-                                {product.unit && (
-                                  <span className="text-emerald-600 text-sm ml-1 font-medium">
-                                    /{product.unit.replace("per ", "")}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-
-                            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 group-hover:text-gray-700 transition-colors">
-                              {product.description}
-                            </p>
+                          <div className="flex items-center mb-3">
+                            <IndianRupee className="w-4 h-4 mr-1 text-emerald-600" />
+                            <span className="font-semibold text-emerald-700 text-lg mr-1">
+                              {product.price}
+                            </span>
+                            {product.unit && (
+                              <span className="text-gray-500 text-sm">
+                                /{product.unit.replace("per ", "")}
+                              </span>
+                            )}
                           </div>
 
-                          {/* Quality Indicator */}
-                          <div className="mt-3 flex items-center space-x-2">
-                            <div className="flex items-center space-x-1">
-                              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                              <div className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-pulse delay-75"></div>
-                              <div className="w-1 h-1 bg-emerald-300 rounded-full animate-pulse delay-150"></div>
-                            </div>
-                            <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">
-                              Premium Quality
-                            </span>
+                          <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3">
+                            {product.description}
+                          </p>
+
+                          <div className="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-wide">
+                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                            <span>Premium Quality</span>
                           </div>
                         </div>
                       </div>
