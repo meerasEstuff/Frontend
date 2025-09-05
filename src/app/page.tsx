@@ -24,8 +24,6 @@ import {
   Info,
   ChevronDown,
   IndianRupee,
-  ChevronLeft,
-  ChevronRight,
   Camera,
   Leaf,
 } from "lucide-react";
@@ -36,36 +34,12 @@ export default function ProfessionalLandingPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
     useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // Image carousel data
-  const heroImages = [
-    {
-      src: "/CompanyImg.jpeg",
-      alt: "MeerasEstuff Company",
-      title: "Premium Quality Products",
-    },
-    {
-      src: "/CompanyImg3.jpeg",
-      alt: "MeerasEstuff Products",
-      title: "Artisanal Excellence",
-    },
-  ];
 
   const AdditionalImg = [
     { src: "/adImg1.jpg" },
     { src: "/adImg2.jpg" },
     { src: "/adImg3.jpg" },
   ];
-
-  // Auto-rotate images every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 20000);
-
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -77,16 +51,6 @@ export default function ProfessionalLandingPage() {
 
   const toggleMainProductDescription = () => {
     setIsMainProductDescriptionOpen(!isMainProductDescriptionOpen);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? heroImages.length - 1 : prevIndex - 1
-    );
   };
 
   // Product data
@@ -138,9 +102,9 @@ export default function ProfessionalLandingPage() {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 font-sans antialiased">
+      <div className="min-h-screen bg-gradient-to-br bg-white/90 font-sans antialiased">
         {/* Navbar */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90  ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               {/* Logo and Company Name */}
@@ -252,7 +216,7 @@ export default function ProfessionalLandingPage() {
           </div>
         </nav>
 
-        {/* Enhanced Hero Section with Image Carousel */}
+        {/* Enhanced Hero Section with Single Featured Image */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 ">
           {/* Enhanced Background */}
           <div className="absolute inset-0 opacity-5">
@@ -329,87 +293,30 @@ export default function ProfessionalLandingPage() {
                   </motion.div>
                 </div>
 
-                {/* Right Column - Enhanced Image Carousel */}
+                {/* Right Column - Simple Image */}
                 <motion.div
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   className="w-full lg:w-1/2 flex justify-center items-center"
                 >
-                  <div className="relative group">
-                    {/* Main Image Container */}
-                    <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white">
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={currentImageIndex}
-                          initial={{ opacity: 0, scale: 1.1 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.9 }}
-                          transition={{ duration: 0.5 }}
-                          className="relative"
-                        >
-                          <Image
-                            src={heroImages[currentImageIndex].src}
-                            alt={heroImages[currentImageIndex].alt}
-                            width={500}
-                            height={600}
-                            className="w-full max-w-md h-auto object-cover transition-transform duration-700 hover:scale-105"
-                          />
-
-                          {/* Image Overlay with Title */}
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
-                            <motion.h3
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.5, delay: 0.2 }}
-                              className="text-white text-xl font-bold text-center"
-                            >
-                              {heroImages[currentImageIndex].title}
-                            </motion.h3>
-                          </div>
-                        </motion.div>
-                      </AnimatePresence>
-
-                      {/* Navigation Arrows */}
-                      <button
-                        onClick={prevImage}
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
-                        aria-label="Previous image"
+                  <div className="relative">
+                    {/* Simple Image Container */}
+                    <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        className="relative"
                       >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-
-                      <button
-                        onClick={nextImage}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </div>
-
-                    {/* Image Indicators */}
-                    <div className="flex justify-center mt-4 space-x-2">
-                      {heroImages.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                            index === currentImageIndex
-                              ? "bg-emerald-600 scale-110"
-                              : "bg-gray-300 hover:bg-gray-400"
-                          }`}
-                          aria-label={`Go to image ${index + 1}`}
+                        <Image
+                          src="/cpmImg.jpg"
+                          alt="MeerasEstuff Direct Selling Business"
+                          width={800}
+                          height={800}
+                          className="w-full max-w-md h-auto object-cover transition-transform duration-700 hover:scale-105"
                         />
-                      ))}
-                    </div>
-
-                    {/* Decorative Elements */}
-                    <div className="absolute -top-2 -right-2 bg-white rounded-full p-2 shadow-lg">
-                      <Award className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <div className="absolute -bottom-2 -left-2 bg-white rounded-full p-2 shadow-lg">
-                      <Star className="w-4 h-4 text-yellow-500" />
+                      </motion.div>
                     </div>
                   </div>
                 </motion.div>
