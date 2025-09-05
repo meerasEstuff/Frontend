@@ -34,7 +34,7 @@ export default function ProfessionalLandingPage() {
   const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
     useState(false);
 
-  const AdditionalImg = [{ src: "/adimg4.jpg" }, { src: "/adimg5.jpg" }];
+  const AdditionalImg = [{ src: "/adImg4.jpg" }, { src: "/adImg5.jpg" }];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
