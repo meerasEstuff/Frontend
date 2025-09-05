@@ -31,22 +31,22 @@ import Image from "next/image";
 const products = [
   {
     id: 1,
-    name: "Prawn Roast ",
-    image: "/Mainimg.jpg",
-    price: 360,
-    unit: "per 175 gm",
-    isMain: true,
-    description: `Indulge in our exquisite Prawn Roast, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
-  },
-  {
-    id: 2,
-    name: "Cashew Nut",
+    name: "Prawn Roast Cashew Nut ",
     image: "/img1.jpg",
     price: 499,
     unit: "250 gm",
+    isMain: true,
+    description: `Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste`,
+  },
+  {
+    id: 2,
+    name: "Prawn Roast",
+    image: "/Mainimg.jpg",
+    price: 499,
+    unit: "175 gm",
     isMain: false,
     description:
-      "Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste",
+      "Savor our Prawn Roast Combo Pack, featuring perfectly seasoned and slow-roasted prawns. Rich, aromatic, and spicy, it's crafted with fresh ingredients for a quick gourmet meal or special gathering. Enjoy authentic coastal flavors in every bite.",
   },
 ];
 

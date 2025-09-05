@@ -26,6 +26,8 @@ import {
   IndianRupee,
   ChevronLeft,
   ChevronRight,
+  Camera,
+  Leaf,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -48,6 +50,12 @@ export default function ProfessionalLandingPage() {
       alt: "MeerasEstuff Products",
       title: "Artisanal Excellence",
     },
+  ];
+
+  const AdditionalImg = [
+    { src: "/adImg1.jpg" },
+    { src: "/adImg2.jpg" },
+    { src: "/adImg3.jpg" },
   ];
 
   // Auto-rotate images every 5 seconds
@@ -85,22 +93,22 @@ export default function ProfessionalLandingPage() {
   const products = [
     {
       id: 1,
-      name: "Prawn Roast",
-      image: "/Mainimg.jpg",
-      price: 360,
-      unit: "per 175 gm",
-      isMain: true,
-      description: `Indulge in our exquisite Prawn Roast Combo Pack, a culinary delight for seafood lovers. This pack features perfectly seasoned and slow-roasted prawns, offering a rich, aromatic, and spicy experience. Made with fresh, high-quality ingredients, it's ideal for a quick, gourmet meal or entertaining guests. Each bite promises a burst of authentic flavors, bringing the taste of traditional coastal cuisine right to your home. Enjoy the perfect blend of spices and tender prawns in every serving.`,
-    },
-    {
-      id: 2,
       name: "Cashew Nut",
       image: "/img1.jpg",
       price: 499,
       unit: "250 gm",
+      isMain: true,
+      description: `Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste`,
+    },
+    {
+      id: 2,
+      name: "Prawn Roast",
+      image: "/Mainimg.jpg",
+      price: 499,
+      unit: "175 gm",
       isMain: false,
       description:
-        "Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste",
+        "Savor our Prawn Roast Combo Pack, featuring perfectly seasoned and slow-roasted prawns. Rich, aromatic, and spicy, it's crafted with fresh ingredients for a quick gourmet meal or special gathering. Enjoy authentic coastal flavors in every bite.",
     },
   ];
 
@@ -410,77 +418,194 @@ export default function ProfessionalLandingPage() {
           </div>
         </section>
 
-        {/* Additional Gallery Section - Showcase both images */}
-        <section className="py-16 bg-white">
+        {/* Additional Gallery Section */}
+        <section className="py-20 bg-gradient-to-br from-gray-50 via-emerald-50/30 to-teal-50/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-12"
+              className="text-center mb-16"
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl shadow-xl mb-6">
+                <Camera className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 via-emerald-700 to-teal-700 bg-clip-text text-transparent mb-4">
                 Experience Our Excellence
               </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Discover the passion and craftsmanship behind every product we
                 create
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {heroImages.map((image, index) => (
+            {/* Main Gallery Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+              {/* First Image - Large Featured */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="lg:col-span-7 relative group"
+              >
+                <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2">
+                  <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
+                    <Image
+                      src={AdditionalImg[0].src}
+                      alt="Featured Gallery Image"
+                      width={800}
+                      height={600}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+
+                    {/* Floating Info Badge */}
+                    <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                      <span className="text-gray-800 font-semibold text-sm">
+                        Premium Quality
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Second and Third Images - Stacked */}
+              <div className="lg:col-span-5 flex flex-col gap-6">
                 <motion.div
-                  key={index}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative group overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="relative group flex-1"
                 >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={600}
-                    height={400}
-                    className="w-full  h-60 sm:h-72 md:h-80 object-cover transition-transform duration-300 md:group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-4 left-4">
-                      <h3 className="text-white text-xl font-bold">
-                        {image.title}
-                      </h3>
+                  <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2 h-full">
+                    <div className="relative overflow-hidden rounded-2xl h-full aspect-[4/3]">
+                      <Image
+                        src={AdditionalImg[1].src}
+                        alt="Gallery Image 2"
+                        width={400}
+                        height={300}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-transparent to-teal-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+
+                      {/* Corner Badge */}
+                      <div className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                        <Heart className="w-4 h-4 text-white" />
+                      </div>
                     </div>
                   </div>
                 </motion.div>
-              ))}
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="relative group flex-1"
+                >
+                  <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2 h-full">
+                    <div className="relative overflow-hidden rounded-2xl h-full min-h-[190px] sm:min-h-[240px] lg:min-h-[290px]">
+                      <Image
+                        src={AdditionalImg[2].src}
+                        alt="Gallery Image 3"
+                        width={400}
+                        height={300}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tl from-amber-500/20 via-transparent to-orange-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+
+                      {/* Corner Badge */}
+                      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                        <span className="text-gray-800 font-medium text-xs">
+                          Handcrafted
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
+
+            {/* Bottom Stats/Features Row */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Award className="w-8 h-8 text-emerald-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  Premium Quality
+                </h3>
+                <p className="text-gray-600">
+                  Carefully selected ingredients for the finest taste
+                </p>
+              </div>
+
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Leaf className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  Fresh & Natural
+                </h3>
+                <p className="text-gray-600">
+                  Made with fresh, natural ingredients daily
+                </p>
+              </div>
+
+              <div className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-8 h-8 text-amber-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  Made with Love
+                </h3>
+                <p className="text-gray-600">
+                  Traditional recipes crafted with care and passion
+                </p>
+              </div>
+            </motion.div>
           </div>
         </section>
 
         {/* Product Section */}
-        {/* Product Section */}
-        <section id="products" className="py-20 bg-emerald-50">
+        <section
+          id="products"
+          className="py-20 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50"
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 sm:p-8"
+              className="bg-white/70 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/30 p-8 sm:p-12 relative overflow-hidden"
             >
-              <div className="text-center mb-12">
-                <Package className="w-10 h-10 text-emerald-600 mx-auto mb-4" />
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
+              {/* Background Decorative Elements */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-emerald-100/30 to-transparent rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-teal-100/30 to-transparent rounded-full blur-3xl"></div>
+
+              <div className="text-center mb-16 relative z-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl shadow-xl mb-6">
+                  <Package className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 via-emerald-700 to-teal-700 bg-clip-text text-transparent mb-4">
                   Our Culinary Creations
                 </h2>
-                <p className="text-lg text-gray-600">
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                   Discover our featured delight and upcoming flavors!
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start relative z-10">
                 {/* Left Column: Main Product */}
                 {mainProduct && (
                   <motion.div
@@ -488,15 +613,23 @@ export default function ProfessionalLandingPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="lg:col-span-2 bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl border border-gray-100 flex flex-col group"
+                    className="lg:col-span-2 bg-gradient-to-br from-white to-gray-50/50 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-3xl border border-white/50 flex flex-col group relative"
                   >
-                    <div className="relative w-full aspect-[3/4]">
+                    {/* Floating Featured Badge */}
+                    <div className="absolute top-6 left-6 z-20">
+                      <span className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-2xl backdrop-blur-sm">
+                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                        Featured
+                      </span>
+                    </div>
+
+                    <div className="relative w-full aspect-[3/4] overflow-hidden">
                       <Image
                         src={mainProduct.image}
                         alt={mainProduct.name}
                         fill
                         sizes="(max-width: 1024px) 100vw, 66vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         onError={(e) => {
                           const target = e.currentTarget;
                           target.style.display = "none";
@@ -511,43 +644,51 @@ export default function ProfessionalLandingPage() {
                           Image not available
                         </p>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white">
-                        <h3 className="text-3xl lg:text-4xl font-bold mb-2">
-                          {mainProduct.name}
-                          <span className="ml-3 text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full align-middle shadow-lg">
-                            Featured
-                          </span>
-                        </h3>
-                        <p className="text-4xl lg:text-5xl font-bold mb-6 flex items-baseline gap-x-3">
-                          <span className="flex items-center bg-black/60 backdrop-blur-md text-white px-4 py-2 rounded-xl shadow-lg">
-                            <IndianRupee className="w-8 h-8 mr-2" />
+
+                      {/* Minimal Gradient Overlay - Only at bottom */}
+                      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+
+                    {/* Product Info Section - Separated from image */}
+                    <div className="p-8 lg:p-10 bg-gradient-to-br from-white to-gray-50">
+                      <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                        {mainProduct.name}
+                      </h3>
+
+                      <div className="flex flex-wrap items-center gap-4 mb-6">
+                        <div className="flex items-center bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-3 rounded-2xl shadow-lg border border-emerald-100">
+                          <IndianRupee className="w-8 h-8 mr-2 text-emerald-600" />
+                          <span className="text-4xl font-bold text-gray-900">
                             {mainProduct.price}
                           </span>
-                          {mainProduct.unit && (
-                            <span className="text-lg font-normal bg-emerald-600/80 backdrop-blur-md text-gray-100 px-3 py-2 rounded-lg">
+                        </div>
+                        {mainProduct.unit && (
+                          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-xl shadow-lg">
+                            <span className="text-lg font-semibold">
                               {mainProduct.unit}
                             </span>
-                          )}
-                        </p>
-                        <button
-                          onClick={toggleMainProductDescription}
-                          className="w-full flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-black shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-                        >
-                          <Info className="w-5 h-5" />
-                          <span>
-                            {isMainProductDescriptionOpen
-                              ? "Hide Details"
-                              : "Show More"}
-                          </span>
-                          <ChevronDown
-                            className={`w-5 h-5 transition-transform duration-300 ${
-                              isMainProductDescriptionOpen
-                                ? "rotate-180"
-                                : "rotate-0"
-                            }`}
-                          />
-                        </button>
+                          </div>
+                        )}
                       </div>
+
+                      <button
+                        onClick={toggleMainProductDescription}
+                        className="w-full flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/50 shadow-xl hover:shadow-2xl transform hover:scale-[1.02]"
+                      >
+                        <Info className="w-6 h-6" />
+                        <span className="text-lg">
+                          {isMainProductDescriptionOpen
+                            ? "Hide Details"
+                            : "Show More"}
+                        </span>
+                        <ChevronDown
+                          className={`w-6 h-6 transition-transform duration-300 ${
+                            isMainProductDescriptionOpen
+                              ? "rotate-180"
+                              : "rotate-0"
+                          }`}
+                        />
+                      </button>
                     </div>
 
                     <AnimatePresence>
@@ -556,11 +697,11 @@ export default function ProfessionalLandingPage() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.4, ease: "easeInOut" }}
+                          transition={{ duration: 0.5, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="p-8 bg-gradient-to-br from-gray-50 to-emerald-50">
-                            <p className="text-gray-700 leading-relaxed text-lg">
+                          <div className="p-8 lg:p-10 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 border-t border-emerald-100">
+                            <p className="text-gray-700 leading-relaxed text-lg lg:text-xl font-medium">
                               {mainProduct.description}
                             </p>
                           </div>
@@ -571,7 +712,7 @@ export default function ProfessionalLandingPage() {
                 )}
 
                 {/* Right Column: Future Products */}
-                <div className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+                <div className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8">
                   {futureProducts.map((product, index) => (
                     <motion.div
                       key={product.id}
@@ -579,15 +720,15 @@ export default function ProfessionalLandingPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                      className="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300 flex flex-col border border-gray-100 group transform hover:scale-105"
+                      className="bg-gradient-to-br from-white to-gray-50/80 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-500 flex flex-col border border-white/60 group transform hover:scale-105 hover:-translate-y-2 backdrop-blur-sm"
                     >
-                      <div className="relative w-full aspect-[4/5]">
+                      <div className="relative w-full aspect-[4/5] overflow-hidden">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
                           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="object-cover group-hover:scale-125 transition-transform duration-700 ease-out"
                           onError={(e) => {
                             const target = e.currentTarget;
                             target.style.display = "none";
@@ -602,24 +743,38 @@ export default function ProfessionalLandingPage() {
                             Image not available
                           </p>
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                        {/* Subtle Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+
+                        {/* Hover Effect Glow */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/10 via-transparent to-teal-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
                       </div>
-                      <div className="p-6 flex-grow flex flex-col bg-gradient-to-br from-white to-gray-50">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+
+                      <div className="p-8 flex-grow flex flex-col bg-gradient-to-br from-white via-gray-50/50 to-emerald-50/30 relative">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-emerald-700 transition-colors duration-300">
                           {product.name}
                         </h3>
-                        <p className="text-gray-600 text-sm mb-4 flex-grow leading-relaxed">
+                        <p className="text-gray-600 text-base mb-6 flex-grow leading-relaxed">
                           {product.description}
                         </p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-2xl font-bold text-gray-800 flex items-center">
-                            <IndianRupee className="w-6 h-6 mr-1" />
-                            {product.price}
-                          </p>
-                          {product.unit && (
-                            <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-                              {product.unit}
+
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                          <div className="flex items-center">
+                            <div className="bg-gradient-to-r from-emerald-100 to-teal-100 p-2 rounded-xl shadow-inner">
+                              <IndianRupee className="w-6 h-6 text-emerald-600" />
+                            </div>
+                            <span className="text-3xl font-bold text-gray-800 ml-3">
+                              {product.price}
                             </span>
+                          </div>
+
+                          {product.unit && (
+                            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-xl shadow-lg">
+                              <span className="text-sm font-bold">
+                                {product.unit}
+                              </span>
+                            </div>
                           )}
                         </div>
                       </div>
