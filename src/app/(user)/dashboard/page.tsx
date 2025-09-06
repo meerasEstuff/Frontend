@@ -16,6 +16,9 @@ import {
   Info,
   Star,
   Sparkles,
+  Heart,
+  Leaf,
+  Award,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/store/userStore";
@@ -26,29 +29,6 @@ import { getGreeting } from "@/utils/greeting";
 import { handleShareCustomerId } from "@/utils/shareUtils";
 import { useProtectPage } from "@/lib/useProtectPage";
 import Image from "next/image";
-
-// UPDATED: Products data for 1 main product and 3 future products
-const products = [
-  {
-    id: 1,
-    name: "Prawn Roast Cashew Nut ",
-    image: "/img1.jpg",
-    price: 499,
-    unit: "250 gm",
-    isMain: true,
-    description: `Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste`,
-  },
-  {
-    id: 2,
-    name: "Prawn Roast",
-    image: "/Mainimg.jpg",
-    price: 499,
-    unit: "175 gm",
-    isMain: false,
-    description:
-      "Savor our Prawn Roast Combo Pack, featuring perfectly seasoned and slow-roasted prawns. Rich, aromatic, and spicy, it's crafted with fresh ingredients for a quick gourmet meal or special gathering. Enjoy authentic coastal flavors in every bite.",
-  },
-];
 
 function DashboardPage() {
   const router = useRouter();
@@ -144,9 +124,6 @@ function DashboardPage() {
   const toggleReferralList = () => {
     setIsReferralListDropdownOpen(!isReferralListDropdownOpen);
   };
-
-  const mainProduct = products.find((p) => p.isMain);
-  const futureProducts = products.filter((p) => !p.isMain);
 
   const toggleMainProductDescription = () => {
     setIsMainProductDescriptionOpen(!isMainProductDescriptionOpen);
@@ -434,7 +411,7 @@ function DashboardPage() {
 
           {/* --- */}
           {/* Our Products Section */}
-          <div className="min-h-screen  p-4 sm:p-6 lg:p-8">
+          <div className="min-h-screen p-4 sm:p-6 lg:p-8">
             <div className="max-w-7xl mx-auto">
               {/* Header Section */}
               <div className="text-center mb-12">
@@ -445,170 +422,213 @@ function DashboardPage() {
                   Our Products
                 </h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                  Discover our main offering and upcoming delights crafted with
-                  premium quality ingredients!
+                  Discover our premium collection of carefully crafted products,
+                  each made with the finest ingredients!
                 </p>
                 <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto mt-6 rounded-full"></div>
               </div>
 
               {/* Main Content Grid */}
-              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                {/* Featured Product - Takes 2 columns on extra large screens */}
-                {mainProduct && (
-                  <div className="xl:col-span-2">
-                    <div className=" backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 overflow-hidden hover:shadow-3xl transition-all duration-700 group relative">
-                      {/* Featured Badge */}
-                      <div className="absolute top-6 left-6 z-10">
-                        <div className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
-                          <Star className="w-4 h-4 fill-current" />
-                          <span className="text-sm font-semibold">
-                            Featured Product
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col lg:flex-row min-h-[600px]">
-                        {/* Image Section */}
-                        <div className="lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50 ">
-                          <div className="relative h-80 lg:h-full ">
-                            <Image
-                              src={mainProduct.image}
-                              alt={mainProduct.name}
-                              fill
-                              className="object-contain p-8 group-hover:scale-110 transition-transform duration-700 "
-                              priority
-                            />
-
-                            <div className="absolute inset-0 flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden">
-                              <Package className="w-20 h-20 text-emerald-500 mb-4" />
-                              <p className="text-gray-600 text-lg font-medium">
-                                Premium Product Image
-                              </p>
-                            </div>
-                          </div>
-                          {/* Decorative Elements */}
-                          <div className="absolute bottom-4 right-4 w-12 h-12 bg-white/20 rounded-full backdrop-blur-sm flex items-center justify-center">
-                            <Sparkles className="w-6 h-6 text-emerald-500" />
-                          </div>
-                        </div>
-
-                        {/* Content Section */}
-                        <div className="lg:w-1/2 p-8 lg:p-10 flex flex-col justify-center bg-white/90 backdrop-blur-sm">
-                          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                            {mainProduct.name}
-                          </h2>
-
-                          <div className="flex items-center mb-8">
-                            <div className="flex items-center bg-gradient-to-r from-emerald-100 to-teal-100 px-6 py-3 rounded-2xl">
-                              <IndianRupee className="w-8 h-8 text-emerald-600 mr-2" />
-                              <span className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                                {mainProduct.price}
-                              </span>
-                            </div>
-                            <span className="ml-4 text-lg text-gray-500 font-medium">
-                              per Bottle
-                            </span>
-                          </div>
-
-                          <span className="text-emerald-600 text-sm ml-1 font-medium">
-                            {mainProduct.unit}
-                          </span>
-                          <div className="mb-8">
-                            <p
-                              className={`text-gray-700 leading-relaxed text-lg transition-all duration-300 ${
-                                isMainProductDescriptionOpen
-                                  ? ""
-                                  : "line-clamp-3"
-                              }`}
-                            >
-                              {mainProduct.description}
-                            </p>
-                          </div>
-
-                          <button
-                            onClick={toggleMainProductDescription}
-                            className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl font-semibold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-300 shadow-lg hover:shadow-xl group/btn transform hover:-translate-y-1 self-start"
-                          >
-                            <Info className="w-5 h-5 group-hover/btn:rotate-12 transition-transform" />
-                            <span>
-                              {isMainProductDescriptionOpen
-                                ? "Show Less"
-                                : "Learn More"}
-                            </span>
-                            <ChevronDown
-                              className={`w-5 h-5 transition-transform ${
-                                isMainProductDescriptionOpen
-                                  ? "rotate-180"
-                                  : "rotate-0"
-                              }`}
-                            />
-                          </button>
-                        </div>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                {/* Cashew Nuts Product (Featured) */}
+                <div className="relative">
+                  <div className="bg-white backdrop-blur-xl rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 group relative h-full">
+                    {/* Featured Badge */}
+                    <div className="absolute top-6 left-6 z-10">
+                      <div className="flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
+                        <Star className="w-4 h-4 fill-current" />
+                        <span className="text-sm font-semibold">
+                          Featured Product
+                        </span>
                       </div>
                     </div>
-                  </div>
-                )}
 
-                {/* Specialties Column */}
-                <div className="space-y-8">
-                  {/* Section Header */}
-                  <div className="text-center xl:text-left mb-12">
-                    <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">
-                      Our Specialties
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      Premium quality products crafted with care
-                    </p>
-                    <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto xl:mx-0 rounded-full"></div>
-                  </div>
-
-                  {/* Specialty Products */}
-                  {futureProducts.map((product) => (
-                    <div
-                      key={product.id}
-                      className="group py-6 hover:bg-gray-50/50 transition-colors duration-200 rounded-lg border border-[#2fb96d]"
-                    >
-                      <div className="flex items-start gap-6">
-                        {/* Product Image */}
-                        <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 relative">
+                    <div className="flex flex-col h-full">
+                      {/* Image Section */}
+                      <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 to-red-50 h-96 lg:h-[450px] ">
+                        <div className="relative h-full">
                           <Image
-                            src={product.image}
-                            alt={product.name}
+                            src="/img1.jpg" // Cashew image
+                            alt="Premium Cashew Nuts"
                             fill
-                            className="object-contain"
+                            className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
+                            priority
                           />
                         </div>
-
-                        {/* Product Info */}
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-lg sm:text-xl text-gray-900 mb-2 leading-tight">
-                            {product.name}
-                          </h4>
-
-                          <div className="flex items-center mb-3">
-                            <IndianRupee className="w-4 h-4 mr-1 text-emerald-600" />
-                            <span className="font-semibold text-emerald-700 text-lg mr-1">
-                              {product.price}
-                            </span>
-                            {product.unit && (
-                              <span className="text-gray-500 text-sm">
-                                /{product.unit.replace("per ", "")}
-                              </span>
-                            )}
-                          </div>
-
-                          <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3">
-                            {product.description}
-                          </p>
-
-                          <div className="flex items-center space-x-2 text-xs text-gray-400 uppercase tracking-wide">
-                            <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                            <span>Premium Quality</span>
-                          </div>
+                        {/* Decorative Elements */}
+                        <div className="absolute bottom-4 right-4 w-12 h-12 bg-white/20 rounded-full backdrop-blur-sm flex items-center justify-center">
+                          <Sparkles className="w-6 h-6 text-emerald-500" />
                         </div>
                       </div>
+
+                      {/* Content Section */}
+                      <div className="p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                            Cashew Nut
+                          </h2>
+
+                          <div className="flex items-center mb-6">
+                            <div className="flex items-center bg-gradient-to-r from-emerald-100 to-teal-100 px-4 py-2 rounded-xl">
+                              <IndianRupee className="w-6 h-6 text-emerald-600 mr-2" />
+                              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                                499
+                              </span>
+                            </div>
+                            <span className="ml-3 text-gray-500 font-medium">
+                              250 gm
+                            </span>
+                          </div>
+
+                          <p className="text-gray-600 leading-relaxed mb-6">
+                            Hand-selected premium cashew nuts, roasted to
+                            perfection with a delightful crunch and rich,
+                            buttery taste
+                          </p>
+                        </div>
+
+                        <button className="inline-flex items-center justify-center space-x-3 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-300 shadow-lg hover:shadow-xl group/btn transform hover:-translate-y-1 self-start">
+                          <Info className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" />
+                          <span>Learn More</span>
+                        </button>
+                      </div>
                     </div>
-                  ))}
+                  </div>
+                </div>
+
+                {/* Prawn Roast Product */}
+                <div className="relative">
+                  <div className="bg-white backdrop-blur-xl rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 group relative h-full">
+                    {/* Popular Badge */}
+                    <div className="absolute top-6 left-6 z-10">
+                      <div className="flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
+                        <Heart className="w-4 h-4 fill-current" />
+                        <span className="text-sm font-semibold">
+                          Customer Favorite
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col h-full">
+                      {/* Image Section */}
+                      <div className="relative overflow-hidden bg-gradient-to-br from-orange-50 to-red-50 h-96 lg:h-[450px]">
+                        <div className="relative h-full">
+                          <Image
+                            src="/Mainimg.jpg" // Prawn image
+                            alt="Premium Prawn Roast"
+                            fill
+                            className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                            priority
+                          />
+                        </div>
+                        {/* Decorative Elements */}
+                        <div className="absolute bottom-4 right-4 w-12 h-12 bg-white/20 rounded-full backdrop-blur-sm flex items-center justify-center">
+                          <Sparkles className="w-6 h-6 text-orange-500" />
+                        </div>
+                      </div>
+
+                      {/* Content Section */}
+                      <div className="p-8 flex-1 flex flex-col justify-between">
+                        <div>
+                          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                            Prawn Roast
+                          </h2>
+
+                          <div className="flex items-center mb-6">
+                            <div className="flex items-center bg-gradient-to-r from-orange-100 to-red-100 px-4 py-2 rounded-xl">
+                              <IndianRupee className="w-6 h-6 text-orange-600 mr-2" />
+                              <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                                499
+                              </span>
+                            </div>
+                            <span className="ml-3 text-gray-500 font-medium">
+                              175 gm
+                            </span>
+                          </div>
+
+                          <p className="text-gray-600 leading-relaxed mb-6">
+                            Savor our Prawn Roast Combo Pack, featuring
+                            perfectly seasoned and slow-roasted prawns. Rich,
+                            aromatic, and spicy.
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={toggleMainProductDescription}
+                          className="inline-flex items-center justify-center space-x-3 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300 shadow-lg hover:shadow-xl group/btn transform hover:-translate-y-1 self-start"
+                        >
+                          <Info className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" />
+                          <span>
+                            {isMainProductDescriptionOpen
+                              ? "Show Less"
+                              : "Learn More"}
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform ${
+                              isMainProductDescriptionOpen
+                                ? "rotate-180"
+                                : "rotate-0"
+                            }`}
+                          />
+                        </button>
+
+                        {/* Expandable Description */}
+                        {isMainProductDescriptionOpen && (
+                          <div className="mt-4 p-4 bg-gray-50 rounded-xl">
+                            <p className="text-gray-700 leading-relaxed text-sm">
+                              Crafted with fresh ingredients for a quick gourmet
+                              meal or special gathering. Enjoy authentic coastal
+                              flavors in every bite.
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Information Section */}
+              <div className="mt-16 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-3xl p-8 text-center">
+                <div className="max-w-4xl mx-auto">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    Why Choose Our Premium Products?
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mb-3">
+                        <Award className="w-6 h-6 text-white" />
+                      </div>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        Premium Quality
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        Carefully selected ingredients for the finest taste
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center mb-3">
+                        <Leaf className="w-6 h-6 text-white" />
+                      </div>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        Fresh & Natural
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        Made with fresh, natural ingredients daily
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center mb-3">
+                        <Heart className="w-6 h-6 text-white" />
+                      </div>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        Made with Love
+                      </h4>
+                      <p className="text-gray-600 text-sm">
+                        Traditional recipes crafted with care and passion
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
