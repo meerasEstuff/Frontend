@@ -12,29 +12,20 @@ import {
   TrendingUp,
   Target,
   Eye,
-  Award,
   Shield,
   Zap,
   Heart,
   Phone,
   Menu,
   X,
-  Package,
-  Info,
-  ChevronDown,
-  IndianRupee,
-  Camera,
-  Leaf,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ProductSection } from "@/components/ProductSection";
+// import { AdditionalGallerySection } from "@/components/AdditionalGallerySection";
 
 export default function ProfessionalLandingPage() {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
-    useState(false);
-
-  const AdditionalImg = [{ src: "/adImg4.jpg" }, { src: "/adImg5.jpg" }];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -43,36 +34,6 @@ export default function ProfessionalLandingPage() {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-
-  const toggleMainProductDescription = () => {
-    setIsMainProductDescriptionOpen(!isMainProductDescriptionOpen);
-  };
-
-  // Product data
-  const products = [
-    {
-      id: 1,
-      name: "Cashew Nut",
-      image: "/img1.jpg",
-      price: 499,
-      unit: "250 gm",
-      isMain: true,
-      description: `Hand-selected premium cashew nuts, roasted to perfection with a delightful crunch and rich, buttery taste`,
-    },
-    {
-      id: 2,
-      name: "Prawn Roast",
-      image: "/Mainimg.jpg",
-      price: 499,
-      unit: "175 gm",
-      isMain: false,
-      description:
-        "Savor our Prawn Roast Combo Pack, featuring perfectly seasoned and slow-roasted prawns. Rich, aromatic, and spicy, it's crafted with fresh ingredients for a quick gourmet meal or special gathering. Enjoy authentic coastal flavors in every bite.",
-    },
-  ];
-
-  const mainProduct = products.find((product) => product.isMain);
-  const futureProducts = products.filter((product) => !product.isMain);
 
   return (
     <>
@@ -212,453 +173,81 @@ export default function ProfessionalLandingPage() {
         </nav>
 
         {/* Enhanced Hero Section with Single Featured Image */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 ">
-          {/* Enhanced Background */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-teal-500 rounded-full blur-3xl opacity-70"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full blur-3xl opacity-40"></div>
-          </div>
-
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-9">
-            <div className="text-center space-y-8">
-              <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
-                {/* Left Column */}
-                <div className="w-full lg:w-1/2 space-y-8 mt-9">
-                  {/* Trust Badge */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="flex justify-center lg:justify-start"
-                  >
-                    <div className="inline-flex items-center space-x-2 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-200">
-                      <Shield className="w-4 h-4 text-emerald-600" />
-                      <span className="text-sm font-medium text-emerald-700">
-                        Trusted by 1000+ Customers
-                      </span>
-                    </div>
-                  </motion.div>
-
-                  {/* Main Headline */}
-                  <motion.h1
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight text-center lg:text-left"
-                  >
-                    Transform Your Life with
-                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 mt-2">
-                      Premium Quality Products
-                    </span>
-                  </motion.h1>
-
-                  {/* Subheadline */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="text-lg sm:text-xl text-gray-600 leading-relaxed text-center lg:text-left"
-                  >
-                    Build your business with just{" "}
-                    <span className="font-semibold text-emerald-600">
-                      ₹1499 ID activations
-                    </span>{" "}
-                    — you earn{" "}
-                    <span className="font-semibold text-emerald-600">
-                      ₹1000 per referral
-                    </span>{" "}
-                    on premium pickles & dry nuts.
-                  </motion.p>
-
-                  {/* CTA */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.8 }}
-                    className="flex items-center justify-center lg:justify-start mt-8"
-                  >
-                    <button
-                      onClick={() => router.push("/login")}
-                      className="group bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2"
-                    >
-                      <span>Start Your Journey</span>
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </motion.div>
+        {/* Hero Section - Redesigned */}
+        <section className="relative pt-20 pb-12 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-white mt-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+              {/* Left Column - Text Content */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-4 sm:space-y-6 text-center lg:text-left"
+              >
+                {/* Trust Badge */}
+                <div className="inline-flex items-center space-x-2 bg-primary-50 border border-primary-200 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary-600" />
+                  <span className="text-xs sm:text-sm font-semibold text-primary-700">
+                    Trusted by 1000+ Customers
+                  </span>
                 </div>
 
-                {/* Right Column - Simple Image */}
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="w-full lg:w-1/2 flex justify-center items-center"
-                >
-                  <div className="relative">
-                    {/* Simple Image Container */}
-                    <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 1.1 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, delay: 0.6 }}
-                        className="relative"
-                      >
-                        <Image
-                          src="/cpmImg.jpg"
-                          alt="MeerasEstuff Direct Selling Business"
-                          width={800}
-                          height={800}
-                          className="w-full max-w-md h-auto object-cover transition-transform duration-700 hover:scale-105"
-                        />
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                  Transform Your Life
+                  <br />
+                  <span className="text-gray-900">with Premium</span>
+                  <br />
+                  <span className="text-gray-900">Quality Products</span>
+                </h1>
+
+                <p className="text-base sm:text-lg text-gray-600 max-w-lg mx-auto lg:mx-0">
+                  Build your business with just{" "}
+                  <span className="inline-flex items-center bg-primary-100 text-primary-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg font-bold text-sm sm:text-base">
+                    ₹1499 ID activation
+                  </span>{" "}
+                  — you earn{" "}
+                  <span className="inline-flex items-center bg-primary-100 text-primary-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg font-bold text-sm sm:text-base">
+                    ₹1000 per referral
+                  </span>{" "}
+                  on premium pickles & dry nuts.
+                </p>
+
+                <div className="flex justify-center lg:justify-start">
+                  <button
+                    onClick={() => router.push("/login")}
+                    className="bg-gradient-to-r from-gray-600 via-emerald-700 to-teal-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-all duration-300 inline-flex items-center space-x-2"
+                  >
+                    <span>Get Started Now</span>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                </div>
+              </motion.div>
+
+              {/* Right Column - Image */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="relative mt-8 lg:mt-0"
+              >
+                <div className="relative w-full aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden bg-primary-100">
+                  <Image
+                    src="/cpmImg.jpg"
+                    alt="Premium Products"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* Additional Gallery Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-50 via-emerald-50/30 to-teal-50/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl shadow-xl mb-6">
-                <Camera className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 via-emerald-700 to-teal-700 bg-clip-text text-transparent mb-4">
-                Experience Our Excellence
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Discover the passion and craftsmanship behind every product we
-                create
-              </p>
-            </motion.div>
+        {/* <AdditionalGallerySection /> */}
 
-            {/* Main Gallery Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-              {/* First Image - Large Featured (4:3 for full pickle jar showcase) */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="lg:col-span-7 relative group"
-              >
-                <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2">
-                  <div className="relative overflow-hidden rounded-2xl aspect-[4/3]">
-                    <Image
-                      src={AdditionalImg[0].src}
-                      alt="Premium Pickle Collection - Full Product Showcase"
-                      width={800}
-                      height={600}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-
-                    {/* Floating Info Badge */}
-                    <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                      <span className="text-gray-800 font-semibold text-sm">
-                        Premium Quality
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Second and Third Images - Square (Perfect for close-ups and process shots) */}
-              <div className="lg:col-span-5 flex flex-col gap-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="relative group flex-1"
-                >
-                  <div className="relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-white p-2 h-full">
-                    <div className="relative overflow-hidden rounded-2xl h-full aspect-square">
-                      <Image
-                        src={AdditionalImg[1].src}
-                        alt="Pickle Texture & Ingredients Close-up"
-                        width={400}
-                        height={400}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-transparent to-teal-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-
-                      {/* Corner Badge */}
-                      <div className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                        <Heart className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Bottom Stats/Features Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            >
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-100 to-teal-100 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Award className="w-8 h-8 text-emerald-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Premium Quality
-                </h3>
-                <p className="text-gray-600">
-                  Carefully selected ingredients for the finest taste
-                </p>
-              </div>
-
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Leaf className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Fresh & Natural
-                </h3>
-                <p className="text-gray-600">
-                  Made with fresh, natural ingredients daily
-                </p>
-              </div>
-
-              <div className="text-center group">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Heart className="w-8 h-8 text-amber-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Made with Love
-                </h3>
-                <p className="text-gray-600">
-                  Traditional recipes crafted with care and passion
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
         {/* Product Section */}
-        <section
-          id="products"
-          className="py-20 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-white/70 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/30 p-8 sm:p-12 relative overflow-hidden"
-            >
-              {/* Background Decorative Elements */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-emerald-100/30 to-transparent rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-teal-100/30 to-transparent rounded-full blur-3xl"></div>
-
-              <div className="text-center mb-16 relative z-10">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl shadow-xl mb-6">
-                  <Package className="w-8 h-8 text-white" />
-                </div>
-                <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 via-emerald-700 to-teal-700 bg-clip-text text-transparent mb-4">
-                  Our Culinary Creations
-                </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Discover our featured delight and upcoming flavors!
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start relative z-10">
-                {/* Left Column: Main Product */}
-                {mainProduct && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="lg:col-span-2 bg-gradient-to-br from-white to-gray-50/50 rounded-3xl shadow-2xl overflow-hidden transition-all duration-500 hover:shadow-3xl border border-white/50 flex flex-col group relative"
-                  >
-                    {/* Floating Featured Badge */}
-                    <div className="absolute top-6 left-6 z-20">
-                      <span className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-2xl backdrop-blur-sm">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                        Featured
-                      </span>
-                    </div>
-
-                    <div className="relative w-full aspect-[3/4] overflow-hidden">
-                      <Image
-                        src={mainProduct.image}
-                        alt={mainProduct.name}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 66vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.style.display = "none";
-                          target.parentElement
-                            ?.querySelector(".fallback-placeholder")
-                            ?.classList.remove("hidden");
-                        }}
-                      />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
-                        <Package className="w-16 h-16 text-emerald-500" />
-                        <p className="text-gray-600 mt-2 text-sm">
-                          Image not available
-                        </p>
-                      </div>
-
-                      {/* Minimal Gradient Overlay - Only at bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    </div>
-
-                    {/* Product Info Section - Separated from image */}
-                    <div className="p-8 lg:p-10 bg-gradient-to-br from-white to-gray-50">
-                      <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                        {mainProduct.name}
-                      </h3>
-
-                      <div className="flex flex-wrap items-center gap-4 mb-6">
-                        <div className="flex items-center bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-3 rounded-2xl shadow-lg border border-emerald-100">
-                          <IndianRupee className="w-8 h-8 mr-2 text-emerald-600" />
-                          <span className="text-4xl font-bold text-gray-900">
-                            {mainProduct.price}
-                          </span>
-                        </div>
-                        {mainProduct.unit && (
-                          <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-xl shadow-lg">
-                            <span className="text-lg font-semibold">
-                              {mainProduct.unit}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      <button
-                        onClick={toggleMainProductDescription}
-                        className="w-full flex items-center justify-center space-x-3 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/50 shadow-xl hover:shadow-2xl transform hover:scale-[1.02]"
-                      >
-                        <Info className="w-6 h-6" />
-                        <span className="text-lg">
-                          {isMainProductDescriptionOpen
-                            ? "Hide Details"
-                            : "Show More"}
-                        </span>
-                        <ChevronDown
-                          className={`w-6 h-6 transition-transform duration-300 ${
-                            isMainProductDescriptionOpen
-                              ? "rotate-180"
-                              : "rotate-0"
-                          }`}
-                        />
-                      </button>
-                    </div>
-
-                    <AnimatePresence>
-                      {isMainProductDescriptionOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.5, ease: "easeInOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="p-8 lg:p-10 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 border-t border-emerald-100">
-                            <p className="text-gray-700 leading-relaxed text-lg lg:text-xl font-medium">
-                              {mainProduct.description}
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                )}
-
-                {/* Right Column: Future Products - Increased Height */}
-                <div className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8">
-                  {futureProducts.map((product, index) => (
-                    <motion.div
-                      key={product.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-                      className="bg-gradient-to-br from-white to-gray-50/80 rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-500 flex flex-col border border-white/60 group transform hover:scale-105 hover:-translate-y-2 backdrop-blur-sm"
-                    >
-                      {/* Increased aspect ratio from 4/5 to 3/4 for taller images */}
-                      <div className="relative w-full aspect-[3/4] overflow-hidden">
-                        <Image
-                          src={product.image}
-                          alt={product.name}
-                          fill
-                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                          className="object-cover group-hover:scale-125 transition-transform duration-700 ease-out"
-                          onError={(e) => {
-                            const target = e.currentTarget;
-                            target.style.display = "none";
-                            target.parentElement
-                              ?.querySelector(".fallback-placeholder")
-                              ?.classList.remove("hidden");
-                          }}
-                        />
-                        <div className="absolute inset-0 flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-100 hidden fallback-placeholder">
-                          <Package className="w-12 h-12 text-emerald-500" />
-                          <p className="text-gray-600 mt-2 text-xs">
-                            Image not available
-                          </p>
-                        </div>
-
-                        {/* Subtle Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-
-                        {/* Hover Effect Glow */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/10 via-transparent to-teal-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                      </div>
-
-                      <div className="p-8 flex-grow flex flex-col bg-gradient-to-br from-white via-gray-50/50 to-emerald-50/30 relative">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-emerald-700 transition-colors duration-300">
-                          {product.name}
-                        </h3>
-                        <p className="text-gray-600 text-base mb-6 flex-grow leading-relaxed">
-                          {product.description}
-                        </p>
-
-                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                          <div className="flex items-center">
-                            <div className="bg-gradient-to-r from-emerald-100 to-teal-100 p-2 rounded-xl shadow-inner">
-                              <IndianRupee className="w-6 h-6 text-emerald-600" />
-                            </div>
-                            <span className="text-3xl font-bold text-gray-800 ml-3">
-                              {product.price}
-                            </span>
-                          </div>
-
-                          {product.unit && (
-                            <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-xl shadow-lg">
-                              <span className="text-sm font-bold">
-                                {product.unit}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <ProductSection />
 
         {/* Features Section */}
         <section id="features" className="py-20 bg-white">
@@ -853,7 +442,7 @@ export default function ProfessionalLandingPage() {
               </p>
               <button
                 onClick={() => router.push("/login")}
-                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-10 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 inline-flex items-center space-x-2"
+                className="bg-accent-700 text-white px-10 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 inline-flex items-center space-x-2"
               >
                 <span>Get Started Today</span>
                 <ArrowRight className="w-5 h-5" />
