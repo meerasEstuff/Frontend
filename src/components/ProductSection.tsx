@@ -13,10 +13,13 @@ import {
   ChevronUp,
   Sparkles,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const ProductSection = () => {
   const [isMainProductDescriptionOpen, setIsMainProductDescriptionOpen] =
     useState(false);
+
+  const router = useRouter();
 
   const products = [
     {
@@ -377,9 +380,12 @@ export const ProductSection = () => {
                     </div>
 
                     {/* Add to Cart Button */}
-                    <button className="w-full flex items-center justify-center space-x-2 md:space-x-3 px-4 py-3 md:px-8 md:py-4 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white rounded-xl md:rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-amber-500/50 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98]">
+                    <button
+                      onClick={() => router.push("/login")}
+                      className="w-full flex items-center justify-center space-x-2 md:space-x-3 px-4 py-3 md:px-8 md:py-4 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white rounded-xl md:rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-amber-500/50 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
                       <span className="text-sm sm:text-base md:text-lg">
-                        check Now
+                        Check Now
                       </span>
                     </button>
                   </div>
@@ -523,7 +529,10 @@ export const ProductSection = () => {
                       )}
 
                       {/* Notify Button */}
-                      <button className="w-full flex items-center justify-center space-x-2 md:space-x-3 px-4 py-3 md:px-8 md:py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl md:rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/50 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98]">
+                      <button
+                        onClick={() => router.push("/login")}
+                        className="w-full flex items-center justify-center space-x-2 md:space-x-3 px-4 py-3 md:px-8 md:py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl md:rounded-2xl font-bold transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/50 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98]"
+                      >
                         <span className="text-sm sm:text-base md:text-lg">
                           Check Now
                         </span>
