@@ -71,50 +71,51 @@ export const ProductSection = () => {
       unit: "400 gm",
       isMain: false,
       description:
-        "Indulge in Meeras’ Premium Honey Soaked Mixed Nuts — a wholesome blend of almonds, cashews, and walnuts soaked in pure honey. Naturally sweet, nutrient-rich, and bursting with flavor, it’s the perfect healthy treat for families, gifting, or daily snacking.",
+        "Indulge in Meeras’ Premium Honey Soaked Mixed Nuts — a wholesome blend of white cashews, raisins, dates, and peanuts enriched with pure honey. Naturally sweet, energy-packed, and bursting with nutrition, it’s the perfect healthy treat for families, gifting, or daily snacking.",
       healthBenefits: [
         {
           title: "Rich in Antioxidants",
           description:
-            "Protects your cells from oxidative stress and boosts immunity",
+            "Protects your cells from oxidative stress and boosts overall immunity",
         },
         {
           title: "Natural Energy Booster",
           description:
-            "A perfect mix of protein, healthy fats, and natural sugars for sustained energy",
+            "A delicious mix of nuts and dry fruits that provide instant and sustained energy",
         },
         {
           title: "Supports Heart Health",
           description:
-            "Loaded with heart-friendly nutrients from nuts and honey",
+            "Contains heart-friendly nutrients and natural fats from peanuts and cashews",
         },
         {
           title: "Improves Digestion",
-          description: "Honey aids digestion and promotes gut health naturally",
+          description:
+            "Honey and dates aid digestion while promoting a healthy gut naturally",
         },
         {
           title: "Promotes Glowing Skin",
           description:
-            "Vitamin E and antioxidants help nourish and rejuvenate skin",
+            "Vitamin E, antioxidants, and natural sugars help keep your skin radiant and hydrated",
         },
         {
           title: "Strengthens Immunity",
           description:
-            "Natural nutrients help enhance the body’s defense system",
+            "Nutrient-dense ingredients enhance your body's natural defense system",
         },
       ],
       nutritionFacts: [
-        { label: "Calories", value: "336 kcal" },
-        { label: "Protein", value: "9.6g" },
-        { label: "Carbs", value: "28.8g" },
-        { label: "Fat", value: "22.4g" },
-        { label: "Sugar (Natural)", value: "16g" },
+        { label: "Calories", value: "340 kcal" },
+        { label: "Protein", value: "10g" },
+        { label: "Carbs", value: "30g" },
+        { label: "Fat", value: "20g" },
+        { label: "Natural Sugar", value: "15g" },
       ],
       highlights: [
-        "100% Natural Ingredients",
-        "Premium Honey Blend",
+        "Made with Cashews, Raisins, Dates & Peanuts",
+        "Sweetened with Pure Honey",
         "No Added Sugar or Preservatives",
-        "Perfect for Family Snacking or Gifting",
+        "Perfect for Energy & Immunity Boost",
       ],
     },
   ];
