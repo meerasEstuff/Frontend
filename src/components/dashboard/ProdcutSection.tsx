@@ -50,7 +50,7 @@ export const ProductSection = () => {
       unit: "400 gm",
       isMain: false,
       description:
-        "Indulge in Meeras' Premium Honey Soaked Mixed Nuts — a wholesome blend of almonds, cashews, and walnuts soaked in pure honey. Naturally sweet, nutrient-rich, and perfect for daily snacking or gifting.",
+        "Indulge in Meeras' Premium Honey Soaked Mixed Nuts — a wholesome blend of white cashews, raisins, dates, and peanuts enriched with pure honey. Naturally sweet, energy-packed, and perfect for daily snacking or gifting.",
       healthBenefits: [
         "Rich in Antioxidants",
         "Natural Energy Booster",
@@ -59,15 +59,15 @@ export const ProductSection = () => {
         "Boosts Immunity",
       ],
       nutritionFacts: [
-        { label: "Calories", value: "336 kcal" },
-        { label: "Protein", value: "9.6g" },
-        { label: "Carbs", value: "28.8g" },
-        { label: "Fat", value: "22.4g" },
-        { label: "Natural Sugar", value: "16g" },
+        { label: "Calories", value: "340 kcal" },
+        { label: "Protein", value: "10g" },
+        { label: "Carbs", value: "30g" },
+        { label: "Fat", value: "20g" },
+        { label: "Natural Sugar", value: "15g" },
       ],
       highlights: [
-        "100% Natural Ingredients",
-        "Premium Honey Blend",
+        "Made with Cashews, Raisins, Dates & Peanuts",
+        "Sweetened with Pure Honey",
         "No Added Sugar or Preservatives",
         "Perfect for Family Snacking or Gifting",
       ],

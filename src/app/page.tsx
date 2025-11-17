@@ -207,7 +207,7 @@ export default function ProfessionalLandingPage() {
                   </span>{" "}
                   — you earn{" "}
                   <span className="inline-flex items-center bg-primary-100 text-primary-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg font-bold text-sm sm:text-base">
-                    ₹1000 per referral
+                    ₹900 per referral
                   </span>{" "}
                   on premium pickles & dry nuts.
                 </p>

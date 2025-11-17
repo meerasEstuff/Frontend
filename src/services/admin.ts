@@ -6,8 +6,6 @@ export async function fetchAllUsersWithReferralCount() {
   // 2. Create the server-safe Supabase client right here
   const supabase = createServerComponentClient({ cookies });
 
-  
-
   // Fetch all users with essential fields
   const { data: users, error: userError } = await supabase
     .from("users")
@@ -57,6 +55,6 @@ export async function fetchAllUsersWithReferralCount() {
   return {
     users: usersWithReferralData,
     totalUsers: usersWithReferralData.length,
-    totalRevenue: usersWithReferralData.length * 499,
+    totalRevenue: usersWithReferralData.length * 599,
   };
 }

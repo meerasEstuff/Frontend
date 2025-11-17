@@ -2,6 +2,10 @@
 
 @import "tailwindcss";
 
+html {
+  scroll-behavior: auto !important;
+}
+
 @theme {
   --font-Montserrat: Montserrat, "sans-serif";
   /* Primary (Green) */
