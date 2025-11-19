@@ -236,7 +236,7 @@ export const ProductSection = () => {
 
         {/* Main Product Card */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-          {/* Image Section */}
+          {/* Image Section - Updated with clean rounded image */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -244,21 +244,15 @@ export const ProductSection = () => {
             className="relative"
           >
             <div className="bg-white rounded-3xl shadow-2xl border border-amber-100/50 overflow-hidden">
-              <div className="relative w-full h-96 bg-gradient-to-br from-amber-100 to-orange-100">
+              {/* Clean image container without outer box */}
+              <div className="relative w-full h-96">
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
-                  className="object-contain p-8"
+                  className="object-cover rounded-t-3xl"
                   priority
                 />
-                {/* Premium Badge */}
-                <div className="absolute top-6 left-6">
-                  <div className="flex items-center space-x-2 px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl text-white font-semibold shadow-xl">
-                    <Star className="w-5 h-5 fill-current" />
-                    <span>Premium Quality</span>
-                  </div>
-                </div>
               </div>
             </div>
           </motion.div>
