@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   IndianRupee,
-  Star,
   Heart,
   Zap,
   Award,
@@ -327,25 +326,6 @@ export const ProductSection = () => {
                       <div className="font-bold text-gray-900 text-xl">
                         {fact.value}
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Health Benefits Preview */}
-              <div className="mb-8">
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-3 text-xl">
-                  <Heart className="w-6 h-6 text-rose-500" />
-                  Key Health Benefits
-                </h4>
-                <div className="grid grid-cols-1 gap-3">
-                  {product.healthBenefits.slice(0, 4).map((benefit) => (
-                    <div
-                      key={benefit}
-                      className="flex items-center gap-4 text-base"
-                    >
-                      <div className="w-3 h-3 bg-rose-500 rounded-full flex-shrink-0"></div>
-                      <span className="text-gray-700">{benefit}</span>
                     </div>
                   ))}
                 </div>
