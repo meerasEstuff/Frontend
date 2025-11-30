@@ -166,7 +166,7 @@ export const ProductSection = () => {
     id: 1,
     name: "Honey Soaked Mixed Nuts",
     image: "/adImg5.jpg",
-    price: 799,
+    price: 899,
     unit: "500 gm",
     description:
       "Meeras E Stuff brings you the ultimate energiser - a spoonful gives you the kick start of the day. Packed with minerals, vitamins, proteins, and fibres. We've combined liquid gold (organic honey) with finest quality nuts, creating a superfood with highest antioxidants and anti-inflammatory properties.",
