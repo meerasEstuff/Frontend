@@ -203,7 +203,7 @@ export default function ProfessionalLandingPage() {
                 <p className="text-base sm:text-lg text-gray-600 max-w-lg mx-auto lg:mx-0">
                   Build your business with just{" "}
                   <span className="inline-flex items-center bg-primary-100 text-primary-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg font-bold text-sm sm:text-base">
-                    ₹999 ID activation
+                    ₹899 ID activation
                   </span>{" "}
                   — you earn{" "}
                   <span className="inline-flex items-center bg-primary-100 text-primary-700 px-2 sm:px-3 py-0.5 sm:py-1 rounded-lg font-bold text-sm sm:text-base">

@@ -32,7 +32,7 @@ export const ProductSection = () => {
       id: 2,
       name: "Honey Soaked Mixed Nuts",
       image: "/adImg5.jpg",
-      price: 799,
+      price: 899,
       unit: "500 gm",
       isMain: true,
       description:

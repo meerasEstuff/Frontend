@@ -82,7 +82,7 @@ function TermsAndConditionsPage() {
             </h2>
             <ul className="list-disc list-inside space-y-2 text-gray-700">
               <li>
-                ₹999 is a one-time onboarding charge to receive products and
+                ₹899 is a one-time onboarding charge to receive products and
                 join the platform.
               </li>
             </ul>
