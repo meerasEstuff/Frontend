@@ -71,7 +71,7 @@ function TermsAndConditionsPage() {
               Referral Program:
             </h2>
             <ul className="list-disc list-inside space-y-2 text-gray-700">
-              <li>You earn ₹400 for each successful referral.</li>
+              <li>You earn ₹300 for each successful referral.</li>
               <li>Referral payments are credited after verification.</li>
             </ul>
           </section>
