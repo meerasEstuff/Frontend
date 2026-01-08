@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import {
   User,
   Phone,
-  Mail,
   ArrowLeft,
   PlusCircle, // Icon for Add Referral
 } from "lucide-react";
@@ -22,10 +21,6 @@ const newReferralSchema = z.object({
     .string()
     .min(1, { message: "Username is required" })
     .min(3, { message: "Username must be at least 3 characters" }),
-  email: z
-    .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Please enter a valid email address" }),
   phone: z
     .string()
     .min(1, { message: "Phone number is required" })
@@ -54,7 +49,6 @@ function AddReferralPage() {
     resolver: zodResolver(newReferralSchema),
     defaultValues: {
       username: "",
-      email: "",
       phone: "",
     },
   });
@@ -63,7 +57,6 @@ function AddReferralPage() {
   const onSubmit = (data: NewReferralFormData) => {
     setOnboardingData({
       username: data.username,
-      email: data.email,
       phone: data.phone,
       referredById: user?.id,
     });
@@ -193,41 +186,6 @@ function AddReferralPage() {
                   className="text-red-500 text-xs mt-1"
                 >
                   {errors.username.message}
-                </motion.p>
-              )}
-            </div>
-
-            {/* Email Field */}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-gray-700 mb-1"
-              >
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                </div>
-                <input
-                  type="email"
-                  id="email"
-                  {...register("email")}
-                  className={`w-full pl-10 pr-3 py-3 bg-gray-50 border-2 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm ${
-                    errors.email
-                      ? "border-red-300 focus:border-red-500"
-                      : "border-gray-200 focus:border-emerald-500 focus:bg-white"
-                  }`}
-                  placeholder="Enter email"
-                />
-              </div>
-              {errors.email && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-red-500 text-xs mt-1"
-                >
-                  {errors.email.message}
                 </motion.p>
               )}
             </div>

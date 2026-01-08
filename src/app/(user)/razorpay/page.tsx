@@ -18,7 +18,6 @@ type RazorpayOptions = {
   }) => void;
   prefill: {
     name: string;
-    email: string;
     contact: string;
   };
   theme?: {
@@ -40,7 +39,7 @@ declare global {
 
 const RazorpayPage = () => {
   const router = useRouter();
-  const { username, email, phone } = useOnboardingStore();
+  const { username, phone } = useOnboardingStore();
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -71,7 +70,7 @@ const RazorpayPage = () => {
         },
         prefill: {
           name: username,
-          email,
+
           contact: phone,
         },
         theme: {
@@ -99,7 +98,7 @@ const RazorpayPage = () => {
         }
       }, 300);
     }
-  }, [username, email, phone, router]);
+  }, [username, phone, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">

@@ -26,14 +26,13 @@ function GenerateCustomerIdPage() {
       if (hasSaved) return; // ✅ Prevent double call
       hasSaved = true;
 
-      const { username, email, phone, referredById, reset } =
+      const { username, phone, referredById, reset } =
         useOnboardingStore.getState();
 
       try {
         await insertNewUser({
           customer_id: newId,
           username,
-          email,
           phone,
           referred_by_id: referredById,
         });
@@ -182,7 +181,7 @@ function GenerateCustomerIdPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="text-4xl sm:text-5xl font-extrabold text-gray-900 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent break-words"
+                  className="text-4xl sm:text-5xl font-extrabold text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text  break-words"
                 >
                   {customerId}
                 </motion.p>

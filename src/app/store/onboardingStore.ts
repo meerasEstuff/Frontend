@@ -2,7 +2,6 @@ import { create } from "zustand";
 
 type OnboardingState = {
   username: string;
-  email: string;
   phone: string;
   referredById: string | null;
   customer_id: string | null;
@@ -12,7 +11,6 @@ type OnboardingState = {
 
 export const useOnboardingStore = create<OnboardingState>((set) => ({
   username: "",
-  email: "",
   phone: "",
   referredById: null,
   customer_id: null,
@@ -20,7 +18,6 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
   reset: () =>
     set({
       username: "",
-      email: "",
       phone: "",
       referredById: null,
       customer_id: null,

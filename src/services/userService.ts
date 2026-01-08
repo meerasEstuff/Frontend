@@ -27,7 +27,7 @@ export async function getReferralsByUserId(
     .from("users")
     .select("id, customer_id, username, created_at, phone")
     .eq("referred_by_id", referrerId)
-    .order("created_at", { ascending: false }) // 👈 Sort by most recent first
+    .order("created_at", { ascending: false })
     .range(from, to);
 
   if (error) {
