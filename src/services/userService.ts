@@ -54,22 +54,40 @@ export async function getUserById(userId: string) {
 }
 
 export async function insertNewUser(user: NewUserPayload) {
+  // 1. Check for existing user
   const { data: existingUser } = await supabase
     .from("users")
     .select("id")
     .eq("customer_id", user.customer_id)
     .single();
 
-  if (existingUser) {
-    console.warn("User already exists. Skipping insert.");
-    return existingUser;
-  }
+  if (existingUser) return existingUser;
 
-  const { data, error } = await supabase.from("users").insert([user]);
+  // 2. Properly sanitize the payload
+  const payload = {
+    customer_id: user.customer_id,
+    username: user.username,
+    phone: user.phone,
+    referred_by_id: user.referred_by_id,
+    payment_amount: user.payment_amount,
+    customer_type: user.customer_type,
+    email: user.email && user.email.trim() !== "" ? user.email : null,
+  };
+
+  const { data, error } = await supabase
+    .from("users")
+    .insert([payload])
+    .select();
 
   if (error) {
-    console.error("❌ Failed to insert user:", error.message);
-    throw new Error("Could not insert new user.");
+    // IMPORTANT: Uncomment this to see the actual database error in your console!
+    console.error(
+      "❌ Supabase Error Details:",
+      error.message,
+      error.details,
+      error.hint
+    );
+    throw new Error(`Could not insert new user: ${error.message}`);
   }
 
   return data;

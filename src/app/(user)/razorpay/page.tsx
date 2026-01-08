@@ -39,7 +39,8 @@ declare global {
 
 const RazorpayPage = () => {
   const router = useRouter();
-  const { username, phone } = useOnboardingStore();
+  const { username, phone, customer_type, setOnboardingData } =
+    useOnboardingStore();
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -54,8 +55,15 @@ const RazorpayPage = () => {
 
   useEffect(() => {
     const startPayment = async () => {
-      const res = await fetch("/api/create-order", { method: "POST" });
+      const res = await fetch("/api/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customer_type }),
+      });
+
       const order = await res.json();
+
+      setOnboardingData({ payment_amount: order.amount / 100 });
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -98,7 +106,7 @@ const RazorpayPage = () => {
         }
       }, 300);
     }
-  }, [username, phone, router]);
+  }, [username, phone, router, customer_type, setOnboardingData]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">

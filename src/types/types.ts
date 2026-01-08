@@ -4,6 +4,8 @@ export interface NewUserPayload {
   email?: string | null;
   phone: string;
   referred_by_id: string | null;
+  payment_amount: number | null;
+  customer_type: "standard" | "student";
 }
 export interface UserRow {
   id: string;

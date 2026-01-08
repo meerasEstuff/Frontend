@@ -5,6 +5,8 @@ type OnboardingState = {
   phone: string;
   referredById: string | null;
   customer_id: string | null;
+  payment_amount: number | null;
+  customer_type: "standard" | "student";
   setOnboardingData: (data: Partial<OnboardingState>) => void;
   reset: () => void;
 };
@@ -14,6 +16,8 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
   phone: "",
   referredById: null,
   customer_id: null,
+  payment_amount: null,
+  customer_type: "standard",
   setOnboardingData: (data) => set((state) => ({ ...state, ...data })),
   reset: () =>
     set({
@@ -21,5 +25,7 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
       phone: "",
       referredById: null,
       customer_id: null,
+      payment_amount: null,
+      customer_type: "standard",
     }),
 }));

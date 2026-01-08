@@ -23,11 +23,23 @@ function GenerateCustomerIdPage() {
       setCustomerId(newId);
       setIsLoading(false);
 
-      if (hasSaved) return; // ✅ Prevent double call
+      if (hasSaved) return;
       hasSaved = true;
 
-      const { username, phone, referredById, reset } =
-        useOnboardingStore.getState();
+      const {
+        username,
+        phone,
+        referredById,
+        payment_amount,
+        customer_type,
+        reset,
+      } = useOnboardingStore.getState();
+
+      // console.log("🚀 PAYLOAD PRE-FLIGHT:", {
+      //   username,
+      //   customer_type,
+      //   payment_amount,
+      // });
 
       try {
         await insertNewUser({
@@ -35,10 +47,11 @@ function GenerateCustomerIdPage() {
           username,
           phone,
           referred_by_id: referredById,
+          payment_amount,
+          customer_type,
         });
 
         reset();
-        // ❌ Removed router.push() here to give user time
       } catch (error) {
         console.error("❌ Error inserting user:", error);
       }
