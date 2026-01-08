@@ -211,7 +211,7 @@ function AddReferralPage() {
               </div>
               <div className="text-right">
                 <p className="text-2xl font-black text-emerald-700">
-                  ₹{selectedType === "standard" ? "299" : "49"}
+                  ₹{selectedType === "standard" ? "300" : "49"}
                 </p>
               </div>
             </div>
