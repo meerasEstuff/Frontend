@@ -55,16 +55,19 @@ export const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="relative"
           >
-            <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-white">
+            {/* Changed border-white to a larger value or added padding to prevent clipping */}
+            <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-[12px] border-white bg-white">
               <Image
                 src="/cpmImg.jpg"
                 alt="Premium Products"
                 fill
-                className="object-cover"
+                className="object-contain p-4" // Use object-contain and padding to show the full image content
+                priority
               />
             </div>
-            {/* Floating Card UI */}
-            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl border border-gray-100 hidden md:block">
+
+            {/* Floating Payout Card remains same */}
+            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl border border-gray-100 hidden md:block z-20">
               <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">
                 Weekly Payout
               </p>

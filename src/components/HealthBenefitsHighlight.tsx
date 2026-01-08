@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Shield,
   Heart,
@@ -13,277 +14,216 @@ import {
   Zap,
   Sun,
   Scale,
+  Leaf,
+  Droplets,
 } from "lucide-react";
 
 export const HealthBenefitsHighlight = () => {
-  const healthBenefits = [
+  const benefitGroups = [
     {
-      icon: <Shield className="w-6 h-6" />,
-      title: "Immunity Boost",
-      description:
-        "Rich in antioxidants from nuts and honey that help strengthen your immune system and protect against infections",
-      color: "from-green-500 to-emerald-600",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200",
-      textColor: "text-green-800",
+      title: "Vitality & Energy",
+      benefits: [
+        {
+          icon: <Zap />,
+          label: "Instant Energy",
+          desc: "Natural sugars from honey",
+        },
+        {
+          icon: <Activity />,
+          label: "Stamina",
+          desc: "Complex carbs from nuts",
+        },
+      ],
     },
     {
-      icon: <Sparkles className="w-6 h-6" />,
-      title: "Anti-Aging Properties",
-      description:
-        "Packed with antioxidants that combat free radicals, reducing oxidative stress and promoting youthful skin",
-      color: "from-purple-500 to-pink-600",
-      bgColor: "bg-purple-50",
-      borderColor: "border-purple-200",
-      textColor: "text-purple-800",
+      title: "Body Defense",
+      benefits: [
+        {
+          icon: <Shield />,
+          label: "Immunity",
+          desc: "Pure honey antioxidants",
+        },
+        {
+          icon: <Heart />,
+          label: "Heart Health",
+          desc: "Nut-based healthy fats",
+        },
+      ],
     },
     {
-      icon: <Sun className="w-6 h-6" />,
-      title: "Skin Radiance",
-      description:
-        "Vitamin E from nuts and antioxidants from honey promote glowing skin and protect against environmental damage",
-      color: "from-amber-500 to-orange-600",
-      bgColor: "bg-amber-50",
-      borderColor: "border-amber-200",
-      textColor: "text-amber-800",
-    },
-    {
-      icon: <Heart className="w-6 h-6" />,
-      title: "Heart Health",
-      description:
-        "Healthy fats from nuts support cardiovascular function and help maintain optimal cholesterol levels",
-      color: "from-rose-500 to-red-600",
-      bgColor: "bg-rose-50",
-      borderColor: "border-rose-200",
-      textColor: "text-rose-800",
-    },
-    {
-      icon: <Brain className="w-6 h-6" />,
-      title: "Brain Function",
-      description:
-        "Omega-3 fatty acids and antioxidants enhance cognitive function, memory, and mental clarity",
-      color: "from-blue-500 to-indigo-600",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
-      textColor: "text-blue-800",
-    },
-    {
-      icon: <Activity className="w-6 h-6" />,
-      title: "Energy & Stamina",
-      description:
-        "Natural sugars from honey and complex carbs from nuts provide sustained energy throughout the day",
-      color: "from-teal-500 to-cyan-600",
-      bgColor: "bg-teal-50",
-      borderColor: "border-teal-200",
-      textColor: "text-teal-800",
-    },
-    {
-      icon: <Bone className="w-6 h-6" />,
-      title: "Bone Strength",
-      description:
-        "Calcium, magnesium, and phosphorus from nuts contribute to strong bones and teeth",
-      color: "from-gray-500 to-gray-700",
-      bgColor: "bg-gray-50",
-      borderColor: "border-gray-200",
-      textColor: "text-gray-800",
-    },
-    {
-      icon: <Scale className="w-6 h-6" />,
-      title: "Weight Management",
-      description:
-        "High fiber content promotes satiety, helping control appetite and support healthy weight maintenance",
-      color: "from-lime-500 to-green-600",
-      bgColor: "bg-lime-50",
-      borderColor: "border-lime-200",
-      textColor: "text-lime-800",
-    },
-    {
-      icon: <Eye className="w-6 h-6" />,
-      title: "Eye Health",
-      description:
-        "Vitamin E and antioxidants protect eye cells from damage and support long-term vision health",
-      color: "from-violet-500 to-purple-600",
-      bgColor: "bg-violet-50",
-      borderColor: "border-violet-200",
-      textColor: "text-violet-800",
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Digestive Health",
-      description:
-        "Dietary fiber from nuts and prebiotic properties of honey support healthy digestion and gut flora",
-      color: "from-orange-500 to-amber-600",
-      bgColor: "bg-orange-50",
-      borderColor: "border-orange-200",
-      textColor: "text-orange-800",
+      title: "Cognitive Power",
+      benefits: [
+        {
+          icon: <Brain />,
+          label: "Mental Clarity",
+          desc: "Omega-3 fatty acids",
+        },
+        { icon: <Eye />, label: "Vision Care", desc: "Vitamin E protection" },
+      ],
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <section className="py-16 bg-gradient-to-br from-slate-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl shadow-xl mb-4">
-            <Sparkles className="w-8 h-8 text-white" />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-amber-700 bg-clip-text text-transparent mb-4">
-            Science-Backed Health Benefits
+    <section className="py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-emerald-600 font-black uppercase tracking-[0.3em] text-xs mb-4 block"
+          >
+            Nutritional Synergy
+          </motion.span>
+          <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6">
+            Science in every <span className="text-amber-500">Spoonful.</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the remarkable health advantages of our honey-soaked mixed
-            nuts, backed by nutritional science and traditional wisdom
-          </p>
-        </motion.div>
+        </div>
 
-        {/* Benefits Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
-        >
-          {healthBenefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{
-                y: -5,
-                transition: { duration: 0.2 },
-              }}
-              className={`${benefit.bgColor} border ${benefit.borderColor} rounded-2xl p-6 text-center group cursor-default hover:shadow-xl transition-all duration-300`}
-            >
-              {/* Icon Container */}
-              <div
-                className={`inline-flex items-center justify-center w-14 h-14 bg-gradient-to-r ${benefit.color} rounded-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}
-              >
-                <div className="text-white">{benefit.icon}</div>
+        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+          {/* Left Side Benefits */}
+          <div className="space-y-12 order-2 lg:order-1">
+            {benefitGroups.slice(0, 2).map((group, gIdx) => (
+              <div key={gIdx} className="space-y-6">
+                <h4 className="text-gray-400 font-black uppercase text-[10px] tracking-widest ml-2">
+                  {group.title}
+                </h4>
+                {group.benefits.map((benefit, bIdx) => (
+                  <motion.div
+                    whileHover={{ x: 10 }}
+                    key={bIdx}
+                    className="flex items-center space-x-6 p-6 rounded-[2rem] bg-amber-50/50 border border-amber-100/50 group"
+                  >
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                      {benefit.icon}
+                    </div>
+                    <div>
+                      <p className="font-black text-gray-900 text-sm">
+                        {benefit.label}
+                      </p>
+                      <p className="text-xs text-gray-500 font-medium">
+                        {benefit.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
+            ))}
+          </div>
 
-              {/* Title */}
-              <h3 className={`font-bold text-lg mb-3 ${benefit.textColor}`}>
-                {benefit.title}
-              </h3>
+          {/* Center Product Visual */}
+          <div className="relative order-1 lg:order-2 flex justify-center">
+            {/* Animated Glow Rings */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity }}
+                className="w-[300px] h-[300px] border-2 border-dashed border-amber-200 rounded-full opacity-50"
+              />
+              <motion.div
+                animate={{ scale: [1.2, 1, 1.2], rotate: -360 }}
+                transition={{ duration: 15, repeat: Infinity }}
+                className="w-[400px] h-[400px] border border-emerald-100 rounded-full opacity-30"
+              />
+            </div>
 
-              {/* Description */}
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {benefit.description}
-              </p>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              className="relative z-10 w-72 h-96"
+            >
+              <Image
+                src="/adImg5.jpg"
+                alt="Honey Soaked Nuts"
+                fill
+                className="object-contain drop-shadow-[0_35px_35px_rgba(251,191,36,0.3)]"
+              />
 
-              {/* Decorative Element */}
-              <div
-                className={`w-8 h-1 bg-gradient-to-r ${benefit.color} rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-              ></div>
+              {/* Ingredient Callouts */}
+              <div className="absolute -top-4 -right-8 bg-white shadow-xl p-3 rounded-2xl border border-gray-100 flex items-center space-x-2">
+                <Droplets className="w-4 h-4 text-amber-500" />
+                <span className="text-[10px] font-black uppercase">
+                  Pure Forest Honey
+                </span>
+              </div>
+              <div className="absolute -bottom-4 -left-8 bg-white shadow-xl p-3 rounded-2xl border border-gray-100 flex items-center space-x-2">
+                <Leaf className="w-4 h-4 text-emerald-500" />
+                <span className="text-[10px] font-black uppercase">
+                  Premium White Cashews
+                </span>
+              </div>
             </motion.div>
-          ))}
-        </motion.div>
+          </div>
 
-        {/* Scientific Note */}
+          {/* Right Side Benefits */}
+          <div className="space-y-12 order-3">
+            <div className="space-y-6">
+              <h4 className="text-gray-400 font-black uppercase text-[10px] tracking-widest ml-2">
+                Internal Support
+              </h4>
+              {[
+                {
+                  icon: <Bone />,
+                  label: "Bone Strength",
+                  desc: "Magnesium & Calcium",
+                },
+                {
+                  icon: <Scale />,
+                  label: "Weight Control",
+                  desc: "High fiber satiety",
+                },
+                {
+                  icon: <Sun />,
+                  label: "Glowing Skin",
+                  desc: "Vitamin E rich",
+                },
+                {
+                  icon: <Sparkles />,
+                  label: "Anti-Aging",
+                  desc: "Oxidative stress reduction",
+                },
+              ].map((benefit, idx) => (
+                <motion.div
+                  whileHover={{ x: -10 }}
+                  key={idx}
+                  className="flex items-center space-x-6 p-6 rounded-[2rem] bg-emerald-50/50 border border-emerald-100/50 group"
+                >
+                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                    {benefit.icon}
+                  </div>
+                  <div>
+                    <p className="font-black text-gray-900 text-sm">
+                      {benefit.label}
+                    </p>
+                    <p className="text-xs text-gray-500 font-medium">
+                      {benefit.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Nutritional Science Footer */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 text-center"
+          className="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden"
         >
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 max-w-4xl mx-auto">
-            <h4 className="font-semibold text-gray-900 text-lg mb-2">
-              Nutritional Science Behind Our Blend
-            </h4>
-            <p className="text-gray-600 text-sm md:text-base">
-              Our honey-soaked mixed nuts combine the nutritional power of
-              cashews (rich in copper and magnesium), raisins (packed with iron
-              and potassium), dates (high in fiber and natural sugars), peanuts
-              (excellent protein source), and pure honey (natural antioxidants
-              and enzymes). This synergistic combination provides comprehensive
-              health benefits that are both delicious and scientifically
-              validated.
-            </p>
-          </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/20 blur-[100px] rounded-full" />
+          <h4 className="text-2xl font-black mb-4 relative z-10">
+            The Synergistic Power of Honey & Nuts
+          </h4>
+          <p className="text-gray-400 max-w-3xl mx-auto leading-relaxed relative z-10">
+            When pure forest honey is combined with premium nuts, it creates a
+            &apos;pre-digestion&apos; effect where the honey&apos;s enzymes help
+            your body absorb the minerals from the nuts faster. This combination
+            provides a sustained energy release that is scientifically superior
+            to consuming nuts or honey alone.
+          </p>
         </motion.div>
       </div>
     </section>
-  );
-};
-
-// Compact version for use in product pages
-export const CompactHealthBenefits = () => {
-  const quickBenefits = [
-    {
-      icon: <Shield className="w-5 h-5" />,
-      title: "Immunity",
-      color: "text-green-600",
-    },
-    {
-      icon: <Sparkles className="w-5 h-5" />,
-      title: "Anti-Aging",
-      color: "text-purple-600",
-    },
-    {
-      icon: <Sun className="w-5 h-5" />,
-      title: "Skin Health",
-      color: "text-amber-600",
-    },
-    {
-      icon: <Heart className="w-5 h-5" />,
-      title: "Heart Care",
-      color: "text-rose-600",
-    },
-    {
-      icon: <Brain className="w-5 h-5" />,
-      title: "Brain Boost",
-      color: "text-blue-600",
-    },
-  ];
-
-  return (
-    <div className="bg-white rounded-2xl p-6 border border-gray-200">
-      <h3 className="font-bold text-gray-900 text-lg mb-4 flex items-center gap-2">
-        <Sparkles className="w-5 h-5 text-amber-500" />
-        Key Health Benefits
-      </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-        {quickBenefits.map((benefit, index) => (
-          <div key={index} className="text-center group cursor-default">
-            <div
-              className={`inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-xl mb-2 group-hover:bg-gradient-to-br group-hover:from-gray-100 group-hover:to-gray-200 transition-colors duration-200`}
-            >
-              <div className={benefit.color}>{benefit.icon}</div>
-            </div>
-            <span className="text-sm font-medium text-gray-700">
-              {benefit.title}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 };
