@@ -28,7 +28,7 @@ export const ProductSection = () => {
       tagline: "Student's Nutrition Choice",
       price: 149,
       unit: "100 Grams Pack",
-      image: "/prawn-masala.jpg",
+      image: "/prawn-masala 2.jpg",
       description:
         "Designed specifically for busy students and hostelers. A high-protein, easy-to-cook masala mix that brings the taste of home to your dorm while fueling your brain for study sessions.",
       nutrition: [
